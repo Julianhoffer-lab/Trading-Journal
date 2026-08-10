@@ -1,0 +1,18 @@
+### Alle Trades abrufen
+GET http://localhost:8081/api/trades
+
+### Neuen Trade anlegen
+POST http://localhost:8081/api/trades
+Content-Type: application/json
+
+{
+  "currencyPair": "EURUSD",
+  "entryPrice": 1.0850,
+  "stopLoss": 1.0800,
+  "takeProfit": 1.0950,
+  "initialRR": 2.0,
+  "direction": "LONG"
+}
+
+### Trade schließen (z. B. Trade mit ID 1)
+PATCH http://localhost:8081/api/trades/1/close?exitPrice=1.0950
