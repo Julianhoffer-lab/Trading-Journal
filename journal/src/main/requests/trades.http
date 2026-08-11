@@ -11,8 +11,23 @@ Content-Type: application/json
   "stopLoss": 1.0800,
   "takeProfit": 1.0950,
   "initialRR": 2.0,
-  "direction": "LONG"
+  "direction": "SHORT"
 }
 
 ### Trade schließen (z. B. Trade mit ID 1)
 PATCH http://localhost:8081/api/trades/1/close?exitPrice=1.0950
+
+### Alle Trades ungefiltert abrufen
+GET http://localhost:8081/api/trades
+
+### Nur Trades für EURUSD abrufen
+GET http://localhost:8081/api/trades?currencyPair=EURUSD
+
+### Nur LONG Trades auf EURUSD abrufen
+GET http://localhost:8081/api/trades?currencyPair=EURUSD&direction=LONG
+
+### Globale Statistiken abrufen
+GET http://localhost:8081/api/trades/stats
+
+### Statistiken nur für EURUSD abrufen
+GET http://localhost:8081/api/trades/stats?currencyPair=EURUSD
