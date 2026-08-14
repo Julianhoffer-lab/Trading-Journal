@@ -7,6 +7,8 @@ import com.trading.journal.dto.TradeStatsDto;
 
 import org.springframework.data.jpa.domain.Specification;
 import org.springframework.stereotype.Service;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 
 import java.util.List;
 import java.util.Optional;
@@ -54,8 +56,8 @@ public class TradeService {
         return tradeRepository.save(trade);
     }
 
-    public List<Trade> getFilteredTrades(String currencyPair, String direction, LocalDateTime start,
-            LocalDateTime end) {
+    public Page<Trade> getFilteredTrades(String currencyPair, String direction, LocalDateTime start, LocalDateTime end,
+            Pageable pageable) {
         Specification<Trade> spec = (root, query, cb) -> cb.conjunction();
 
         if (currencyPair != null && !currencyPair.isBlank()) {
@@ -65,13 +67,11 @@ public class TradeService {
 
         if (direction != null && !direction.isBlank()) {
             spec = spec.and((root, query, cb) -> {
-                // Falls direction in der Trade-Entity ein Enum ist:
                 try {
                     com.trading.journal.model.Direction dirEnum = com.trading.journal.model.Direction
                             .valueOf(direction.toUpperCase());
                     return cb.equal(root.get("direction"), dirEnum);
                 } catch (IllegalArgumentException e) {
-                    // Falls es ein normaler String in der Entity ist:
                     return cb.equal(cb.upper(root.get("direction")), direction.toUpperCase());
                 }
             });
@@ -81,7 +81,7 @@ public class TradeService {
             spec = spec.and((root, query, cb) -> cb.between(root.get("entryTime"), start, end));
         }
 
-        return tradeRepository.findAll(spec);
+        return tradeRepository.findAll(spec, pageable);
     }
 
     public TradeStatsDto calculateStats(List<Trade> trades) {

@@ -7,6 +7,10 @@ import com.trading.journal.service.TradeService;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
 
 import java.util.List;
 import java.math.BigDecimal;
@@ -28,13 +32,14 @@ public class TradeController {
     }
 
     @GetMapping
-    public ResponseEntity<List<Trade>> getAllTrades(
+    public ResponseEntity<Page<Trade>> getAllTrades(
             @RequestParam(required = false) String currencyPair,
             @RequestParam(required = false) String direction,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end,
+            @PageableDefault(size = 10, sort = "entryTime", direction = Sort.Direction.DESC) Pageable pageable) {
 
-        return ResponseEntity.ok(tradeService.getFilteredTrades(currencyPair, direction, start, end));
+        return ResponseEntity.ok(tradeService.getFilteredTrades(currencyPair, direction, start, end, pageable));
     }
 
     @DeleteMapping("/{id}")
@@ -55,7 +60,10 @@ public class TradeController {
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
             @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
 
-        List<Trade> filteredTrades = tradeService.getFilteredTrades(currencyPair, direction, start, end);
+        // .getContent() wandelt das Page<Trade> in die benötigte List<Trade> um
+        List<Trade> filteredTrades = tradeService
+                .getFilteredTrades(currencyPair, direction, start, end, Pageable.unpaged()).getContent();
+
         TradeStatsDto stats = tradeService.calculateStats(filteredTrades);
 
         return ResponseEntity.ok(stats);
