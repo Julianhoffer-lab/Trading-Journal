@@ -31,3 +31,19 @@ GET http://localhost:8081/api/trades/stats
 
 ### Statistiken nur für EURUSD abrufen
 GET http://localhost:8081/api/trades/stats?currencyPair=EURUSD
+
+### Trade mit Multi-Timeframe Charts & SMC Confirmations anlegen
+POST http://localhost:8081/api/trades
+Content-Type: application/json
+
+{
+  "currencyPair": "EURUSD",
+  "direction": "LONG",
+  "entryPrice": 1.0850,
+  "stopLoss": 1.0835,
+  "entryTime": "2026-08-14T10:00:00",
+  "notes": "H4 Liquidity Sweep + M15 Choch + M5 FVG Entry",
+  "imageUrl1": "https://www.tradingview.com/x/tNPxD3Ip/",
+  "imageUrl2": "https://www.tradingview.com/x/Fq0F4oRH/",
+  "imageUrl3": "https://www.tradingview.com/x/JKez75Jv/"
+}

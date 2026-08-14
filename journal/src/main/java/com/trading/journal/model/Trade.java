@@ -10,6 +10,7 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.Table;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 
 @Entity
@@ -25,15 +26,18 @@ public class Trade {
     @Enumerated(EnumType.STRING)
     private Direction direction;
     private LocalDateTime entryTime;
+    @Column(length = 1000)
     private String notes;
     private BigDecimal outcome;
     private BigDecimal initialRR;
-    private String imageUrl;
+    private String imageUrl1;
+    private String imageUrl2;
+    private String imageUrl3;
     private BigDecimal finalRR;
 
     public Trade(String currencyPair, BigDecimal entryPrice, BigDecimal stopLoss, BigDecimal exitPrice,
             Direction direction, LocalDateTime entryTime, String notes, BigDecimal outcome, BigDecimal initialRR,
-            String imageUrl) {
+            String imageUrl1, String imageUrl2, String imageUrl3) {
         this.currencyPair = currencyPair;
         this.entryPrice = entryPrice;
         this.stopLoss = stopLoss;
@@ -43,7 +47,9 @@ public class Trade {
         this.notes = notes;
         this.outcome = outcome;
         this.initialRR = initialRR;
-        this.imageUrl = imageUrl;
+        this.imageUrl1 = imageUrl1;
+        this.imageUrl2 = imageUrl2;
+        this.imageUrl3 = imageUrl3;
         this.finalRR = BigDecimal.ZERO;
     }
 
@@ -145,12 +151,28 @@ public class Trade {
         this.initialRR = initialRR;
     }
 
-    public String getImageUrl() {
-        return imageUrl;
+    public String getImageUrl1() {
+        return imageUrl1;
     }
 
-    public void setImageUrl(String imageUrl) {
-        this.imageUrl = imageUrl;
+    public void setImageUrl1(String imageUrl1) {
+        this.imageUrl1 = imageUrl1;
+    }
+
+    public String getImageUrl2() {
+        return imageUrl2;
+    }
+
+    public void setImageUrl2(String imageUrl2) {
+        this.imageUrl2 = imageUrl2;
+    }
+
+    public String getImageUrl3() {
+        return imageUrl3;
+    }
+
+    public void setImageUrl3(String imageUrl3) {
+        this.imageUrl3 = imageUrl3;
     }
 
     public BigDecimal getFinalRR() {
