@@ -1,12 +1,16 @@
 package com.trading.journal.controller;
 
+import com.trading.journal.dto.TradeStatsDto;
 import com.trading.journal.model.Trade;
 import com.trading.journal.service.TradeService;
+
+import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 @RestController
 @RequestMapping("/api/trades")
@@ -20,20 +24,17 @@ public class TradeController {
 
     @PostMapping
     public ResponseEntity<Trade> createTrade(@RequestBody Trade trade) {
-        Trade savedTrade = tradeService.saveTrade(trade);
-        return ResponseEntity.ok(savedTrade);
+        return ResponseEntity.ok(tradeService.saveTrade(trade));
     }
 
     @GetMapping
-    public ResponseEntity<List<Trade>> getAllTrades() {
-        return ResponseEntity.ok(tradeService.getAllTrades());
-    }
+    public ResponseEntity<List<Trade>> getAllTrades(
+            @RequestParam(required = false) String currencyPair,
+            @RequestParam(required = false) String direction,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
 
-    @GetMapping("/{id}")
-    public ResponseEntity<Trade> getTradeById(@PathVariable Long id) {
-        return tradeService.getTradeById(id)
-                .map(ResponseEntity::ok)
-                .orElse(ResponseEntity.notFound().build());
+        return ResponseEntity.ok(tradeService.getFilteredTrades(currencyPair, direction, start, end));
     }
 
     @DeleteMapping("/{id}")
@@ -44,7 +45,19 @@ public class TradeController {
 
     @PatchMapping("/{id}/close")
     public ResponseEntity<Trade> closeTrade(@PathVariable Long id, @RequestParam BigDecimal exitPrice) {
-        Trade closedTrade = tradeService.closeTrade(id, exitPrice);
-        return ResponseEntity.ok(closedTrade);
+        return ResponseEntity.ok(tradeService.closeTrade(id, exitPrice));
+    }
+
+    @GetMapping("/stats")
+    public ResponseEntity<TradeStatsDto> getStats(
+            @RequestParam(required = false) String currencyPair,
+            @RequestParam(required = false) String direction,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
+            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
+
+        List<Trade> filteredTrades = tradeService.getFilteredTrades(currencyPair, direction, start, end);
+        TradeStatsDto stats = tradeService.calculateStats(filteredTrades);
+
+        return ResponseEntity.ok(stats);
     }
 }

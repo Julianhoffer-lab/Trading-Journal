@@ -1,10 +1,10 @@
 package com.trading.journal.repository;
 
-import org.springframework.data.jpa.repository.JpaRepository;
 import com.trading.journal.model.Trade;
-import org.springframework.stereotype.Repository;
+import org.springframework.data.jpa.repository.JpaRepository;
+import java.util.List;
+import org.springframework.data.jpa.repository.JpaSpecificationExecutor;
 
-@Repository
-public interface TradeRepository extends JpaRepository<Trade, Long> {
-
+public interface TradeRepository extends JpaRepository<Trade, Long>, JpaSpecificationExecutor<Trade> {
+    // Hier brauchst du KEINE findBy... Methoden mehr!
 }
