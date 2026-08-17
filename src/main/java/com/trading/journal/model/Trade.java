@@ -29,11 +29,13 @@ public class Trade {
     @Column(length = 1000)
     private String notes;
     private BigDecimal outcome;
+    @Column(name = "initial_rr")
     private BigDecimal initialRR;
+    @Column(name = "final_rr")
+    private BigDecimal finalRR;
     private String imageUrl1;
     private String imageUrl2;
     private String imageUrl3;
-    private BigDecimal finalRR;
 
     public Trade(String currencyPair, BigDecimal entryPrice, BigDecimal stopLoss, BigDecimal exitPrice,
             Direction direction, LocalDateTime entryTime, String notes, BigDecimal outcome, BigDecimal initialRR,

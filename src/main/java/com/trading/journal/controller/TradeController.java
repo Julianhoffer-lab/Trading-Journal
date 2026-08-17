@@ -32,14 +32,8 @@ public class TradeController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Trade>> getAllTrades(
-            @RequestParam(required = false) String currencyPair,
-            @RequestParam(required = false) String direction,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end,
-            @PageableDefault(size = 10, sort = "entryTime", direction = Sort.Direction.DESC) Pageable pageable) {
-
-        return ResponseEntity.ok(tradeService.getFilteredTrades(currencyPair, direction, start, end, pageable));
+    public List<Trade> getAllTrades() {
+        return tradeService.getAllTrades(); // bzw. tradeRepository.findAll();
     }
 
     @DeleteMapping("/{id}")
