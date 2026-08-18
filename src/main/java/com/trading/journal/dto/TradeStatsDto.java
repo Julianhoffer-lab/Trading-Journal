@@ -43,4 +43,28 @@ public class TradeStatsDto {
     public double getAverageRR() {
         return averageRR;
     }
+
+    public void setTotalTrades(long totalTrades) {
+        this.totalTrades = totalTrades;
+    }
+
+    public void setWinningTrades(long winningTrades) {
+        this.winningTrades = winningTrades;
+    }
+
+    public void setLosingTrades(long losingTrades) {
+        this.losingTrades = losingTrades;
+    }
+
+    public void setWinratePercent(double winratePercent) {
+        this.winratePercent = winratePercent;
+    }
+
+    public void setTotalR(double totalR) {
+        this.totalR = totalR;
+    }
+
+    public void setAverageRR(double averageRR) {
+        this.averageRR = averageRR;
+    }
 }
