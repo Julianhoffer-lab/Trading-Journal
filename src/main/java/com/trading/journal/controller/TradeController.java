@@ -11,13 +11,16 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
 
 import java.util.List;
 import java.math.BigDecimal;
 import java.time.LocalDateTime;
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/api/trades")
+@CrossOrigin(origins = "*")
 public class TradeController {
 
     private final TradeService tradeService;
@@ -27,8 +30,9 @@ public class TradeController {
     }
 
     @PostMapping
-    public ResponseEntity<Trade> createTrade(@RequestBody Trade trade) {
-        return ResponseEntity.ok(tradeService.saveTrade(trade));
+    public ResponseEntity<Trade> createTrade(@Valid @RequestBody Trade trade) {
+        Trade savedTrade = tradeService.saveTrade(trade);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedTrade);
     }
 
     @GetMapping

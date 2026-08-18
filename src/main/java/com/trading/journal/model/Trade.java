@@ -12,6 +12,9 @@ import jakarta.persistence.Id;
 import jakarta.persistence.Table;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 
 @Entity
 @Table(name = "trades")
@@ -19,11 +22,18 @@ public class Trade {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @NotBlank(message = "Währungspaar darf nicht leer sein.")
     private String currencyPair;
+    @NotNull(message = "Entry-Preis ist erforderlich.")
+    @Positive(message = "Entry-Preis muss positiv sein.")
     private BigDecimal entryPrice;
+    @NotNull(message = "Stop-Loss ist erforderlich.")
+    @Positive(message = "Stop-Loss muss positiv sein.")
     private BigDecimal stopLoss;
+    @Positive(message = "Exit-Preis muss positiv sein.")
     private BigDecimal exitPrice;
     @Enumerated(EnumType.STRING)
+    @NotNull(message = "Direction (LONG/SHORT) ist erforderlich.")
     private Direction direction;
     private LocalDateTime entryTime;
     @Column(length = 1000)
