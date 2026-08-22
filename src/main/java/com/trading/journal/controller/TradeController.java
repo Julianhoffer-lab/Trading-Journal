@@ -40,30 +40,26 @@ public class TradeController {
         return tradeService.getAllTrades(); // bzw. tradeRepository.findAll();
     }
 
-    @DeleteMapping("/{id}")
-    public ResponseEntity<Void> deleteTrade(@PathVariable Long id) {
-        tradeService.deleteTrade(id);
-        return ResponseEntity.noContent().build();
-    }
-
     @PatchMapping("/{id}/close")
     public ResponseEntity<Trade> closeTrade(@PathVariable Long id, @RequestParam BigDecimal exitPrice) {
         return ResponseEntity.ok(tradeService.closeTrade(id, exitPrice));
     }
 
     @GetMapping("/stats")
-    public ResponseEntity<TradeStatsDto> getStats(
-            @RequestParam(required = false) String currencyPair,
-            @RequestParam(required = false) String direction,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime start,
-            @RequestParam(required = false) @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime end) {
+    public ResponseEntity<TradeStatsDto> getStats() {
+        return ResponseEntity.ok(tradeService.calculateStats());
+    }
 
-        // .getContent() wandelt das Page<Trade> in die benötigte List<Trade> um
-        List<Trade> filteredTrades = tradeService
-                .getFilteredTrades(currencyPair, direction, start, end, Pageable.unpaged()).getContent();
+    // Trade löschen
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTrade(@PathVariable Long id) {
+        tradeService.deleteTrade(id);
+        return ResponseEntity.noContent().build();
+    }
 
-        TradeStatsDto stats = tradeService.calculateStats(filteredTrades);
-
-        return ResponseEntity.ok(stats);
+    // Trade aktualisieren (z.B. Exit-Preis nachtragen)
+    @PutMapping("/{id}")
+    public ResponseEntity<Trade> updateTrade(@PathVariable Long id, @Valid @RequestBody Trade dto) {
+        return ResponseEntity.ok(tradeService.updateTrade(id, dto));
     }
 }

@@ -36,16 +36,20 @@ public class Trade {
     @NotNull(message = "Direction (LONG/SHORT) ist erforderlich.")
     private Direction direction;
     private LocalDateTime entryTime;
-    @Column(length = 1000)
+    @Column(columnDefinition = "TEXT")
     private String notes;
     private BigDecimal outcome;
     @Column(name = "initial_rr")
     private BigDecimal initialRR;
     @Column(name = "final_rr")
     private BigDecimal finalRR;
+    @Column(columnDefinition = "TEXT")
     private String imageUrl1;
+    @Column(columnDefinition = "TEXT")
     private String imageUrl2;
+    @Column(columnDefinition = "TEXT")
     private String imageUrl3;
+    private LocalDateTime tradeDateTime;
 
     public Trade(String currencyPair, BigDecimal entryPrice, BigDecimal stopLoss, BigDecimal exitPrice,
             Direction direction, LocalDateTime entryTime, String notes, BigDecimal outcome, BigDecimal initialRR,
@@ -193,6 +197,14 @@ public class Trade {
 
     public void setFinalRR(BigDecimal finalRR) {
         this.finalRR = finalRR;
+    }
+
+    public LocalDateTime getTradeDateTime() {
+        return tradeDateTime;
+    }
+
+    public void setTradeDateTime(LocalDateTime tradeDateTime) {
+        this.tradeDateTime = tradeDateTime;
     }
 
 }

@@ -1,74 +1,38 @@
 package com.trading.journal.dto;
 
-import jakarta.validation.constraints.NotBlank;
-import jakarta.validation.constraints.NotNull;
-import jakarta.validation.constraints.Positive;
-
 public class TradeStatsDto {
-
     private long totalTrades;
-    private long winningTrades;
-    private long losingTrades;
-    private double winratePercent;
+    private double winRate;
     private double totalR;
-    private double averageRR;
 
-    public TradeStatsDto(long totalTrades, long winningTrades, long losingTrades,
-            double winratePercent, double totalR, double averageRR) {
+    public TradeStatsDto(long totalTrades, double winRate, double totalR) {
         this.totalTrades = totalTrades;
-        this.winningTrades = winningTrades;
-        this.losingTrades = losingTrades;
-        this.winratePercent = winratePercent;
+        this.winRate = winRate;
         this.totalR = totalR;
-        this.averageRR = averageRR;
     }
 
-    // Getter
+    // Getter und Setter
     public long getTotalTrades() {
         return totalTrades;
-    }
-
-    public long getWinningTrades() {
-        return winningTrades;
-    }
-
-    public long getLosingTrades() {
-        return losingTrades;
-    }
-
-    public double getWinratePercent() {
-        return winratePercent;
-    }
-
-    public double getTotalR() {
-        return totalR;
-    }
-
-    public double getAverageRR() {
-        return averageRR;
     }
 
     public void setTotalTrades(long totalTrades) {
         this.totalTrades = totalTrades;
     }
 
-    public void setWinningTrades(long winningTrades) {
-        this.winningTrades = winningTrades;
+    public double getWinRate() {
+        return winRate;
     }
 
-    public void setLosingTrades(long losingTrades) {
-        this.losingTrades = losingTrades;
+    public void setWinRate(double winRate) {
+        this.winRate = winRate;
     }
 
-    public void setWinratePercent(double winratePercent) {
-        this.winratePercent = winratePercent;
+    public double getTotalR() {
+        return totalR;
     }
 
     public void setTotalR(double totalR) {
         this.totalR = totalR;
-    }
-
-    public void setAverageRR(double averageRR) {
-        this.averageRR = averageRR;
     }
 }
