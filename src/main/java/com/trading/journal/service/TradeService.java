@@ -11,6 +11,9 @@ import java.math.RoundingMode;
 import java.time.LocalDateTime;
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 @Service
 public class TradeService {
 
@@ -22,6 +25,10 @@ public class TradeService {
 
     public List<Trade> getAllTrades() {
         return tradeRepository.findAll();
+    }
+
+    public Page<Trade> getAllTrades(Pageable pageable) {
+        return tradeRepository.findAll(pageable);
     }
 
     public Trade saveTrade(Trade trade) {

@@ -1,0 +1,2785 @@
+This file is a merged representation of the entire codebase, combined into a single document by Repomix.
+
+<file_summary>
+This section contains a summary of this file.
+
+<purpose>
+This file contains a packed representation of the entire repository's contents.
+It is designed to be easily consumable by AI systems for analysis, code review,
+or other automated processes.
+</purpose>
+
+<file_format>
+The content is organized as follows:
+1. This summary section
+2. Repository information
+3. Directory structure
+4. Repository files (if enabled)
+5. Multiple file entries, each consisting of:
+  - File path as an attribute
+  - Full contents of the file
+</file_format>
+
+<usage_guidelines>
+- This file should be treated as read-only. Any changes should be made to the
+  original repository files, not this packed version.
+- When processing this file, use the file path to distinguish
+  between different files in the repository.
+- Be aware that this file may contain sensitive information. Handle it with
+  the same level of security as you would the original repository.
+</usage_guidelines>
+
+<notes>
+- Some files may have been excluded based on .gitignore rules and Repomix's configuration
+- Binary files are not included in this packed representation. Please refer to the Repository Structure section for a complete list of file paths, including binary files
+- Files matching patterns in .gitignore are excluded
+- Files matching default ignore patterns are excluded
+- Files are sorted by Git change count (files with more changes are at the bottom)
+</notes>
+
+</file_summary>
+
+<directory_structure>
+.mvn/
+  wrapper/
+    maven-wrapper.properties
+frontend/
+  public/
+    favicon.svg
+    icons.svg
+  src/
+    assets/
+      hero.png
+      react.svg
+      vite.svg
+    App.css
+    App.jsx
+    index.css
+    main.jsx
+  .gitignore
+  .oxlintrc.json
+  index.html
+  package.json
+  README.md
+  vite.config.js
+src/
+  main/
+    java/
+      com/
+        trading/
+          journal/
+            config/
+              WebConfig.java
+            controller/
+              TradeController.java
+            dto/
+              TradeStatsDto.java
+            exception/
+              GlobalExceptionHandler.java
+            model/
+              Direction.java
+              Trade.java
+            repository/
+              TradeRepository.java
+            service/
+              TradeService.java
+            JournalApplication.java
+    requests/
+      trades.http
+    resources/
+      db/
+        migration/
+          V1__init_schema.sql
+          V2__add_trade_date_time_and_images.sql
+          V3__change_images_and_notes_to_text.sql
+      application.properties
+  test/
+    java/
+      com/
+        trading/
+          journal/
+            model/
+              TradeTest.java
+            JournalApplicationTests.java
+.gitattributes
+.gitignore
+docker-compose.yml
+Dockerfile
+mvnw
+mvnw.cmd
+package.json
+pom.xml
+</directory_structure>
+
+<files>
+This section contains the contents of the repository's files.
+
+<file path="package.json">
+{
+  "dependencies": {
+    "recharts": "^3.10.1"
+  }
+}
+</file>
+
+<file path=".mvn/wrapper/maven-wrapper.properties">
+wrapperVersion=3.3.4
+distributionType=only-script
+distributionUrl=https://repo.maven.apache.org/maven2/org/apache/maven/apache-maven/3.9.16/apache-maven-3.9.16-bin.zip
+</file>
+
+<file path="frontend/public/favicon.svg">
+<svg xmlns="http://www.w3.org/2000/svg" width="48" height="46" fill="none" viewBox="0 0 48 46"><path fill="#863bff" d="M25.946 44.938c-.664.845-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.287c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.497 0-3.578-1.842-3.578H1.237c-.92 0-1.456-1.04-.92-1.788L10.013.474c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.579 1.842 3.579h11.377c.943 0 1.473 1.088.89 1.83L25.947 44.94z" style="fill:#863bff;fill:color(display-p3 .5252 .23 1);fill-opacity:1"/><mask id="a" width="48" height="46" x="0" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha"><path fill="#000" d="M25.842 44.938c-.664.844-2.021.375-2.021-.698V33.937a2.26 2.26 0 0 0-2.262-2.262H10.183c-.92 0-1.456-1.04-.92-1.788l7.48-10.471c1.07-1.498 0-3.579-1.842-3.579H1.133c-.92 0-1.456-1.04-.92-1.787L9.91.473c.214-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.471c-1.07 1.498 0 3.578 1.842 3.578h11.377c.943 0 1.473 1.088.89 1.832L25.843 44.94z" style="fill:#000;fill-opacity:1"/></mask><g mask="url(#a)"><g filter="url(#b)"><ellipse cx="5.508" cy="14.704" fill="#ede6ff" rx="5.508" ry="14.704" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -4.47 31.516)"/></g><g filter="url(#c)"><ellipse cx="10.399" cy="29.851" fill="#ede6ff" rx="10.399" ry="29.851" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -39.328 7.883)"/></g><g filter="url(#d)"><ellipse cx="5.508" cy="30.487" fill="#7e14ff" rx="5.508" ry="30.487" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.814 -25.913 -14.639)scale(1 -1)"/></g><g filter="url(#e)"><ellipse cx="5.508" cy="30.599" fill="#7e14ff" rx="5.508" ry="30.599" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.814 -32.644 -3.334)scale(1 -1)"/></g><g filter="url(#f)"><ellipse cx="5.508" cy="30.599" fill="#7e14ff" rx="5.508" ry="30.599" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="matrix(.00324 1 1 -.00324 -34.34 30.47)"/></g><g filter="url(#g)"><ellipse cx="14.072" cy="22.078" fill="#ede6ff" rx="14.072" ry="22.078" style="fill:#ede6ff;fill:color(display-p3 .9275 .9033 1);fill-opacity:1" transform="rotate(93.35 24.506 48.493)scale(-1 1)"/></g><g filter="url(#h)"><ellipse cx="3.47" cy="21.501" fill="#7e14ff" rx="3.47" ry="21.501" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.009 28.708 47.59)scale(-1 1)"/></g><g filter="url(#i)"><ellipse cx="3.47" cy="21.501" fill="#7e14ff" rx="3.47" ry="21.501" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(89.009 28.708 47.59)scale(-1 1)"/></g><g filter="url(#j)"><ellipse cx=".387" cy="8.972" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(39.51 .387 8.972)"/></g><g filter="url(#k)"><ellipse cx="47.523" cy="-6.092" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 47.523 -6.092)"/></g><g filter="url(#l)"><ellipse cx="41.412" cy="6.333" fill="#47bfff" rx="5.971" ry="9.665" style="fill:#47bfff;fill:color(display-p3 .2799 .748 1);fill-opacity:1" transform="rotate(37.892 41.412 6.333)"/></g><g filter="url(#m)"><ellipse cx="-1.879" cy="38.332" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 -1.88 38.332)"/></g><g filter="url(#n)"><ellipse cx="-1.879" cy="38.332" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 -1.88 38.332)"/></g><g filter="url(#o)"><ellipse cx="35.651" cy="29.907" fill="#7e14ff" rx="4.407" ry="29.108" style="fill:#7e14ff;fill:color(display-p3 .4922 .0767 1);fill-opacity:1" transform="rotate(37.892 35.651 29.907)"/></g><g filter="url(#p)"><ellipse cx="38.418" cy="32.4" fill="#47bfff" rx="5.971" ry="15.297" style="fill:#47bfff;fill:color(display-p3 .2799 .748 1);fill-opacity:1" transform="rotate(37.892 38.418 32.4)"/></g></g><defs><filter id="b" width="60.045" height="41.654" x="-19.77" y="16.149" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="c" width="90.34" height="51.437" x="-54.613" y="-7.533" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="d" width="79.355" height="29.4" x="-49.64" y="2.03" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="e" width="79.579" height="29.4" x="-45.045" y="20.029" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="f" width="79.579" height="29.4" x="-43.513" y="21.178" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="g" width="74.749" height="58.852" x="15.756" y="-17.901" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="7.659"/></filter><filter id="h" width="61.377" height="25.362" x="23.548" y="2.284" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="i" width="61.377" height="25.362" x="23.548" y="2.284" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="j" width="56.045" height="63.649" x="-27.636" y="-22.853" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="k" width="54.814" height="64.646" x="20.116" y="-38.415" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="l" width="33.541" height="35.313" x="24.641" y="-11.323" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="m" width="54.814" height="64.646" x="-29.286" y="6.009" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="n" width="54.814" height="64.646" x="-29.286" y="6.009" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="o" width="54.814" height="64.646" x="8.244" y="-2.416" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter><filter id="p" width="39.409" height="43.623" x="18.713" y="10.588" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17158" stdDeviation="4.596"/></filter></defs></svg>
+</file>
+
+<file path="frontend/public/icons.svg">
+<svg xmlns="http://www.w3.org/2000/svg">
+  <symbol id="bluesky-icon" viewBox="0 0 16 17">
+    <g clip-path="url(#bluesky-clip)"><path fill="#08060d" d="M7.75 7.735c-.693-1.348-2.58-3.86-4.334-5.097-1.68-1.187-2.32-.981-2.74-.79C.188 2.065.1 2.812.1 3.251s.241 3.602.398 4.13c.52 1.744 2.367 2.333 4.07 2.145-2.495.37-4.71 1.278-1.805 4.512 3.196 3.309 4.38-.71 4.987-2.746.608 2.036 1.307 5.91 4.93 2.746 2.72-2.746.747-4.143-1.747-4.512 1.702.189 3.55-.4 4.07-2.145.156-.528.397-3.691.397-4.13s-.088-1.186-.575-1.406c-.42-.19-1.06-.395-2.741.79-1.755 1.24-3.64 3.752-4.334 5.099"/></g>
+    <defs><clipPath id="bluesky-clip"><path fill="#fff" d="M.1.85h15.3v15.3H.1z"/></clipPath></defs>
+  </symbol>
+  <symbol id="discord-icon" viewBox="0 0 20 19">
+    <path fill="#08060d" d="M16.224 3.768a14.5 14.5 0 0 0-3.67-1.153c-.158.286-.343.67-.47.976a13.5 13.5 0 0 0-4.067 0c-.128-.306-.317-.69-.476-.976A14.4 14.4 0 0 0 3.868 3.77C1.546 7.28.916 10.703 1.231 14.077a14.7 14.7 0 0 0 4.5 2.306q.545-.748.965-1.587a9.5 9.5 0 0 1-1.518-.74q.191-.14.372-.293c2.927 1.369 6.107 1.369 8.999 0q.183.152.372.294-.723.437-1.52.74.418.838.963 1.588a14.6 14.6 0 0 0 4.504-2.308c.37-3.911-.63-7.302-2.644-10.309m-9.13 8.234c-.878 0-1.599-.82-1.599-1.82 0-.998.705-1.82 1.6-1.82.894 0 1.614.82 1.599 1.82.001 1-.705 1.82-1.6 1.82m5.91 0c-.878 0-1.599-.82-1.599-1.82 0-.998.705-1.82 1.6-1.82.893 0 1.614.82 1.599 1.82 0 1-.706 1.82-1.6 1.82"/>
+  </symbol>
+  <symbol id="documentation-icon" viewBox="0 0 21 20">
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="m15.5 13.333 1.533 1.322c.645.555.967.833.967 1.178s-.322.623-.967 1.179L15.5 18.333m-3.333-5-1.534 1.322c-.644.555-.966.833-.966 1.178s.322.623.966 1.179l1.534 1.321"/>
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M17.167 10.836v-4.32c0-1.41 0-2.117-.224-2.68-.359-.906-1.118-1.621-2.08-1.96-.599-.21-1.349-.21-2.848-.21-2.623 0-3.935 0-4.983.369-1.684.591-3.013 1.842-3.641 3.428C3 6.449 3 7.684 3 10.154v2.122c0 2.558 0 3.838.706 4.726q.306.383.713.671c.76.536 1.79.64 3.581.66"/>
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M3 10a2.78 2.78 0 0 1 2.778-2.778c.555 0 1.209.097 1.748-.047.48-.129.854-.503.982-.982.145-.54.048-1.194.048-1.749a2.78 2.78 0 0 1 2.777-2.777"/>
+  </symbol>
+  <symbol id="github-icon" viewBox="0 0 19 19">
+    <path fill="#08060d" fill-rule="evenodd" d="M9.356 1.85C5.05 1.85 1.57 5.356 1.57 9.694a7.84 7.84 0 0 0 5.324 7.44c.387.079.528-.168.528-.376 0-.182-.013-.805-.013-1.454-2.165.467-2.616-.935-2.616-.935-.349-.91-.864-1.143-.864-1.143-.71-.48.051-.48.051-.48.787.051 1.2.805 1.2.805.695 1.194 1.817.857 2.268.649.064-.507.27-.857.49-1.052-1.728-.182-3.545-.857-3.545-3.87 0-.857.31-1.558.8-2.104-.078-.195-.349-1 .077-2.078 0 0 .657-.208 2.14.805a7.5 7.5 0 0 1 1.946-.26c.657 0 1.328.092 1.946.26 1.483-1.013 2.14-.805 2.14-.805.426 1.078.155 1.883.078 2.078.502.546.799 1.247.799 2.104 0 3.013-1.818 3.675-3.558 3.87.284.247.528.714.528 1.454 0 1.052-.012 1.896-.012 2.156 0 .208.142.455.528.377a7.84 7.84 0 0 0 5.324-7.441c.013-4.338-3.48-7.844-7.773-7.844" clip-rule="evenodd"/>
+  </symbol>
+  <symbol id="social-icon" viewBox="0 0 20 20">
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M12.5 6.667a4.167 4.167 0 1 0-8.334 0 4.167 4.167 0 0 0 8.334 0"/>
+    <path fill="none" stroke="#aa3bff" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.35" d="M2.5 16.667a5.833 5.833 0 0 1 8.75-5.053m3.837.474.513 1.035c.07.144.257.282.414.309l.93.155c.596.1.736.536.307.965l-.723.73a.64.64 0 0 0-.152.531l.207.903c.164.715-.213.991-.84.618l-.872-.52a.63.63 0 0 0-.577 0l-.872.52c-.624.373-1.003.094-.84-.618l.207-.903a.64.64 0 0 0-.152-.532l-.723-.729c-.426-.43-.289-.864.306-.964l.93-.156a.64.64 0 0 0 .412-.31l.513-1.034c.28-.562.735-.562 1.012 0"/>
+  </symbol>
+  <symbol id="x-icon" viewBox="0 0 19 19">
+    <path fill="#08060d" fill-rule="evenodd" d="M1.893 1.98c.052.072 1.245 1.769 2.653 3.77l2.892 4.114c.183.261.333.48.333.486s-.068.089-.152.183l-.522.593-.765.867-3.597 4.087c-.375.426-.734.834-.798.905a1 1 0 0 0-.118.148c0 .01.236.017.664.017h.663l.729-.83c.4-.457.796-.906.879-.999a692 692 0 0 0 1.794-2.038c.034-.037.301-.34.594-.675l.551-.624.345-.392a7 7 0 0 1 .34-.374c.006 0 .93 1.306 2.052 2.903l2.084 2.965.045.063h2.275c1.87 0 2.273-.003 2.266-.021-.008-.02-1.098-1.572-3.894-5.547-2.013-2.862-2.28-3.246-2.273-3.266.008-.019.282-.332 2.085-2.38l2-2.274 1.567-1.782c.022-.028-.016-.03-.65-.03h-.674l-.3.342a871 871 0 0 1-1.782 2.025c-.067.075-.405.458-.75.852a100 100 0 0 1-.803.91c-.148.172-.299.344-.99 1.127-.304.343-.32.358-.345.327-.015-.019-.904-1.282-1.976-2.808L6.365 1.85H1.8zm1.782.91 8.078 11.294c.772 1.08 1.413 1.973 1.425 1.984.016.017.241.02 1.05.017l1.03-.004-2.694-3.766L7.796 5.75 5.722 2.852l-1.039-.004-1.039-.004z" clip-rule="evenodd"/>
+  </symbol>
+</svg>
+</file>
+
+<file path="frontend/src/assets/react.svg">
+<svg xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" aria-hidden="true" role="img" class="iconify iconify--logos" width="35.93" height="32" preserveAspectRatio="xMidYMid meet" viewBox="0 0 256 228"><path fill="#00D8FF" d="M210.483 73.824a171.49 171.49 0 0 0-8.24-2.597c.465-1.9.893-3.777 1.273-5.621c6.238-30.281 2.16-54.676-11.769-62.708c-13.355-7.7-35.196.329-57.254 19.526a171.23 171.23 0 0 0-6.375 5.848a155.866 155.866 0 0 0-4.241-3.917C100.759 3.829 77.587-4.822 63.673 3.233C50.33 10.957 46.379 33.89 51.995 62.588a170.974 170.974 0 0 0 1.892 8.48c-3.28.932-6.445 1.924-9.474 2.98C17.309 83.498 0 98.307 0 113.668c0 15.865 18.582 31.778 46.812 41.427a145.52 145.52 0 0 0 6.921 2.165a167.467 167.467 0 0 0-2.01 9.138c-5.354 28.2-1.173 50.591 12.134 58.266c13.744 7.926 36.812-.22 59.273-19.855a145.567 145.567 0 0 0 5.342-4.923a168.064 168.064 0 0 0 6.92 6.314c21.758 18.722 43.246 26.282 56.54 18.586c13.731-7.949 18.194-32.003 12.4-61.268a145.016 145.016 0 0 0-1.535-6.842c1.62-.48 3.21-.974 4.76-1.488c29.348-9.723 48.443-25.443 48.443-41.52c0-15.417-17.868-30.326-45.517-39.844Zm-6.365 70.984c-1.4.463-2.836.91-4.3 1.345c-3.24-10.257-7.612-21.163-12.963-32.432c5.106-11 9.31-21.767 12.459-31.957c2.619.758 5.16 1.557 7.61 2.4c23.69 8.156 38.14 20.213 38.14 29.504c0 9.896-15.606 22.743-40.946 31.14Zm-10.514 20.834c2.562 12.94 2.927 24.64 1.23 33.787c-1.524 8.219-4.59 13.698-8.382 15.893c-8.067 4.67-25.32-1.4-43.927-17.412a156.726 156.726 0 0 1-6.437-5.87c7.214-7.889 14.423-17.06 21.459-27.246c12.376-1.098 24.068-2.894 34.671-5.345a134.17 134.17 0 0 1 1.386 6.193ZM87.276 214.515c-7.882 2.783-14.16 2.863-17.955.675c-8.075-4.657-11.432-22.636-6.853-46.752a156.923 156.923 0 0 1 1.869-8.499c10.486 2.32 22.093 3.988 34.498 4.994c7.084 9.967 14.501 19.128 21.976 27.15a134.668 134.668 0 0 1-4.877 4.492c-9.933 8.682-19.886 14.842-28.658 17.94ZM50.35 144.747c-12.483-4.267-22.792-9.812-29.858-15.863c-6.35-5.437-9.555-10.836-9.555-15.216c0-9.322 13.897-21.212 37.076-29.293c2.813-.98 5.757-1.905 8.812-2.773c3.204 10.42 7.406 21.315 12.477 32.332c-5.137 11.18-9.399 22.249-12.634 32.792a134.718 134.718 0 0 1-6.318-1.979Zm12.378-84.26c-4.811-24.587-1.616-43.134 6.425-47.789c8.564-4.958 27.502 2.111 47.463 19.835a144.318 144.318 0 0 1 3.841 3.545c-7.438 7.987-14.787 17.08-21.808 26.988c-12.04 1.116-23.565 2.908-34.161 5.309a160.342 160.342 0 0 1-1.76-7.887Zm110.427 27.268a347.8 347.8 0 0 0-7.785-12.803c8.168 1.033 15.994 2.404 23.343 4.08c-2.206 7.072-4.956 14.465-8.193 22.045a381.151 381.151 0 0 0-7.365-13.322Zm-45.032-43.861c5.044 5.465 10.096 11.566 15.065 18.186a322.04 322.04 0 0 0-30.257-.006c4.974-6.559 10.069-12.652 15.192-18.18ZM82.802 87.83a323.167 323.167 0 0 0-7.227 13.238c-3.184-7.553-5.909-14.98-8.134-22.152c7.304-1.634 15.093-2.97 23.209-3.984a321.524 321.524 0 0 0-7.848 12.897Zm8.081 65.352c-8.385-.936-16.291-2.203-23.593-3.793c2.26-7.3 5.045-14.885 8.298-22.6a321.187 321.187 0 0 0 7.257 13.246c2.594 4.48 5.28 8.868 8.038 13.147Zm37.542 31.03c-5.184-5.592-10.354-11.779-15.403-18.433c4.902.192 9.899.29 14.978.29c5.218 0 10.376-.117 15.453-.343c-4.985 6.774-10.018 12.97-15.028 18.486Zm52.198-57.817c3.422 7.8 6.306 15.345 8.596 22.52c-7.422 1.694-15.436 3.058-23.88 4.071a382.417 382.417 0 0 0 7.859-13.026a347.403 347.403 0 0 0 7.425-13.565Zm-16.898 8.101a358.557 358.557 0 0 1-12.281 19.815a329.4 329.4 0 0 1-23.444.823c-7.967 0-15.716-.248-23.178-.732a310.202 310.202 0 0 1-12.513-19.846h.001a307.41 307.41 0 0 1-10.923-20.627a310.278 310.278 0 0 1 10.89-20.637l-.001.001a307.318 307.318 0 0 1 12.413-19.761c7.613-.576 15.42-.876 23.31-.876H128c7.926 0 15.743.303 23.354.883a329.357 329.357 0 0 1 12.335 19.695a358.489 358.489 0 0 1 11.036 20.54a329.472 329.472 0 0 1-11 20.722Zm22.56-122.124c8.572 4.944 11.906 24.881 6.52 51.026c-.344 1.668-.73 3.367-1.15 5.09c-10.622-2.452-22.155-4.275-34.23-5.408c-7.034-10.017-14.323-19.124-21.64-27.008a160.789 160.789 0 0 1 5.888-5.4c18.9-16.447 36.564-22.941 44.612-18.3ZM128 90.808c12.625 0 22.86 10.235 22.86 22.86s-10.235 22.86-22.86 22.86s-22.86-10.235-22.86-22.86s10.235-22.86 22.86-22.86Z"></path></svg>
+</file>
+
+<file path="frontend/src/assets/vite.svg">
+<svg xmlns="http://www.w3.org/2000/svg" width="77" height="47" fill="none" aria-labelledby="vite-logo-title" viewBox="0 0 77 47"><title id="vite-logo-title">Vite</title><style>.parenthesis{fill:#000}@media (prefers-color-scheme:dark){.parenthesis{fill:#fff}}</style><path fill="#9135ff" d="M40.151 45.71c-.663.844-2.02.374-2.02-.699V34.708a2.26 2.26 0 0 0-2.262-2.262H24.493c-.92 0-1.457-1.04-.92-1.788l7.479-10.471c1.07-1.498 0-3.578-1.842-3.578H15.443c-.92 0-1.456-1.04-.92-1.788l9.696-13.576c.213-.297.556-.474.92-.474h28.894c.92 0 1.456 1.04.92 1.788l-7.48 10.472c-1.07 1.497 0 3.578 1.842 3.578h11.376c.944 0 1.474 1.087.89 1.83L40.153 45.712z"/><mask id="a" width="48" height="47" x="14" y="0" maskUnits="userSpaceOnUse" style="mask-type:alpha"><path fill="#000" d="M40.047 45.71c-.663.843-2.02.374-2.02-.699V34.708a2.26 2.26 0 0 0-2.262-2.262H24.389c-.92 0-1.457-1.04-.92-1.788l7.479-10.472c1.07-1.497 0-3.578-1.842-3.578H15.34c-.92 0-1.456-1.04-.92-1.788l9.696-13.575c.213-.297.556-.474.92-.474H53.93c.92 0 1.456 1.04.92 1.788L47.37 13.03c-1.07 1.498 0 3.578 1.842 3.578h11.376c.944 0 1.474 1.088.89 1.831L40.049 45.712z"/></mask><g mask="url(#a)"><g filter="url(#b)"><ellipse cx="5.508" cy="14.704" fill="#eee6ff" rx="5.508" ry="14.704" transform="rotate(269.814 20.96 11.29)scale(-1 1)"/></g><g filter="url(#c)"><ellipse cx="10.399" cy="29.851" fill="#eee6ff" rx="10.399" ry="29.851" transform="rotate(89.814 -16.902 -8.275)scale(1 -1)"/></g><g filter="url(#d)"><ellipse cx="5.508" cy="30.487" fill="#8900ff" rx="5.508" ry="30.487" transform="rotate(89.814 -19.197 -7.127)scale(1 -1)"/></g><g filter="url(#e)"><ellipse cx="5.508" cy="30.599" fill="#8900ff" rx="5.508" ry="30.599" transform="rotate(89.814 -25.928 4.177)scale(1 -1)"/></g><g filter="url(#f)"><ellipse cx="5.508" cy="30.599" fill="#8900ff" rx="5.508" ry="30.599" transform="rotate(89.814 -25.738 5.52)scale(1 -1)"/></g><g filter="url(#g)"><ellipse cx="14.072" cy="22.078" fill="#eee6ff" rx="14.072" ry="22.078" transform="rotate(93.35 31.245 55.578)scale(-1 1)"/></g><g filter="url(#h)"><ellipse cx="3.47" cy="21.501" fill="#8900ff" rx="3.47" ry="21.501" transform="rotate(89.009 35.419 55.202)scale(-1 1)"/></g><g filter="url(#i)"><ellipse cx="3.47" cy="21.501" fill="#8900ff" rx="3.47" ry="21.501" transform="rotate(89.009 35.419 55.202)scale(-1 1)"/></g><g filter="url(#j)"><ellipse cx="14.592" cy="9.743" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(39.51 14.592 9.743)"/></g><g filter="url(#k)"><ellipse cx="61.728" cy="-5.321" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 61.728 -5.32)"/></g><g filter="url(#l)"><ellipse cx="55.618" cy="7.104" fill="#00c2ff" rx="5.971" ry="9.665" transform="rotate(37.892 55.618 7.104)"/></g><g filter="url(#m)"><ellipse cx="12.326" cy="39.103" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 12.326 39.103)"/></g><g filter="url(#n)"><ellipse cx="12.326" cy="39.103" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 12.326 39.103)"/></g><g filter="url(#o)"><ellipse cx="49.857" cy="30.678" fill="#8900ff" rx="4.407" ry="29.108" transform="rotate(37.892 49.857 30.678)"/></g><g filter="url(#p)"><ellipse cx="52.623" cy="33.171" fill="#00c2ff" rx="5.971" ry="15.297" transform="rotate(37.892 52.623 33.17)"/></g></g><path d="M6.919 0c-9.198 13.166-9.252 33.575 0 46.789h6.215c-9.25-13.214-9.196-33.623 0-46.789zm62.424 0h-6.215c9.198 13.166 9.252 33.575 0 46.789h6.215c9.25-13.214 9.196-33.623 0-46.789" class="parenthesis"/><defs><filter id="b" width="60.045" height="41.654" x="-5.564" y="16.92" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="7.659"/></filter><filter id="c" width="90.34" height="51.437" x="-40.407" y="-6.762" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="7.659"/></filter><filter id="d" width="79.355" height="29.4" x="-35.435" y="2.801" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="e" width="79.579" height="29.4" x="-30.84" y="20.8" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="f" width="79.579" height="29.4" x="-29.307" y="21.949" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="g" width="74.749" height="58.852" x="29.961" y="-17.13" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="7.659"/></filter><filter id="h" width="61.377" height="25.362" x="37.754" y="3.055" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="i" width="61.377" height="25.362" x="37.754" y="3.055" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="j" width="56.045" height="63.649" x="-13.43" y="-22.082" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="k" width="54.814" height="64.646" x="34.321" y="-37.644" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="l" width="33.541" height="35.313" x="38.847" y="-10.552" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="m" width="54.814" height="64.646" x="-15.081" y="6.78" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="n" width="54.814" height="64.646" x="-15.081" y="6.78" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="o" width="54.814" height="64.646" x="22.45" y="-1.645" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter><filter id="p" width="39.409" height="43.623" x="32.919" y="11.36" color-interpolation-filters="sRGB" filterUnits="userSpaceOnUse"><feFlood flood-opacity="0" result="BackgroundImageFix"/><feBlend in="SourceGraphic" in2="BackgroundImageFix" result="shape"/><feGaussianBlur result="effect1_foregroundBlur_2002_17286" stdDeviation="4.596"/></filter></defs></svg>
+</file>
+
+<file path="frontend/src/App.css">
+.counter {
+  font-size: 16px;
+  padding: 5px 10px;
+  border-radius: 5px;
+  color: var(--accent);
+  background: var(--accent-bg);
+  border: 2px solid transparent;
+  transition: border-color 0.3s;
+  margin-bottom: 24px;
+
+  &:hover {
+    border-color: var(--accent-border);
+  }
+  &:focus-visible {
+    outline: 2px solid var(--accent);
+    outline-offset: 2px;
+  }
+}
+
+.hero {
+  position: relative;
+
+  .base,
+  .framework,
+  .vite {
+    inset-inline: 0;
+    margin: 0 auto;
+  }
+
+  .base {
+    width: 170px;
+    position: relative;
+    z-index: 0;
+  }
+
+  .framework,
+  .vite {
+    position: absolute;
+  }
+
+  .framework {
+    z-index: 1;
+    top: 34px;
+    height: 28px;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(44deg) rotateY(39deg)
+      scale(1.4);
+  }
+
+  .vite {
+    z-index: 0;
+    top: 107px;
+    height: 26px;
+    width: auto;
+    transform: perspective(2000px) rotateZ(300deg) rotateX(40deg) rotateY(39deg)
+      scale(0.8);
+  }
+}
+
+#center {
+  display: flex;
+  flex-direction: column;
+  gap: 25px;
+  place-content: center;
+  place-items: center;
+  flex-grow: 1;
+
+  @media (max-width: 1024px) {
+    padding: 32px 20px 24px;
+    gap: 18px;
+  }
+}
+
+#next-steps {
+  display: flex;
+  border-top: 1px solid var(--border);
+  text-align: left;
+
+  & > div {
+    flex: 1 1 0;
+    padding: 32px;
+    @media (max-width: 1024px) {
+      padding: 24px 20px;
+    }
+  }
+
+  .icon {
+    margin-bottom: 16px;
+    width: 22px;
+    height: 22px;
+  }
+
+  @media (max-width: 1024px) {
+    flex-direction: column;
+    text-align: center;
+  }
+}
+
+#docs {
+  border-right: 1px solid var(--border);
+
+  @media (max-width: 1024px) {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+}
+
+#next-steps ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  gap: 8px;
+  margin: 32px 0 0;
+
+  .logo {
+    height: 18px;
+  }
+
+  a {
+    color: var(--text-h);
+    font-size: 16px;
+    border-radius: 6px;
+    background: var(--social-bg);
+    display: flex;
+    padding: 6px 12px;
+    align-items: center;
+    gap: 8px;
+    text-decoration: none;
+    transition: box-shadow 0.3s;
+
+    &:hover {
+      box-shadow: var(--shadow);
+    }
+    .button-icon {
+      height: 18px;
+      width: 18px;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    margin-top: 20px;
+    flex-wrap: wrap;
+    justify-content: center;
+
+    li {
+      flex: 1 1 calc(50% - 8px);
+    }
+
+    a {
+      width: 100%;
+      justify-content: center;
+      box-sizing: border-box;
+    }
+  }
+}
+
+#spacer {
+  height: 88px;
+  border-top: 1px solid var(--border);
+  @media (max-width: 1024px) {
+    height: 48px;
+  }
+}
+
+.ticks {
+  position: relative;
+  width: 100%;
+
+  &::before,
+  &::after {
+    content: '';
+    position: absolute;
+    top: -4.5px;
+    border: 5px solid transparent;
+  }
+
+  &::before {
+    left: 0;
+    border-left-color: var(--border);
+  }
+  &::after {
+    right: 0;
+    border-right-color: var(--border);
+  }
+}
+</file>
+
+<file path="frontend/src/App.jsx">
+import { useState, useEffect, useMemo } from 'react'
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip as RechartsTooltip,
+  CartesianGrid
+} from 'recharts'
+
+function App() {
+  const [trades, setTrades] = useState([])
+  const [stats, setStats] = useState(null)
+  const [loading, setLoading] = useState(true)
+  const [errorMsg, setErrorMsg] = useState('')
+
+  // Dark Mode State (Standard: Dark Mode)
+  const [darkMode, setDarkMode] = useState(true)
+
+  // Selected Trade & State für Detail-Edit
+  const [selectedTrade, setSelectedTrade] = useState(null)
+  const [editNotes, setEditNotes] = useState('')
+  const [images, setImages] = useState({ imageUrl1: '', imageUrl2: '', imageUrl3: '' })
+  const [isSaving, setIsSaving] = useState(false)
+
+  // State für vergrößertes Bild (Lightbox / Preview)
+  const [previewImage, setPreviewImage] = useState(null)
+
+  // Filter States (wirken GLOBAL auf Journal UND Analytics)
+  const [filterPair, setFilterPair] = useState('')
+  const [filterDirection, setFilterDirection] = useState('ALL')
+  const [filterOutcome, setFilterOutcome] = useState('ALL')
+  const [filterDay, setFilterDay] = useState('ALL')
+  const [filterNotes, setFilterNotes] = useState('')
+
+  // Form State
+  const [formData, setFormData] = useState({
+    currencyPair: 'EUR/USD',
+    direction: 'LONG',
+    entryPrice: '',
+    stopLoss: '',
+    exitPrice: '',
+    tradeDateTime: new Date().toISOString().slice(0, 16)
+  })
+
+  // Navigation State: 'journal' oder 'analytics'
+  const [activeTab, setActiveTab] = useState('journal')
+
+  // Graph X-Achse Mode: 'tradeCount' oder 'time'
+  const [chartXAxisMode, setChartXAxisMode] = useState('tradeCount')
+
+  // Paginierung States
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 10
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [filterPair, filterDirection, filterOutcome, filterDay, filterNotes])
+
+
+
+  // Theme-Farben je nach Modus
+  const theme = {
+    bg: darkMode ? '#121212' : '#f4f6f8',
+    text: darkMode ? '#e0e0e0' : '#212529',
+    heading: darkMode ? '#ffffff' : '#111111',
+    cardBg: darkMode ? '#1e1e1e' : '#ffffff',
+    border: darkMode ? '#333333' : '#dddddd',
+    subText: darkMode ? '#aaaaaa' : '#666666',
+    tableHeaderBg: darkMode ? '#2a2a2a' : '#f1f3f5',
+    tableHoverBg: darkMode ? '#2c2c2c' : '#f8f9fa',
+    inputBg: darkMode ? '#2d2d2d' : '#ffffff',
+    inputBorder: darkMode ? '#444444' : '#cccccc',
+    chartGrid: darkMode ? '#333333' : '#e0e0e0',
+    chartTooltipBg: darkMode ? '#2a2a2a' : '#ffffff'
+  }
+
+  const fetchData = () => {
+    Promise.all([
+      fetch('http://localhost:8081/api/trades').then(res => res.json()),
+      fetch('http://localhost:8081/api/trades/stats').then(res => res.json())
+    ])
+      .then(([tradesData, statsData]) => {
+        setTrades(Array.isArray(tradesData) ? tradesData : tradesData.content || [])
+        setStats(statsData)
+        setLoading(false)
+      })
+      .catch(err => {
+        console.error('Fehler beim Laden:', err)
+        setLoading(false)
+      })
+  }
+
+  useEffect(() => {
+    fetchData()
+  }, [])
+
+  const openModal = (trade) => {
+    setSelectedTrade(trade)
+    setEditNotes(trade.notes || '')
+    setImages({
+      imageUrl1: trade.imageUrl1 || '',
+      imageUrl2: trade.imageUrl2 || '',
+      imageUrl3: trade.imageUrl3 || ''
+    })
+  }
+
+  const handleChange = (e) => {
+    setFormData({ ...formData, [e.target.name]: e.target.value })
+  }
+
+  const handleSubmit = (e) => {
+    e.preventDefault()
+    setErrorMsg('')
+
+    let formattedDateTime = null
+    if (formData.tradeDateTime && formData.tradeDateTime.trim() !== '') {
+      formattedDateTime = formData.tradeDateTime.length === 16
+        ? formData.tradeDateTime + ':00'
+        : formData.tradeDateTime
+    }
+
+    const payload = {
+      currencyPair: formData.currencyPair,
+      direction: formData.direction,
+      entryPrice: parseFloat(formData.entryPrice) || 0,
+      stopLoss: parseFloat(formData.stopLoss) || 0,
+      exitPrice: parseFloat(formData.exitPrice) || 0,
+      tradeDateTime: formattedDateTime,
+      imageUrl1: null,
+      imageUrl2: null,
+      imageUrl3: null,
+      notes: ''
+    }
+
+    fetch('http://localhost:8081/api/trades', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    })
+      .then(async res => {
+        if (!res.ok) {
+          const text = await res.text()
+          throw new Error(`Server Fehler (${res.status}): ${text}`)
+        }
+        return res.json()
+      })
+      .then(() => {
+        setFormData({
+          currencyPair: 'EUR/USD',
+          direction: 'LONG',
+          entryPrice: '',
+          stopLoss: '',
+          exitPrice: '',
+          tradeDateTime: new Date().toISOString().slice(0, 16)
+        })
+        fetchData()
+      })
+      .catch(err => setErrorMsg(err.message || 'Verbindung fehlgeschlagen'))
+  }
+
+  const handlePasteImage = (e, slotKey) => {
+    const items = e.clipboardData?.items
+    if (!items) return
+
+    for (let item of items) {
+      if (item.type.indexOf('image') !== -1) {
+        const file = item.getAsFile()
+        const reader = new FileReader()
+        reader.onload = (event) => {
+          setImages(prev => ({ ...prev, [slotKey]: event.target.result }))
+        }
+        reader.readAsDataURL(file)
+        break
+      }
+    }
+  }
+
+  const handleSaveDetails = () => {
+    if (!selectedTrade) return
+    setIsSaving(true)
+
+    const updatedPayload = {
+      ...selectedTrade,
+      notes: editNotes,
+      imageUrl1: images.imageUrl1,
+      imageUrl2: images.imageUrl2,
+      imageUrl3: images.imageUrl3
+    }
+
+    fetch(`http://localhost:8081/api/trades/${selectedTrade.id}`, {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify(updatedPayload)
+    })
+      .then(res => res.json())
+      .then(data => {
+        setSelectedTrade(data)
+        setIsSaving(false)
+        fetchData()
+        alert('Details & Notizen erfolgreich gespeichert!')
+      })
+      .catch(err => {
+        console.error('Fehler beim Speichern:', err)
+        setIsSaving(false)
+      })
+  }
+
+  const handleDelete = (id, e) => {
+    e.stopPropagation()
+    if (!window.confirm(`Möchtest du Trade #${id} wirklich löschen?`)) return
+
+    fetch(`http://localhost:8081/api/trades/${id}`, { method: 'DELETE' })
+      .then(res => {
+        if (res.ok) {
+          if (selectedTrade?.id === id) setSelectedTrade(null)
+          fetchData()
+        } else {
+          alert('Fehler beim Löschen')
+        }
+      })
+      .catch(err => console.error(err))
+  }
+
+  // Gefilterte Liste für BEIDE Tabs (Journal & Analytics)
+  const filteredTrades = trades.filter(trade => {
+    if (!trade) return false
+    const matchesPair = (trade.currencyPair || '').toLowerCase().includes(filterPair.toLowerCase())
+    const matchesDirection = filterDirection === 'ALL' || trade.direction === filterDirection
+
+    const isWin = trade.finalRR !== null && trade.finalRR !== undefined && trade.finalRR > 0
+    const matchesOutcome =
+      filterOutcome === 'ALL' ||
+      (filterOutcome === 'WIN' && isWin) ||
+      (filterOutcome === 'LOSS' && !isWin)
+
+    let matchesDay = true
+    if (filterDay !== 'ALL' && trade.tradeDateTime) {
+      const dayOfWeek = new Date(trade.tradeDateTime).getDay()
+      matchesDay = dayOfWeek === parseInt(filterDay)
+    }
+
+    const matchesNotes = !filterNotes || (trade.notes && trade.notes.toLowerCase().includes(filterNotes.toLowerCase()))
+
+    return matchesPair && matchesDirection && matchesOutcome && matchesDay && matchesNotes
+  })
+
+  // Check, ob aktuell ein Filter aktiv ist
+  const isFiltered = filterPair !== '' || filterDirection !== 'ALL' || filterOutcome !== 'ALL' || filterDay !== 'ALL' || filterNotes !== ''
+
+  const resetFilters = () => {
+    setFilterPair('')
+    setFilterDirection('ALL')
+    setFilterOutcome('ALL')
+    setFilterDay('ALL')
+    setFilterNotes('')
+  }
+
+  // Kumulierter Datenverlauf für den Graphen
+  const chartData = useMemo(() => {
+    if (!filteredTrades || filteredTrades.length === 0) return []
+
+    // Nur Trades mit gültiger finalRR berücksichtigen
+    const validTrades = filteredTrades
+      .filter(t => t && t.finalRR !== null && t.finalRR !== undefined && !isNaN(Number(t.finalRR)))
+      .sort((a, b) => new Date(a.tradeDateTime || 0) - new Date(b.tradeDateTime || 0))
+
+    if (validTrades.length === 0) return []
+
+    let cumulativeR = 0
+    const dataPoints = [
+      {
+        tradeNum: 0,
+        date: 'Start',
+        tradeRR: 0,
+        cumulativeR: 0
+      }
+    ]
+
+    validTrades.forEach((trade, index) => {
+      const rrVal = Number(trade.finalRR) || 0
+      cumulativeR += rrVal
+
+      const dateObj = trade.tradeDateTime ? new Date(trade.tradeDateTime) : null
+      const formattedDate = dateObj && !isNaN(dateObj.getTime())
+        ? dateObj.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: '2-digit' })
+        : `Trade #${index + 1}`
+
+      dataPoints.push({
+        tradeNum: index + 1,
+        date: formattedDate,
+        tradeRR: Number(rrVal.toFixed(2)),
+        cumulativeR: Number(cumulativeR.toFixed(2))
+      })
+    })
+
+    return dataPoints
+  }, [filteredTrades])
+
+  // Paginierung für Journal
+  const indexOfLastTrade = currentPage * itemsPerPage
+  const indexOfFirstTrade = indexOfLastTrade - itemsPerPage
+  const currentTrades = filteredTrades.slice(indexOfFirstTrade, indexOfLastTrade)
+  const totalPages = Math.ceil(filteredTrades.length / itemsPerPage) || 1
+
+  const getDayName = (dateString) => {
+    if (!dateString) return '-'
+    const date = new Date(dateString)
+    return date.toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })
+  }
+
+  // CSV-Export
+  const exportToCSV = () => {
+    if (filteredTrades.length === 0) {
+      alert('Keine Trades zum Exportieren vorhanden!')
+      return
+    }
+
+    const headers = ['ID', 'Datum/Zeit', 'Waehrungspaar', 'Richtung', 'Entry', 'StopLoss', 'Exit', 'Ergebnis_R', 'Notizen']
+
+    const rows = filteredTrades.map(trade => [
+      trade.id,
+      trade.tradeDateTime || '',
+      `"${trade.currencyPair || ''}"`,
+      trade.direction || '',
+      trade.entryPrice || 0,
+      trade.stopLoss || 0,
+      trade.exitPrice || 0,
+      trade.finalRR ?? '',
+      `"${(trade.notes || '').replace(/"/g, '""')}"`
+    ])
+
+    const csvContent = 'data:text/csv;charset=utf-8,\uFEFF'
+      + [headers.join(';'), ...rows.map(e => e.join(';'))].join('\n')
+
+    const encodedUri = encodeURI(csvContent)
+    const link = document.createElement('a')
+    link.setAttribute('href', encodedUri)
+    link.setAttribute('download', `trading_journal_export_${new Date().toISOString().slice(0, 10)}.csv`)
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
+  // Hilfskomponente für Info-Tooltips direkt mit Inline-Styles
+  const Tooltip = ({ text }) => (
+    <span
+      title={text}
+      style={{
+        cursor: 'help',
+        marginLeft: '6px',
+        fontSize: '0.8rem',
+        backgroundColor: theme.border,
+        color: theme.subText,
+        borderRadius: '50%',
+        width: '16px',
+        height: '16px',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontWeight: 'bold'
+      }}
+    >
+      ?
+    </span>
+  )
+
+  if (loading) return <div style={{ padding: '2rem', backgroundColor: theme.bg, color: theme.text, minHeight: '100vh' }}>Lade Daten vom Backend...</div>
+
+  return (
+    <div style={{ backgroundColor: theme.bg, color: theme.text, minHeight: '100vh', padding: '2rem', fontFamily: 'system-ui, sans-serif', transition: 'all 0.2s ease' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
+
+        {/* Header mit Tab-Navigation & Buttons */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+          <h1 style={{ margin: 0, color: theme.heading }}>Trading Journal Dashboard</h1>
+
+          {/* Tab Navigation */}
+          <div style={{ display: 'flex', gap: '0.5rem', backgroundColor: theme.cardBg, padding: '4px', borderRadius: '12px', border: `1px solid ${theme.border}` }}>
+            <button
+              onClick={() => setActiveTab('journal')}
+              style={{
+                padding: '8px 16px',
+                borderRadius: '8px',
+                border: 'none',
+                backgroundColor: activeTab === 'journal' ? '#007bff' : 'transparent',
+                color: activeTab === 'journal' ? 'white' : theme.text,
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+            >
+              📝 Journal
+            </button>
+            <button
+              onClick={() => setActiveTab('analytics')}
+              style={{
+                padding: '8px 16px',
+                borderRadius: '8px',
+                border: 'none',
+                backgroundColor: activeTab === 'analytics' ? '#007bff' : 'transparent',
+                color: activeTab === 'analytics' ? 'white' : theme.text,
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+            >
+              📊 Analytics
+            </button>
+          </div>
+
+          {/* Action Buttons */}
+          <div style={{ display: 'flex', gap: '0.75rem' }}>
+            <button
+              onClick={exportToCSV}
+              style={{
+                padding: '8px 16px',
+                borderRadius: '20px',
+                border: `1px solid ${theme.border}`,
+                backgroundColor: '#28a745',
+                color: 'white',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
+              }}
+            >
+              📥 CSV Export
+            </button>
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              style={{
+                padding: '8px 16px',
+                borderRadius: '20px',
+                border: `1px solid ${theme.border}`,
+                backgroundColor: theme.cardBg,
+                color: theme.text,
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
+              }}
+            >
+              {darkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
+            </button>
+          </div>
+        </div>
+
+        {/* GLOBALE FILTER-LEISTE (Gilt für Journal AND Analytics) */}
+        <div style={{ padding: '1rem', backgroundColor: theme.cardBg, border: `1px solid ${theme.border}`, borderRadius: '8px', marginBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+            <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: theme.heading }}>
+              🔍 Globaler Filter (dieser Filter wirkt auf Journal & Analytics) {isFiltered && <span style={{ color: '#007bff', fontSize: '0.8rem' }}>(Aktiv: {filteredTrades.length} von {trades.length} Trades)</span>}
+            </span>
+            {isFiltered && (
+              <button
+                onClick={resetFilters}
+                style={{ fontSize: '0.8rem', padding: '4px 8px', backgroundColor: 'transparent', color: '#dc3545', border: '1px solid #dc3545', borderRadius: '4px', cursor: 'pointer' }}
+              >
+                Filter zurücksetzen
+              </button>
+            )}
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '0.75rem', alignItems: 'center' }}>
+            <div>
+              <label style={{ fontSize: '0.8rem', fontWeight: 'bold', display: 'block', color: theme.subText }}>Asset:</label>
+              <input type="text" placeholder="z.B. EUR/USD..." value={filterPair} onChange={(e) => setFilterPair(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}` }} />
+            </div>
+
+            <div>
+              <label style={{ fontSize: '0.8rem', fontWeight: 'bold', display: 'block', color: theme.subText }}>Richtung:</label>
+              <select value={filterDirection} onChange={(e) => setFilterDirection(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}` }}>
+                <option value="ALL">Alle Richtungen</option>
+                <option value="LONG">LONG</option>
+                <option value="SHORT">SHORT</option>
+              </select>
+            </div>
+
+            <div>
+              <label style={{ fontSize: '0.8rem', fontWeight: 'bold', display: 'block', color: theme.subText }}>Ergebnis:</label>
+              <select value={filterOutcome} onChange={(e) => setFilterOutcome(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}` }}>
+                <option value="ALL">Alle Trades</option>
+                <option value="WIN">Gewinner (Win)</option>
+                <option value="LOSS">Verlierer (Loss)</option>
+              </select>
+            </div>
+
+            <div>
+              <label style={{ fontSize: '0.8rem', fontWeight: 'bold', display: 'block', color: theme.subText }}>Wochentag:</label>
+              <select value={filterDay} onChange={(e) => setFilterDay(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}` }}>
+                <option value="ALL">Alle Tage</option>
+                <option value="1">Montag</option>
+                <option value="2">Dienstag</option>
+                <option value="3">Mittwoch</option>
+                <option value="4">Donnerstag</option>
+                <option value="5">Freitag</option>
+              </select>
+            </div>
+
+            <div>
+              <label style={{ fontSize: '0.8rem', fontWeight: 'bold', display: 'block', color: theme.subText }}>Notiz-Suche:</label>
+              <input type="text" placeholder="Stichwort..." value={filterNotes} onChange={(e) => setFilterNotes(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}` }} />
+            </div>
+          </div>
+        </div>
+
+        {/* TAB 1: JOURNAL */}
+        {activeTab === 'journal' && (
+          <>
+            {/* Formular zum Anlegen */}
+            <div style={{ padding: '1.5rem', border: `1px solid ${theme.border}`, borderRadius: '8px', marginBottom: '2rem', backgroundColor: theme.cardBg }}>
+              <h2 style={{ marginTop: 0, color: theme.heading }}>Neuen Trade erfassen (Schnelleingabe)</h2>
+
+              {errorMsg && (
+                <div style={{ padding: '0.75rem', backgroundColor: '#ffebee', color: '#c62828', borderRadius: '4px', marginBottom: '1rem' }}>
+                  <strong>Fehler:</strong> {errorMsg}
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div>
+                  <label style={{ color: theme.text }}>Asset:</label>
+                  <input type="text" name="currencyPair" value={formData.currencyPair} onChange={handleChange} required style={{ width: '100%', padding: '8px', marginTop: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, borderRadius: '4px' }} />
+                </div>
+
+                <div>
+                  <label style={{ color: theme.text }}>Richtung:</label>
+                  <select name="direction" value={formData.direction} onChange={handleChange} style={{ width: '100%', padding: '8px', marginTop: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, borderRadius: '4px' }}>
+                    <option value="LONG">LONG</option>
+                    <option value="SHORT">SHORT</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label style={{ color: theme.text }}>Entry Preis:</label>
+                  <input type="number" step="any" name="entryPrice" value={formData.entryPrice} onChange={handleChange} required style={{ width: '100%', padding: '8px', marginTop: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, borderRadius: '4px' }} />
+                </div>
+
+                <div>
+                  <label style={{ color: theme.text }}>Stop Loss:</label>
+                  <input type="number" step="any" name="stopLoss" value={formData.stopLoss} onChange={handleChange} required style={{ width: '100%', padding: '8px', marginTop: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, borderRadius: '4px' }} />
+                </div>
+
+                <div>
+                  <label style={{ color: theme.text }}>Exit Preis:</label>
+                  <input type="number" step="any" name="exitPrice" value={formData.exitPrice} onChange={handleChange} required style={{ width: '100%', padding: '8px', marginTop: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, borderRadius: '4px' }} />
+                </div>
+
+                <div>
+                  <label style={{ color: theme.text }}>Datum & Uhrzeit des Trades:</label>
+                  <input type="datetime-local" name="tradeDateTime" value={formData.tradeDateTime} onChange={handleChange} style={{ width: '100%', padding: '8px', marginTop: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, borderRadius: '4px' }} />
+                </div>
+
+                <button type="submit" style={{ gridColumn: 'span 2', padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+                  Trade Speichern
+                </button>
+              </form>
+            </div>
+
+            {/* Tabellen-Übersicht */}
+            <h2 style={{ color: theme.heading }}>Alle Trades ({filteredTrades.length})</h2>
+            <p>(Klicke auf einen Trade, um die Details anzuzeigen und/oder zu bearbeiten)</p>
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', backgroundColor: theme.cardBg, border: `1px solid ${theme.border}`, borderRadius: '8px', overflow: 'hidden' }}>
+              <thead>
+                <tr style={{ backgroundColor: theme.tableHeaderBg, borderBottom: `2px solid ${theme.border}`, color: theme.heading }}>
+                  <th style={{ padding: '12px' }}>Datum / Zeit</th>
+                  <th style={{ padding: '12px' }}>Asset</th>
+                  <th style={{ padding: '12px' }}>Richtung</th>
+                  <th style={{ padding: '12px' }}>Entry</th>
+                  <th style={{ padding: '12px' }}>Exit</th>
+                  <th style={{ padding: '12px' }}>Ergebnis (R)</th>
+                  <th style={{ padding: '12px' }}>Aktionen</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentTrades.map(trade => {
+                  const isWin = trade.finalRR !== null && trade.finalRR !== undefined && trade.finalRR > 0
+                  return (
+                    <tr
+                      key={trade.id}
+                      onClick={() => openModal(trade)}
+                      style={{
+                        backgroundColor: theme.cardBg,
+                        color: theme.text,
+                        borderBottom: `1px solid ${theme.border}`,
+                        cursor: 'pointer',
+                        transition: 'background-color 0.2s'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = theme.tableHoverBg}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = theme.cardBg}
+                    >
+                      <td style={{ padding: '12px', color: theme.subText, fontSize: '0.9rem' }}>{getDayName(trade.tradeDateTime)}</td>
+                      <td style={{ padding: '12px' }}>{trade.currencyPair}</td>
+                      <td style={{ padding: '12px' }}>
+                        <span style={{ padding: '4px 8px', borderRadius: '4px', backgroundColor: trade.direction === 'LONG' ? (darkMode ? '#132f4c' : '#e3f2fd') : (darkMode ? '#3c1818' : '#fbe9e7'), color: trade.direction === 'LONG' ? '#64b5f6' : '#e57373', fontWeight: 'bold', fontSize: '0.85rem' }}>
+                          {trade.direction}
+                        </span>
+                      </td>
+                      <td style={{ padding: '12px' }}>{trade.entryPrice}</td>
+                      <td style={{ padding: '12px' }}>{trade.exitPrice}</td>
+                      <td style={{ padding: '12px', fontWeight: 'bold', color: isWin ? '#28a745' : '#dc3545' }}>
+                        {trade.finalRR !== null && trade.finalRR !== undefined ? `${trade.finalRR} R` : '-'}
+                      </td>
+                      <td style={{ padding: '12px' }}>
+                        <button onClick={(e) => handleDelete(trade.id, e)} style={{ backgroundColor: '#dc3545', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer' }}>
+                          Löschen
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginTop: '1rem' }}>
+                <button
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                  style={{
+                    padding: '6px 12px',
+                    backgroundColor: currentPage === 1 ? theme.border : theme.cardBg,
+                    color: currentPage === 1 ? theme.subText : theme.text,
+                    border: `1px solid ${theme.border}`,
+                    borderRadius: '4px',
+                    cursor: currentPage === 1 ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  &laquo; Zurück
+                </button>
+
+                <span style={{ fontSize: '0.9rem', color: theme.text }}>
+                  Seite <strong>{currentPage}</strong> von <strong>{totalPages}</strong>
+                </span>
+
+                <button
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  style={{
+                    padding: '6px 12px',
+                    backgroundColor: currentPage === totalPages ? theme.border : theme.cardBg,
+                    color: currentPage === totalPages ? theme.subText : theme.text,
+                    border: `1px solid ${theme.border}`,
+                    borderRadius: '4px',
+                    cursor: currentPage === totalPages ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  Weiter &raquo;
+                </button>
+              </div>
+            )}
+          </>
+        )}
+
+        {/* TAB 2: ANALYTICS */}
+        {activeTab === 'analytics' && (() => {
+          // Sicherstellen, dass filteredTrades ein Array ist
+          const safeTrades = Array.isArray(filteredTrades) ? filteredTrades : []
+
+          const tradesWithRR = safeTrades.filter(
+            t => t && t.finalRR !== null && t.finalRR !== undefined && !isNaN(Number(t.finalRR))
+          )
+          const totalCount = safeTrades.length
+
+          const winRList = tradesWithRR.map(t => Number(t.finalRR)).filter(r => r > 0)
+          const lossRList = tradesWithRR.map(t => Number(t.finalRR)).filter(r => r < 0)
+
+          const winCount = winRList.length
+          const calculatedWinRate = totalCount > 0 ? (winCount / totalCount) * 100 : 0
+
+          const totalR = tradesWithRR.reduce((acc, t) => acc + (Number(t.finalRR) || 0), 0)
+
+          const sumWins = winRList.reduce((acc, r) => acc + r, 0)
+          const sumLosses = Math.abs(lossRList.reduce((acc, r) => acc + r, 0))
+
+          let calculatedProfitFactor = 'N/A'
+          if (sumLosses > 0) {
+            calculatedProfitFactor = (sumWins / sumLosses).toFixed(2)
+          } else if (sumWins > 0) {
+            calculatedProfitFactor = '∞'
+          }
+
+          const bestR = tradesWithRR.length > 0 ? Math.max(...tradesWithRR.map(t => Number(t.finalRR))) : null
+          const worstR = tradesWithRR.length > 0 ? Math.min(...tradesWithRR.map(t => Number(t.finalRR))) : null
+          const avgWin = winRList.length > 0 ? (sumWins / winRList.length) : null
+          const avgLoss = lossRList.length > 0 ? (lossRList.reduce((acc, r) => acc + r, 0) / lossRList.length) : null
+
+          // Sichere Werte-Zuweisung mit Null-Checks
+          const displayWinRate = (!isFiltered && stats && stats.winRate !== undefined) ? stats.winRate : calculatedWinRate
+          const displayTotalR = (!isFiltered && stats && stats.totalR !== undefined) ? stats.totalR : totalR
+          const displayProfitFactor = (!isFiltered && stats && stats.profitFactor !== undefined) ? stats.profitFactor : calculatedProfitFactor
+          const displayBestR = (!isFiltered && stats && stats.bestTradeR !== undefined) ? stats.bestTradeR : bestR
+          const displayWorstR = (!isFiltered && stats && stats.worstTradeR !== undefined) ? stats.worstTradeR : worstR
+          const displayAvgWin = (!isFiltered && stats && stats.avgWinR !== undefined) ? stats.avgWinR : avgWin
+          const displayAvgLoss = (!isFiltered && stats && stats.avgLossR !== undefined) ? stats.avgLossR : avgLoss
+
+          return (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+              {/* 1. Haupt-KPI Übersicht */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+                <div style={{ padding: '1.25rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                  <div style={{ fontSize: '0.85rem', color: theme.subText }}>Gefilterte Trades</div>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: theme.heading, marginTop: '4px' }}>{totalCount}</div>
+                </div>
+
+                <div style={{ padding: '1.25rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                  <div style={{ fontSize: '0.85rem', color: theme.subText }}>Winrate</div>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: Number(displayWinRate) >= 50 ? '#28a745' : '#dc3545', marginTop: '4px' }}>
+                    {typeof displayWinRate === 'number' ? `${displayWinRate.toFixed(1)}%` : displayWinRate}
+                  </div>
+                </div>
+
+                <div style={{ padding: '1.25rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                  <div style={{ fontSize: '0.85rem', color: theme.subText }}>Akkumuliertes R</div>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: Number(displayTotalR) >= 0 ? '#28a745' : '#dc3545', marginTop: '4px' }}>
+                    {typeof displayTotalR === 'number' ? `${displayTotalR.toFixed(2)} R` : displayTotalR}
+                  </div>
+                </div>
+
+                <div style={{ padding: '1.25rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                  <div style={{ fontSize: '0.85rem', color: theme.subText }}>Profit Factor</div>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: theme.heading, marginTop: '4px' }}>{displayProfitFactor}</div>
+                </div>
+              </div>
+
+              {/* 2. Detaillierte Stats */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+                <div style={{ padding: '1rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                  <div style={{ fontSize: '0.8rem', color: theme.subText }}>Bester Trade</div>
+                  <div style={{ fontSize: '1.3rem', fontWeight: 'bold', color: '#28a745' }}>
+                    {displayBestR !== null && displayBestR !== undefined ? `${Number(displayBestR).toFixed(2)} R` : '-'}
+                  </div>
+                </div>
+
+                <div style={{ padding: '1rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                  <div style={{ fontSize: '0.8rem', color: theme.subText }}>Schlechtester Trade</div>
+                  <div style={{ fontSize: '1.3rem', fontWeight: 'bold', color: '#dc3545' }}>
+                    {displayWorstR !== null && displayWorstR !== undefined ? `${Number(displayWorstR).toFixed(2)} R` : '-'}
+                  </div>
+                </div>
+
+                <div style={{ padding: '1rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                  <div style={{ fontSize: '0.8rem', color: theme.subText }}>Durchschnittlicher Gewinner</div>
+                  <div style={{ fontSize: '1.3rem', fontWeight: 'bold', color: '#28a745' }}>
+                    {displayAvgWin !== null && displayAvgWin !== undefined ? `${Number(displayAvgWin).toFixed(2)} R` : '-'}
+                  </div>
+                </div>
+
+                <div style={{ padding: '1rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                  <div style={{ fontSize: '0.8rem', color: theme.subText }}>Durchschnittlicher Verlierer</div>
+                  <div style={{ fontSize: '1.3rem', fontWeight: 'bold', color: '#dc3545' }}>
+                    {displayAvgLoss !== null && displayAvgLoss !== undefined ? `${Number(displayAvgLoss).toFixed(2)} R` : '-'}
+                  </div>
+                </div>
+              </div>
+
+              {/* 3. CHART CONTAINER */}
+              <div style={{ padding: '1.5rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                  <h3 style={{ margin: 0, color: theme.heading }}>📈 Konto-Wachstum (Equity Curve in R)</h3>
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <button onClick={() => setChartXAxisMode('tradeCount')} style={{ padding: '4px 8px', fontSize: '0.8rem', cursor: 'pointer' }}># Trade-Anzahl</button>
+                    <button onClick={() => setChartXAxisMode('time')} style={{ padding: '4px 8px', fontSize: '0.8rem', cursor: 'pointer' }}>📅 Zeit</button>
+                  </div>
+                </div>
+
+                {(!chartData || chartData.length < 2) ? (
+                  <div style={{ padding: '2rem', textAlign: 'center', color: theme.subText }}>
+                    Keine ausreichenden Daten mit geschlossenen Trades (finalRR) für die Equity Curve vorhanden.
+                  </div>
+                ) : (
+                  <div style={{ width: '100%', height: '350px', minHeight: '350px' }}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke={theme.chartGrid} />
+                        <XAxis dataKey={chartXAxisMode === 'tradeCount' ? 'tradeNum' : 'date'} stroke={theme.subText} />
+                        <YAxis stroke={theme.subText} unit=" R" />
+                        <RechartsTooltip contentStyle={{ backgroundColor: theme.chartTooltipBg, color: theme.text, borderRadius: '8px' }} formatter={(value) => [`${value} R`, 'Kumuliert']} />
+                        <Line
+                          type="monotone"
+                          dataKey="cumulativeR"
+                          stroke={(chartData[chartData.length - 1]?.cumulativeR || 0) >= 0 ? '#28a745' : '#dc3545'}
+                          strokeWidth={2}
+                          dot={{ r: 3 }}
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                )}
+              </div>
+            </div>
+          )
+        })()}
+
+      </div>
+    </div>
+  )
+}
+
+export default App
+</file>
+
+<file path="frontend/src/index.css">
+:root {
+  --text: #6b6375;
+  --text-h: #08060d;
+  --bg: #fff;
+  --border: #e5e4e7;
+  --code-bg: #f4f3ec;
+  --accent: #aa3bff;
+  --accent-bg: rgba(170, 59, 255, 0.1);
+  --accent-border: rgba(170, 59, 255, 0.5);
+  --social-bg: rgba(244, 243, 236, 0.5);
+  --shadow:
+    rgba(0, 0, 0, 0.1) 0 10px 15px -3px, rgba(0, 0, 0, 0.05) 0 4px 6px -2px;
+
+  --sans: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --heading: system-ui, 'Segoe UI', Roboto, sans-serif;
+  --mono: ui-monospace, Consolas, monospace;
+
+  font: 18px/145% var(--sans);
+  letter-spacing: 0.18px;
+  color-scheme: light dark;
+  color: var(--text);
+  background: var(--bg);
+  font-synthesis: none;
+  text-rendering: optimizeLegibility;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+
+  @media (max-width: 1024px) {
+    font-size: 16px;
+  }
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    --text: #9ca3af;
+    --text-h: #f3f4f6;
+    --bg: #16171d;
+    --border: #2e303a;
+    --code-bg: #1f2028;
+    --accent: #c084fc;
+    --accent-bg: rgba(192, 132, 252, 0.15);
+    --accent-border: rgba(192, 132, 252, 0.5);
+    --social-bg: rgba(47, 48, 58, 0.5);
+    --shadow:
+      rgba(0, 0, 0, 0.4) 0 10px 15px -3px, rgba(0, 0, 0, 0.25) 0 4px 6px -2px;
+  }
+
+  #social .button-icon {
+    filter: invert(1) brightness(2);
+  }
+}
+
+body {
+  margin: 0;
+}
+
+#root {
+  width: 1126px;
+  max-width: 100%;
+  margin: 0 auto;
+  text-align: center;
+  border-inline: 1px solid var(--border);
+  min-height: 100svh;
+  display: flex;
+  flex-direction: column;
+  box-sizing: border-box;
+}
+
+h1,
+h2 {
+  font-family: var(--heading);
+  font-weight: 500;
+  color: var(--text-h);
+}
+
+h1 {
+  font-size: 56px;
+  letter-spacing: -1.68px;
+  margin: 32px 0;
+  @media (max-width: 1024px) {
+    font-size: 36px;
+    margin: 20px 0;
+  }
+}
+h2 {
+  font-size: 24px;
+  line-height: 118%;
+  letter-spacing: -0.24px;
+  margin: 0 0 8px;
+  @media (max-width: 1024px) {
+    font-size: 20px;
+  }
+}
+p {
+  margin: 0;
+}
+
+code,
+.counter {
+  font-family: var(--mono);
+  display: inline-flex;
+  border-radius: 4px;
+  color: var(--text-h);
+}
+
+code {
+  font-size: 15px;
+  line-height: 135%;
+  padding: 4px 8px;
+  background: var(--code-bg);
+}
+</file>
+
+<file path="frontend/src/main.jsx">
+import { StrictMode } from 'react'
+import { createRoot } from 'react-dom/client'
+import './index.css'
+import App from './App.jsx'
+
+createRoot(document.getElementById('root')).render(
+  <StrictMode>
+    <App />
+  </StrictMode>,
+)
+</file>
+
+<file path="frontend/.gitignore">
+# Logs
+logs
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+node_modules
+dist
+dist-ssr
+*.local
+
+# Editor directories and files
+.vscode/*
+!.vscode/extensions.json
+.idea
+.DS_Store
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+</file>
+
+<file path="frontend/.oxlintrc.json">
+{
+  "$schema": "./node_modules/oxlint/configuration_schema.json",
+  "plugins": ["react", "oxc"],
+  "rules": {
+    "react/rules-of-hooks": "error",
+    "react/only-export-components": ["warn", { "allowConstantExport": true }]
+  }
+}
+</file>
+
+<file path="frontend/index.html">
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>frontend</title>
+  </head>
+  <body>
+    <div id="root"></div>
+    <script type="module" src="/src/main.jsx"></script>
+  </body>
+</html>
+</file>
+
+<file path="frontend/package.json">
+{
+  "name": "frontend",
+  "private": true,
+  "version": "0.0.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "build": "vite build",
+    "lint": "oxlint",
+    "preview": "vite preview"
+  },
+  "dependencies": {
+    "react": "^19.2.8",
+    "react-dom": "^19.2.8"
+  },
+  "devDependencies": {
+    "@types/react": "^19.2.17",
+    "@types/react-dom": "^19.2.3",
+    "@vitejs/plugin-react": "^6.0.4",
+    "oxlint": "^1.75.0",
+    "vite": "^8.2.0"
+  }
+}
+</file>
+
+<file path="frontend/README.md">
+# React + Vite
+
+This template provides a minimal setup to get React working in Vite with HMR and some Oxlint rules.
+
+Currently, two official plugins are available:
+
+- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Oxc](https://oxc.rs)
+- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/)
+
+## React Compiler
+
+The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+
+## Expanding the Oxlint configuration
+
+If you are developing a production application, we recommend using TypeScript with type-aware lint rules enabled. Check out the [TS template](https://github.com/vitejs/vite/tree/main/packages/create-vite/template-react-ts) for information on how to integrate TypeScript and Oxlint's TypeScript related rules in your project.
+</file>
+
+<file path="frontend/vite.config.js">
+import { defineConfig } from 'vite'
+import react from '@vitejs/plugin-react'
+
+// https://vite.dev/config/
+export default defineConfig({
+  plugins: [react()],
+})
+</file>
+
+<file path="src/main/java/com/trading/journal/config/WebConfig.java">
+package com.trading.journal.config;
+
+import org.springframework.context.annotation.Configuration;
+import org.springframework.web.servlet.config.annotation.CorsRegistry;
+import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
+
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+
+    @Override
+    public void addCorsMappings(CorsRegistry registry) {
+        registry.addMapping("/api/**")
+                .allowedOrigins("http://localhost:5173")
+                .allowedMethods("GET", "POST", "PUT", "DELETE", "OPTIONS")
+                .allowedHeaders("*");
+    }
+}
+</file>
+
+<file path="src/main/java/com/trading/journal/exception/GlobalExceptionHandler.java">
+package com.trading.journal.exception;
+
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.ExceptionHandler;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<Map<String, String>> handleValidationExceptions(MethodArgumentNotValidException ex) {
+        Map<String, String> errors = new HashMap<>();
+
+        ex.getBindingResult().getAllErrors().forEach((error) -> {
+            String fieldName = ((FieldError) error).getField();
+            String errorMessage = error.getDefaultMessage();
+            errors.put(fieldName, errorMessage);
+        });
+
+        return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+    }
+}
+</file>
+
+<file path="src/main/java/com/trading/journal/model/Direction.java">
+package com.trading.journal.model;
+
+public enum Direction {
+    LONG,
+    SHORT
+}
+</file>
+
+<file path="src/main/java/com/trading/journal/repository/TradeRepository.java">
+package com.trading.journal.repository;
+
+import com.trading.journal.model.Trade;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.stereotype.Repository;
+
+@Repository
+public interface TradeRepository extends JpaRepository<Trade, Long> {
+
+    // Gibt automatisch ein Page-Objekt inklusive Metadaten (totalElements,
+    // totalPages) zurück
+    Page<Trade> findAll(Pageable pageable);
+}
+</file>
+
+<file path="src/main/java/com/trading/journal/JournalApplication.java">
+package com.trading.journal;
+
+import org.springframework.boot.SpringApplication;
+import org.springframework.boot.autoconfigure.SpringBootApplication;
+
+@SpringBootApplication
+public class JournalApplication {
+
+	public static void main(String[] args) {
+		SpringApplication.run(JournalApplication.class, args);
+	}
+
+}
+</file>
+
+<file path="src/main/requests/trades.http">
+### Alle Trades abrufen
+GET http://localhost:8081/api/trades
+
+### Neuen Trade anlegen
+POST http://localhost:8081/api/trades
+Content-Type: application/json
+
+{
+  "currencyPair": "EURUSD",
+  "entryPrice": 1.0850,
+  "stopLoss": 1.0800,
+  "takeProfit": 1.0950,
+  "initialRR": 2.0,
+  "direction": "SHORT"
+}
+
+### Trade schließen (z. B. Trade mit ID 1)
+PATCH http://localhost:8081/api/trades/1/close?exitPrice=1.0950
+
+### Alle Trades ungefiltert abrufen
+GET http://localhost:8081/api/trades
+
+### Nur Trades für EURUSD abrufen
+GET http://localhost:8081/api/trades?currencyPair=EURUSD
+
+### Nur LONG Trades auf EURUSD abrufen
+GET http://localhost:8081/api/trades?currencyPair=EURUSD&direction=LONG
+
+### Globale Statistiken abrufen
+GET http://localhost:8081/api/trades/stats
+
+### Statistiken nur für EURUSD abrufen
+GET http://localhost:8081/api/trades/stats?currencyPair=EURUSD
+
+### Trade mit Multi-Timeframe Charts & SMC Confirmations anlegen
+POST http://localhost:8081/api/trades
+Content-Type: application/json
+
+{
+  "currencyPair": "EURUSD",
+  "direction": "LONG",
+  "entryPrice": 1.0850,
+  "stopLoss": 1.0835,
+  "entryTime": "2026-08-14T10:00:00",
+  "notes": "H4 Liquidity Sweep + M15 Choch + M5 FVG Entry",
+  "imageUrl1": "https://www.tradingview.com/x/tNPxD3Ip/",
+  "imageUrl2": "https://www.tradingview.com/x/Fq0F4oRH/",
+  "imageUrl3": "https://www.tradingview.com/x/JKez75Jv/"
+}
+</file>
+
+<file path="src/main/resources/db/migration/V1__init_schema.sql">
+CREATE TABLE IF NOT EXISTS trades (
+    id BIGSERIAL PRIMARY KEY,
+    currency_pair VARCHAR(20) NOT NULL,
+    entry_price NUMERIC(19, 4) NOT NULL,
+    stop_loss NUMERIC(19, 4),
+    exit_price NUMERIC(19, 4),
+    direction VARCHAR(20),
+    entry_time TIMESTAMP,
+    notes VARCHAR(1000),
+    outcome NUMERIC(19, 4),
+    initial_rr NUMERIC(19, 4),
+    image_url1 VARCHAR(500),
+    image_url2 VARCHAR(500),
+    image_url3 VARCHAR(500),
+    final_rr NUMERIC(19, 4)
+);
+</file>
+
+<file path="src/main/resources/db/migration/V2__add_trade_date_time_and_images.sql">
+ALTER TABLE trades ADD COLUMN IF NOT EXISTS trade_date_time TIMESTAMP;
+ALTER TABLE trades ADD COLUMN IF NOT EXISTS image_url1 VARCHAR(255);
+ALTER TABLE trades ADD COLUMN IF NOT EXISTS image_url2 VARCHAR(255);
+ALTER TABLE trades ADD COLUMN IF NOT EXISTS image_url3 VARCHAR(255);
+</file>
+
+<file path="src/main/resources/db/migration/V3__change_images_and_notes_to_text.sql">
+ALTER TABLE trades ALTER COLUMN image_url1 TYPE TEXT;
+ALTER TABLE trades ALTER COLUMN image_url2 TYPE TEXT;
+ALTER TABLE trades ALTER COLUMN image_url3 TYPE TEXT;
+ALTER TABLE trades ALTER COLUMN notes TYPE TEXT;
+</file>
+
+<file path="src/main/resources/application.properties">
+spring.application.name=journal
+
+# Datenbank-Verbindung
+spring.datasource.url=jdbc:postgresql://localhost:5432/trading_journal
+spring.datasource.username=postgres
+spring.datasource.password=Nicht.vergessen15
+
+# JPA / Hibernate Einstellungen
+spring.jpa.hibernate.ddl-auto=validate  
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+
+server.port=8081
+
+spring.flyway.enabled=true
+spring.flyway.locations=classpath:db/migration
+</file>
+
+<file path="src/test/java/com/trading/journal/model/TradeTest.java">
+package com.trading.journal.model;
+
+import org.junit.jupiter.api.DisplayName;
+import org.junit.jupiter.api.Test;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+import java.math.BigDecimal;
+
+class TradeTest {
+
+    @Test
+    @DisplayName("Sollte das Final RR für einen erfolgreichen LONG-Trade korrekt berechnen")
+    void shouldCalculateFinalRRForLongTrade() {
+        // Arrange
+        Trade trade = new Trade();
+        trade.setDirection(Direction.LONG);
+        trade.setEntryPrice(new BigDecimal("100.00"));
+        trade.setStopLoss(new BigDecimal("90.00")); // Risiko: 10
+        trade.setExitPrice(new BigDecimal("130.00")); // Gewinnen: 30
+
+        // Act
+        BigDecimal finalRR = trade.calculateFinalRR();
+
+        // Assert: 30 / 10 = 3.00 (CRV von 3)
+        assertEquals(new BigDecimal("3.00"), finalRR);
+    }
+
+    @Test
+    @DisplayName("Sollte das Final RR für einen erfolgreichen SHORT-Trade korrekt berechnen")
+    void shouldCalculateFinalRRForShortTrade() {
+        // Arrange
+        Trade trade = new Trade();
+        trade.setDirection(Direction.SHORT);
+        trade.setEntryPrice(new BigDecimal("100.00"));
+        trade.setStopLoss(new BigDecimal("110.00")); // Risiko: 10
+        trade.setExitPrice(new BigDecimal("70.00")); // Gewinnen: 30
+
+        // Act
+        BigDecimal finalRR = trade.calculateFinalRR();
+
+        // Assert: 30 / 10 = 3.00
+        assertEquals(new BigDecimal("3.00"), finalRR);
+    }
+}
+</file>
+
+<file path="src/test/java/com/trading/journal/JournalApplicationTests.java">
+package com.trading.journal;
+
+import org.junit.jupiter.api.Test;
+import org.springframework.boot.test.context.SpringBootTest;
+
+@SpringBootTest
+class JournalApplicationTests {
+
+	@Test
+	void contextLoads() {
+	}
+
+}
+</file>
+
+<file path=".gitattributes">
+/mvnw text eol=lf
+*.cmd text eol=crlf
+</file>
+
+<file path=".gitignore">
+HELP.md
+target/
+.mvn/wrapper/maven-wrapper.jar
+!**/src/main/**/target/
+!**/src/test/**/target/
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/
+</file>
+
+<file path="docker-compose.yml">
+services:
+  db:
+    image: postgres:16-alpine
+    container_name: trading-db
+    environment:
+      POSTGRES_DB: trading_journal
+      POSTGRES_USER: user
+      POSTGRES_PASSWORD: password
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  app:
+    build: .
+    container_name: trading-app
+    ports:
+      - "8081:8081"
+    environment:
+      SERVER_PORT: 8081
+      SPRING_DATASOURCE_URL: jdbc:postgresql://db:5432/trading_journal
+      SPRING_DATASOURCE_USERNAME: user
+      SPRING_DATASOURCE_PASSWORD: password
+      SPRING_JPA_HIBERNATE_DDL_AUTO: validate
+      SPRING_FLYWAY_ENABLED: "true"
+      SPRING_FLYWAY_BASELINE_ON_MIGRATE: "true"
+    depends_on:
+      - db
+
+volumes:
+  postgres_data:
+</file>
+
+<file path="Dockerfile">
+# Build Stage
+FROM maven:3.9-eclipse-temurin-21 AS build
+WORKDIR /app
+COPY . .
+RUN mvn clean package -DskipTests
+
+# Run Stage
+FROM eclipse-temurin:21-jre-jammy
+WORKDIR /app
+COPY --from=build /app/target/*.jar app.jar
+EXPOSE 8080
+ENTRYPOINT ["java", "-jar", "app.jar"]
+</file>
+
+<file path="mvnw">
+#!/bin/sh
+# ----------------------------------------------------------------------------
+# Licensed to the Apache Software Foundation (ASF) under one
+# or more contributor license agreements.  See the NOTICE file
+# distributed with this work for additional information
+# regarding copyright ownership.  The ASF licenses this file
+# to you under the Apache License, Version 2.0 (the
+# "License"); you may not use this file except in compliance
+# with the License.  You may obtain a copy of the License at
+#
+#    http://www.apache.org/licenses/LICENSE-2.0
+#
+# Unless required by applicable law or agreed to in writing,
+# software distributed under the License is distributed on an
+# "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+# KIND, either express or implied.  See the License for the
+# specific language governing permissions and limitations
+# under the License.
+# ----------------------------------------------------------------------------
+
+# ----------------------------------------------------------------------------
+# Apache Maven Wrapper startup batch script, version 3.3.4
+#
+# Optional ENV vars
+# -----------------
+#   JAVA_HOME - location of a JDK home dir, required when download maven via java source
+#   MVNW_REPOURL - repo url base for downloading maven distribution
+#   MVNW_USERNAME/MVNW_PASSWORD - user and password for downloading maven
+#   MVNW_VERBOSE - true: enable verbose log; debug: trace the mvnw script; others: silence the output
+# ----------------------------------------------------------------------------
+
+set -euf
+[ "${MVNW_VERBOSE-}" != debug ] || set -x
+
+# OS specific support.
+native_path() { printf %s\\n "$1"; }
+case "$(uname)" in
+CYGWIN* | MINGW*)
+  [ -z "${JAVA_HOME-}" ] || JAVA_HOME="$(cygpath --unix "$JAVA_HOME")"
+  native_path() { cygpath --path --windows "$1"; }
+  ;;
+esac
+
+# set JAVACMD and JAVACCMD
+set_java_home() {
+  # For Cygwin and MinGW, ensure paths are in Unix format before anything is touched
+  if [ -n "${JAVA_HOME-}" ]; then
+    if [ -x "$JAVA_HOME/jre/sh/java" ]; then
+      # IBM's JDK on AIX uses strange locations for the executables
+      JAVACMD="$JAVA_HOME/jre/sh/java"
+      JAVACCMD="$JAVA_HOME/jre/sh/javac"
+    else
+      JAVACMD="$JAVA_HOME/bin/java"
+      JAVACCMD="$JAVA_HOME/bin/javac"
+
+      if [ ! -x "$JAVACMD" ] || [ ! -x "$JAVACCMD" ]; then
+        echo "The JAVA_HOME environment variable is not defined correctly, so mvnw cannot run." >&2
+        echo "JAVA_HOME is set to \"$JAVA_HOME\", but \"\$JAVA_HOME/bin/java\" or \"\$JAVA_HOME/bin/javac\" does not exist." >&2
+        return 1
+      fi
+    fi
+  else
+    JAVACMD="$(
+      'set' +e
+      'unset' -f command 2>/dev/null
+      'command' -v java
+    )" || :
+    JAVACCMD="$(
+      'set' +e
+      'unset' -f command 2>/dev/null
+      'command' -v javac
+    )" || :
+
+    if [ ! -x "${JAVACMD-}" ] || [ ! -x "${JAVACCMD-}" ]; then
+      echo "The java/javac command does not exist in PATH nor is JAVA_HOME set, so mvnw cannot run." >&2
+      return 1
+    fi
+  fi
+}
+
+# hash string like Java String::hashCode
+hash_string() {
+  str="${1:-}" h=0
+  while [ -n "$str" ]; do
+    char="${str%"${str#?}"}"
+    h=$(((h * 31 + $(LC_CTYPE=C printf %d "'$char")) % 4294967296))
+    str="${str#?}"
+  done
+  printf %x\\n $h
+}
+
+verbose() { :; }
+[ "${MVNW_VERBOSE-}" != true ] || verbose() { printf %s\\n "${1-}"; }
+
+die() {
+  printf %s\\n "$1" >&2
+  exit 1
+}
+
+trim() {
+  # MWRAPPER-139:
+  #   Trims trailing and leading whitespace, carriage returns, tabs, and linefeeds.
+  #   Needed for removing poorly interpreted newline sequences when running in more
+  #   exotic environments such as mingw bash on Windows.
+  printf "%s" "${1}" | tr -d '[:space:]'
+}
+
+scriptDir="$(dirname "$0")"
+scriptName="$(basename "$0")"
+
+# parse distributionUrl and optional distributionSha256Sum, requires .mvn/wrapper/maven-wrapper.properties
+while IFS="=" read -r key value; do
+  case "${key-}" in
+  distributionUrl) distributionUrl=$(trim "${value-}") ;;
+  distributionSha256Sum) distributionSha256Sum=$(trim "${value-}") ;;
+  esac
+done <"$scriptDir/.mvn/wrapper/maven-wrapper.properties"
+[ -n "${distributionUrl-}" ] || die "cannot read distributionUrl property in $scriptDir/.mvn/wrapper/maven-wrapper.properties"
+
+case "${distributionUrl##*/}" in
+maven-mvnd-*bin.*)
+  MVN_CMD=mvnd.sh _MVNW_REPO_PATTERN=/maven/mvnd/
+  case "${PROCESSOR_ARCHITECTURE-}${PROCESSOR_ARCHITEW6432-}:$(uname -a)" in
+  *AMD64:CYGWIN* | *AMD64:MINGW*) distributionPlatform=windows-amd64 ;;
+  :Darwin*x86_64) distributionPlatform=darwin-amd64 ;;
+  :Darwin*arm64) distributionPlatform=darwin-aarch64 ;;
+  :Linux*x86_64*) distributionPlatform=linux-amd64 ;;
+  *)
+    echo "Cannot detect native platform for mvnd on $(uname)-$(uname -m), use pure java version" >&2
+    distributionPlatform=linux-amd64
+    ;;
+  esac
+  distributionUrl="${distributionUrl%-bin.*}-$distributionPlatform.zip"
+  ;;
+maven-mvnd-*) MVN_CMD=mvnd.sh _MVNW_REPO_PATTERN=/maven/mvnd/ ;;
+*) MVN_CMD="mvn${scriptName#mvnw}" _MVNW_REPO_PATTERN=/org/apache/maven/ ;;
+esac
+
+# apply MVNW_REPOURL and calculate MAVEN_HOME
+# maven home pattern: ~/.m2/wrapper/dists/{apache-maven-<version>,maven-mvnd-<version>-<platform>}/<hash>
+[ -z "${MVNW_REPOURL-}" ] || distributionUrl="$MVNW_REPOURL$_MVNW_REPO_PATTERN${distributionUrl#*"$_MVNW_REPO_PATTERN"}"
+distributionUrlName="${distributionUrl##*/}"
+distributionUrlNameMain="${distributionUrlName%.*}"
+distributionUrlNameMain="${distributionUrlNameMain%-bin}"
+MAVEN_USER_HOME="${MAVEN_USER_HOME:-${HOME}/.m2}"
+MAVEN_HOME="${MAVEN_USER_HOME}/wrapper/dists/${distributionUrlNameMain-}/$(hash_string "$distributionUrl")"
+
+exec_maven() {
+  unset MVNW_VERBOSE MVNW_USERNAME MVNW_PASSWORD MVNW_REPOURL || :
+  exec "$MAVEN_HOME/bin/$MVN_CMD" "$@" || die "cannot exec $MAVEN_HOME/bin/$MVN_CMD"
+}
+
+if [ -d "$MAVEN_HOME" ]; then
+  verbose "found existing MAVEN_HOME at $MAVEN_HOME"
+  exec_maven "$@"
+fi
+
+case "${distributionUrl-}" in
+*?-bin.zip | *?maven-mvnd-?*-?*.zip) ;;
+*) die "distributionUrl is not valid, must match *-bin.zip or maven-mvnd-*.zip, but found '${distributionUrl-}'" ;;
+esac
+
+# prepare tmp dir
+if TMP_DOWNLOAD_DIR="$(mktemp -d)" && [ -d "$TMP_DOWNLOAD_DIR" ]; then
+  clean() { rm -rf -- "$TMP_DOWNLOAD_DIR"; }
+  trap clean HUP INT TERM EXIT
+else
+  die "cannot create temp dir"
+fi
+
+mkdir -p -- "${MAVEN_HOME%/*}"
+
+# Download and Install Apache Maven
+verbose "Couldn't find MAVEN_HOME, downloading and installing it ..."
+verbose "Downloading from: $distributionUrl"
+verbose "Downloading to: $TMP_DOWNLOAD_DIR/$distributionUrlName"
+
+# select .zip or .tar.gz
+if ! command -v unzip >/dev/null; then
+  distributionUrl="${distributionUrl%.zip}.tar.gz"
+  distributionUrlName="${distributionUrl##*/}"
+fi
+
+# verbose opt
+__MVNW_QUIET_WGET=--quiet __MVNW_QUIET_CURL=--silent __MVNW_QUIET_UNZIP=-q __MVNW_QUIET_TAR=''
+[ "${MVNW_VERBOSE-}" != true ] || __MVNW_QUIET_WGET='' __MVNW_QUIET_CURL='' __MVNW_QUIET_UNZIP='' __MVNW_QUIET_TAR=v
+
+# normalize http auth
+case "${MVNW_PASSWORD:+has-password}" in
+'') MVNW_USERNAME='' MVNW_PASSWORD='' ;;
+has-password) [ -n "${MVNW_USERNAME-}" ] || MVNW_USERNAME='' MVNW_PASSWORD='' ;;
+esac
+
+if [ -z "${MVNW_USERNAME-}" ] && command -v wget >/dev/null; then
+  verbose "Found wget ... using wget"
+  wget ${__MVNW_QUIET_WGET:+"$__MVNW_QUIET_WGET"} "$distributionUrl" -O "$TMP_DOWNLOAD_DIR/$distributionUrlName" || die "wget: Failed to fetch $distributionUrl"
+elif [ -z "${MVNW_USERNAME-}" ] && command -v curl >/dev/null; then
+  verbose "Found curl ... using curl"
+  curl ${__MVNW_QUIET_CURL:+"$__MVNW_QUIET_CURL"} -f -L -o "$TMP_DOWNLOAD_DIR/$distributionUrlName" "$distributionUrl" || die "curl: Failed to fetch $distributionUrl"
+elif set_java_home; then
+  verbose "Falling back to use Java to download"
+  javaSource="$TMP_DOWNLOAD_DIR/Downloader.java"
+  targetZip="$TMP_DOWNLOAD_DIR/$distributionUrlName"
+  cat >"$javaSource" <<-END
+	public class Downloader extends java.net.Authenticator
+	{
+	  protected java.net.PasswordAuthentication getPasswordAuthentication()
+	  {
+	    return new java.net.PasswordAuthentication( System.getenv( "MVNW_USERNAME" ), System.getenv( "MVNW_PASSWORD" ).toCharArray() );
+	  }
+	  public static void main( String[] args ) throws Exception
+	  {
+	    setDefault( new Downloader() );
+	    java.nio.file.Files.copy( java.net.URI.create( args[0] ).toURL().openStream(), java.nio.file.Paths.get( args[1] ).toAbsolutePath().normalize() );
+	  }
+	}
+	END
+  # For Cygwin/MinGW, switch paths to Windows format before running javac and java
+  verbose " - Compiling Downloader.java ..."
+  "$(native_path "$JAVACCMD")" "$(native_path "$javaSource")" || die "Failed to compile Downloader.java"
+  verbose " - Running Downloader.java ..."
+  "$(native_path "$JAVACMD")" -cp "$(native_path "$TMP_DOWNLOAD_DIR")" Downloader "$distributionUrl" "$(native_path "$targetZip")"
+fi
+
+# If specified, validate the SHA-256 sum of the Maven distribution zip file
+if [ -n "${distributionSha256Sum-}" ]; then
+  distributionSha256Result=false
+  if [ "$MVN_CMD" = mvnd.sh ]; then
+    echo "Checksum validation is not supported for maven-mvnd." >&2
+    echo "Please disable validation by removing 'distributionSha256Sum' from your maven-wrapper.properties." >&2
+    exit 1
+  elif command -v sha256sum >/dev/null; then
+    if echo "$distributionSha256Sum  $TMP_DOWNLOAD_DIR/$distributionUrlName" | sha256sum -c - >/dev/null 2>&1; then
+      distributionSha256Result=true
+    fi
+  elif command -v shasum >/dev/null; then
+    if echo "$distributionSha256Sum  $TMP_DOWNLOAD_DIR/$distributionUrlName" | shasum -a 256 -c >/dev/null 2>&1; then
+      distributionSha256Result=true
+    fi
+  else
+    echo "Checksum validation was requested but neither 'sha256sum' or 'shasum' are available." >&2
+    echo "Please install either command, or disable validation by removing 'distributionSha256Sum' from your maven-wrapper.properties." >&2
+    exit 1
+  fi
+  if [ $distributionSha256Result = false ]; then
+    echo "Error: Failed to validate Maven distribution SHA-256, your Maven distribution might be compromised." >&2
+    echo "If you updated your Maven version, you need to update the specified distributionSha256Sum property." >&2
+    exit 1
+  fi
+fi
+
+# unzip and move
+if command -v unzip >/dev/null; then
+  unzip ${__MVNW_QUIET_UNZIP:+"$__MVNW_QUIET_UNZIP"} "$TMP_DOWNLOAD_DIR/$distributionUrlName" -d "$TMP_DOWNLOAD_DIR" || die "failed to unzip"
+else
+  tar xzf${__MVNW_QUIET_TAR:+"$__MVNW_QUIET_TAR"} "$TMP_DOWNLOAD_DIR/$distributionUrlName" -C "$TMP_DOWNLOAD_DIR" || die "failed to untar"
+fi
+
+# Find the actual extracted directory name (handles snapshots where filename != directory name)
+actualDistributionDir=""
+
+# First try the expected directory name (for regular distributions)
+if [ -d "$TMP_DOWNLOAD_DIR/$distributionUrlNameMain" ]; then
+  if [ -f "$TMP_DOWNLOAD_DIR/$distributionUrlNameMain/bin/$MVN_CMD" ]; then
+    actualDistributionDir="$distributionUrlNameMain"
+  fi
+fi
+
+# If not found, search for any directory with the Maven executable (for snapshots)
+if [ -z "$actualDistributionDir" ]; then
+  # enable globbing to iterate over items
+  set +f
+  for dir in "$TMP_DOWNLOAD_DIR"/*; do
+    if [ -d "$dir" ]; then
+      if [ -f "$dir/bin/$MVN_CMD" ]; then
+        actualDistributionDir="$(basename "$dir")"
+        break
+      fi
+    fi
+  done
+  set -f
+fi
+
+if [ -z "$actualDistributionDir" ]; then
+  verbose "Contents of $TMP_DOWNLOAD_DIR:"
+  verbose "$(ls -la "$TMP_DOWNLOAD_DIR")"
+  die "Could not find Maven distribution directory in extracted archive"
+fi
+
+verbose "Found extracted Maven distribution directory: $actualDistributionDir"
+printf %s\\n "$distributionUrl" >"$TMP_DOWNLOAD_DIR/$actualDistributionDir/mvnw.url"
+mv -- "$TMP_DOWNLOAD_DIR/$actualDistributionDir" "$MAVEN_HOME" || [ -d "$MAVEN_HOME" ] || die "fail to move MAVEN_HOME"
+
+clean || :
+exec_maven "$@"
+</file>
+
+<file path="mvnw.cmd">
+<# : batch portion
+@REM ----------------------------------------------------------------------------
+@REM Licensed to the Apache Software Foundation (ASF) under one
+@REM or more contributor license agreements.  See the NOTICE file
+@REM distributed with this work for additional information
+@REM regarding copyright ownership.  The ASF licenses this file
+@REM to you under the Apache License, Version 2.0 (the
+@REM "License"); you may not use this file except in compliance
+@REM with the License.  You may obtain a copy of the License at
+@REM
+@REM    http://www.apache.org/licenses/LICENSE-2.0
+@REM
+@REM Unless required by applicable law or agreed to in writing,
+@REM software distributed under the License is distributed on an
+@REM "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+@REM KIND, either express or implied.  See the License for the
+@REM specific language governing permissions and limitations
+@REM under the License.
+@REM ----------------------------------------------------------------------------
+
+@REM ----------------------------------------------------------------------------
+@REM Apache Maven Wrapper startup batch script, version 3.3.4
+@REM
+@REM Optional ENV vars
+@REM   MVNW_REPOURL - repo url base for downloading maven distribution
+@REM   MVNW_USERNAME/MVNW_PASSWORD - user and password for downloading maven
+@REM   MVNW_VERBOSE - true: enable verbose log; others: silence the output
+@REM ----------------------------------------------------------------------------
+
+@IF "%__MVNW_ARG0_NAME__%"=="" (SET __MVNW_ARG0_NAME__=%~nx0)
+@SET __MVNW_CMD__=
+@SET __MVNW_ERROR__=
+@SET __MVNW_PSMODULEP_SAVE=%PSModulePath%
+@SET PSModulePath=
+@FOR /F "usebackq tokens=1* delims==" %%A IN (`powershell -noprofile "& {$scriptDir='%~dp0'; $script='%__MVNW_ARG0_NAME__%'; icm -ScriptBlock ([Scriptblock]::Create((Get-Content -Raw '%~f0'))) -NoNewScope}"`) DO @(
+  IF "%%A"=="MVN_CMD" (set __MVNW_CMD__=%%B) ELSE IF "%%B"=="" (echo %%A) ELSE (echo %%A=%%B)
+)
+@SET PSModulePath=%__MVNW_PSMODULEP_SAVE%
+@SET __MVNW_PSMODULEP_SAVE=
+@SET __MVNW_ARG0_NAME__=
+@SET MVNW_USERNAME=
+@SET MVNW_PASSWORD=
+@IF NOT "%__MVNW_CMD__%"=="" ("%__MVNW_CMD__%" %*)
+@echo Cannot start maven from wrapper >&2 && exit /b 1
+@GOTO :EOF
+: end batch / begin powershell #>
+
+$ErrorActionPreference = "Stop"
+if ($env:MVNW_VERBOSE -eq "true") {
+  $VerbosePreference = "Continue"
+}
+
+# calculate distributionUrl, requires .mvn/wrapper/maven-wrapper.properties
+$distributionUrl = (Get-Content -Raw "$scriptDir/.mvn/wrapper/maven-wrapper.properties" | ConvertFrom-StringData).distributionUrl
+if (!$distributionUrl) {
+  Write-Error "cannot read distributionUrl property in $scriptDir/.mvn/wrapper/maven-wrapper.properties"
+}
+
+switch -wildcard -casesensitive ( $($distributionUrl -replace '^.*/','') ) {
+  "maven-mvnd-*" {
+    $USE_MVND = $true
+    $distributionUrl = $distributionUrl -replace '-bin\.[^.]*$',"-windows-amd64.zip"
+    $MVN_CMD = "mvnd.cmd"
+    break
+  }
+  default {
+    $USE_MVND = $false
+    $MVN_CMD = $script -replace '^mvnw','mvn'
+    break
+  }
+}
+
+# apply MVNW_REPOURL and calculate MAVEN_HOME
+# maven home pattern: ~/.m2/wrapper/dists/{apache-maven-<version>,maven-mvnd-<version>-<platform>}/<hash>
+if ($env:MVNW_REPOURL) {
+  $MVNW_REPO_PATTERN = if ($USE_MVND -eq $False) { "/org/apache/maven/" } else { "/maven/mvnd/" }
+  $distributionUrl = "$env:MVNW_REPOURL$MVNW_REPO_PATTERN$($distributionUrl -replace "^.*$MVNW_REPO_PATTERN",'')"
+}
+$distributionUrlName = $distributionUrl -replace '^.*/',''
+$distributionUrlNameMain = $distributionUrlName -replace '\.[^.]*$','' -replace '-bin$',''
+
+$MAVEN_M2_PATH = "$HOME/.m2"
+if ($env:MAVEN_USER_HOME) {
+  $MAVEN_M2_PATH = "$env:MAVEN_USER_HOME"
+}
+
+if (-not (Test-Path -Path $MAVEN_M2_PATH)) {
+    New-Item -Path $MAVEN_M2_PATH -ItemType Directory | Out-Null
+}
+
+$MAVEN_WRAPPER_DISTS = $null
+if ((Get-Item $MAVEN_M2_PATH).Target[0] -eq $null) {
+  $MAVEN_WRAPPER_DISTS = "$MAVEN_M2_PATH/wrapper/dists"
+} else {
+  $MAVEN_WRAPPER_DISTS = (Get-Item $MAVEN_M2_PATH).Target[0] + "/wrapper/dists"
+}
+
+$MAVEN_HOME_PARENT = "$MAVEN_WRAPPER_DISTS/$distributionUrlNameMain"
+$MAVEN_HOME_NAME = ([System.Security.Cryptography.SHA256]::Create().ComputeHash([byte[]][char[]]$distributionUrl) | ForEach-Object {$_.ToString("x2")}) -join ''
+$MAVEN_HOME = "$MAVEN_HOME_PARENT/$MAVEN_HOME_NAME"
+
+if (Test-Path -Path "$MAVEN_HOME" -PathType Container) {
+  Write-Verbose "found existing MAVEN_HOME at $MAVEN_HOME"
+  Write-Output "MVN_CMD=$MAVEN_HOME/bin/$MVN_CMD"
+  exit $?
+}
+
+if (! $distributionUrlNameMain -or ($distributionUrlName -eq $distributionUrlNameMain)) {
+  Write-Error "distributionUrl is not valid, must end with *-bin.zip, but found $distributionUrl"
+}
+
+# prepare tmp dir
+$TMP_DOWNLOAD_DIR_HOLDER = New-TemporaryFile
+$TMP_DOWNLOAD_DIR = New-Item -Itemtype Directory -Path "$TMP_DOWNLOAD_DIR_HOLDER.dir"
+$TMP_DOWNLOAD_DIR_HOLDER.Delete() | Out-Null
+trap {
+  if ($TMP_DOWNLOAD_DIR.Exists) {
+    try { Remove-Item $TMP_DOWNLOAD_DIR -Recurse -Force | Out-Null }
+    catch { Write-Warning "Cannot remove $TMP_DOWNLOAD_DIR" }
+  }
+}
+
+New-Item -Itemtype Directory -Path "$MAVEN_HOME_PARENT" -Force | Out-Null
+
+# Download and Install Apache Maven
+Write-Verbose "Couldn't find MAVEN_HOME, downloading and installing it ..."
+Write-Verbose "Downloading from: $distributionUrl"
+Write-Verbose "Downloading to: $TMP_DOWNLOAD_DIR/$distributionUrlName"
+
+$webclient = New-Object System.Net.WebClient
+if ($env:MVNW_USERNAME -and $env:MVNW_PASSWORD) {
+  $webclient.Credentials = New-Object System.Net.NetworkCredential($env:MVNW_USERNAME, $env:MVNW_PASSWORD)
+}
+[Net.ServicePointManager]::SecurityProtocol = [Net.SecurityProtocolType]::Tls12
+$webclient.DownloadFile($distributionUrl, "$TMP_DOWNLOAD_DIR/$distributionUrlName") | Out-Null
+
+# If specified, validate the SHA-256 sum of the Maven distribution zip file
+$distributionSha256Sum = (Get-Content -Raw "$scriptDir/.mvn/wrapper/maven-wrapper.properties" | ConvertFrom-StringData).distributionSha256Sum
+if ($distributionSha256Sum) {
+  if ($USE_MVND) {
+    Write-Error "Checksum validation is not supported for maven-mvnd. `nPlease disable validation by removing 'distributionSha256Sum' from your maven-wrapper.properties."
+  }
+  Import-Module $PSHOME\Modules\Microsoft.PowerShell.Utility -Function Get-FileHash
+  if ((Get-FileHash "$TMP_DOWNLOAD_DIR/$distributionUrlName" -Algorithm SHA256).Hash.ToLower() -ne $distributionSha256Sum) {
+    Write-Error "Error: Failed to validate Maven distribution SHA-256, your Maven distribution might be compromised. If you updated your Maven version, you need to update the specified distributionSha256Sum property."
+  }
+}
+
+# unzip and move
+Expand-Archive "$TMP_DOWNLOAD_DIR/$distributionUrlName" -DestinationPath "$TMP_DOWNLOAD_DIR" | Out-Null
+
+# Find the actual extracted directory name (handles snapshots where filename != directory name)
+$actualDistributionDir = ""
+
+# First try the expected directory name (for regular distributions)
+$expectedPath = Join-Path "$TMP_DOWNLOAD_DIR" "$distributionUrlNameMain"
+$expectedMvnPath = Join-Path "$expectedPath" "bin/$MVN_CMD"
+if ((Test-Path -Path $expectedPath -PathType Container) -and (Test-Path -Path $expectedMvnPath -PathType Leaf)) {
+  $actualDistributionDir = $distributionUrlNameMain
+}
+
+# If not found, search for any directory with the Maven executable (for snapshots)
+if (!$actualDistributionDir) {
+  Get-ChildItem -Path "$TMP_DOWNLOAD_DIR" -Directory | ForEach-Object {
+    $testPath = Join-Path $_.FullName "bin/$MVN_CMD"
+    if (Test-Path -Path $testPath -PathType Leaf) {
+      $actualDistributionDir = $_.Name
+    }
+  }
+}
+
+if (!$actualDistributionDir) {
+  Write-Error "Could not find Maven distribution directory in extracted archive"
+}
+
+Write-Verbose "Found extracted Maven distribution directory: $actualDistributionDir"
+Rename-Item -Path "$TMP_DOWNLOAD_DIR/$actualDistributionDir" -NewName $MAVEN_HOME_NAME | Out-Null
+try {
+  Move-Item -Path "$TMP_DOWNLOAD_DIR/$MAVEN_HOME_NAME" -Destination $MAVEN_HOME_PARENT | Out-Null
+} catch {
+  if (! (Test-Path -Path "$MAVEN_HOME" -PathType Container)) {
+    Write-Error "fail to move MAVEN_HOME"
+  }
+} finally {
+  try { Remove-Item $TMP_DOWNLOAD_DIR -Recurse -Force | Out-Null }
+  catch { Write-Warning "Cannot remove $TMP_DOWNLOAD_DIR" }
+}
+
+Write-Output "MVN_CMD=$MAVEN_HOME/bin/$MVN_CMD"
+</file>
+
+<file path="pom.xml">
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<groupId>org.springframework.boot</groupId>
+		<artifactId>spring-boot-starter-parent</artifactId>
+		<version>4.0.7</version>
+		<relativePath/> <!-- lookup parent from repository -->
+	</parent>
+	<groupId>com.trading</groupId>
+	<artifactId>journal</artifactId>
+	<version>0.0.1-SNAPSHOT</version>
+	<name/>
+	<description/>
+	<url/>
+	<licenses>
+		<license/>
+	</licenses>
+	<developers>
+		<developer/>
+	</developers>
+	<scm>
+		<connection/>
+		<developerConnection/>
+		<tag/>
+		<url/>
+	</scm>
+	<properties>
+		<java.version>21</java.version>
+	</properties>
+	<dependencies>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webmvc</artifactId>
+		</dependency>
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-validation</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.postgresql</groupId>
+			<artifactId>postgresql</artifactId>
+			<scope>runtime</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-data-jpa-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-webmvc-test</artifactId>
+			<scope>test</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.springdoc</groupId>
+			<artifactId>springdoc-openapi-starter-webmvc-ui</artifactId>
+			<version>2.8.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.springframework.boot</groupId>
+			<artifactId>spring-boot-starter-test</artifactId>
+			<scope>test</scope>
+		</dependency>	
+		<dependency>
+    		<groupId>org.springframework.boot</groupId>
+    		<artifactId>spring-boot-starter-flyway</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>org.flywaydb</groupId>
+			<artifactId>flyway-database-postgresql</artifactId>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<groupId>org.springframework.boot</groupId>
+				<artifactId>spring-boot-maven-plugin</artifactId>
+			</plugin>
+		</plugins>
+	</build>
+
+</project>
+</file>
+
+<file path="src/main/java/com/trading/journal/controller/TradeController.java">
+package com.trading.journal.controller;
+
+import com.trading.journal.dto.TradeStatsDto;
+import com.trading.journal.model.Trade;
+import com.trading.journal.service.TradeService;
+
+import org.springframework.format.annotation.DateTimeFormat;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
+import org.springframework.data.web.PageableDefault;
+import org.springframework.http.HttpStatus;
+
+import java.util.List;
+import java.math.BigDecimal;
+import java.time.LocalDateTime;
+import jakarta.validation.Valid;
+
+@RestController
+@RequestMapping("/api/trades")
+@CrossOrigin(origins = "*")
+public class TradeController {
+
+    private final TradeService tradeService;
+
+    public TradeController(TradeService tradeService) {
+        this.tradeService = tradeService;
+    }
+
+    @PostMapping
+    public ResponseEntity<Trade> createTrade(@Valid @RequestBody Trade trade) {
+        Trade savedTrade = tradeService.saveTrade(trade);
+        return ResponseEntity.status(HttpStatus.CREATED).body(savedTrade);
+    }
+
+    @GetMapping
+    public List<Trade> getAllTrades() {
+        return tradeService.getAllTrades(); // bzw. tradeRepository.findAll();
+    }
+
+    @PatchMapping("/{id}/close")
+    public ResponseEntity<Trade> closeTrade(@PathVariable Long id, @RequestParam BigDecimal exitPrice) {
+        return ResponseEntity.ok(tradeService.closeTrade(id, exitPrice));
+    }
+
+    @GetMapping("/stats")
+    public ResponseEntity<TradeStatsDto> getStats() {
+        return ResponseEntity.ok(tradeService.calculateStats());
+    }
+
+    // Trade löschen
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deleteTrade(@PathVariable Long id) {
+        tradeService.deleteTrade(id);
+        return ResponseEntity.noContent().build();
+    }
+
+    // Trade aktualisieren (z.B. Exit-Preis nachtragen)
+    @PutMapping("/{id}")
+    public ResponseEntity<Trade> updateTrade(@PathVariable Long id, @Valid @RequestBody Trade dto) {
+        return ResponseEntity.ok(tradeService.updateTrade(id, dto));
+    }
+}
+</file>
+
+<file path="src/main/java/com/trading/journal/model/Trade.java">
+package com.trading.journal.model;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDateTime;
+
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+import jakarta.persistence.Table;
+import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
+
+@Entity
+@Table(name = "trades")
+public class Trade {
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+    @NotBlank(message = "Währungspaar darf nicht leer sein.")
+    private String currencyPair;
+    @NotNull(message = "Entry-Preis ist erforderlich.")
+    @Positive(message = "Entry-Preis muss positiv sein.")
+    private BigDecimal entryPrice;
+    @NotNull(message = "Stop-Loss ist erforderlich.")
+    @Positive(message = "Stop-Loss muss positiv sein.")
+    private BigDecimal stopLoss;
+    @Positive(message = "Exit-Preis muss positiv sein.")
+    private BigDecimal exitPrice;
+    @Enumerated(EnumType.STRING)
+    @NotNull(message = "Direction (LONG/SHORT) ist erforderlich.")
+    private Direction direction;
+    private LocalDateTime entryTime;
+    @Column(columnDefinition = "TEXT")
+    private String notes;
+    private BigDecimal outcome;
+    @Column(name = "initial_rr")
+    private BigDecimal initialRR;
+    @Column(name = "final_rr")
+    private BigDecimal finalRR;
+    @Column(columnDefinition = "TEXT")
+    private String imageUrl1;
+    @Column(columnDefinition = "TEXT")
+    private String imageUrl2;
+    @Column(columnDefinition = "TEXT")
+    private String imageUrl3;
+    private LocalDateTime tradeDateTime;
+
+    public Trade(String currencyPair, BigDecimal entryPrice, BigDecimal stopLoss, BigDecimal exitPrice,
+            Direction direction, LocalDateTime entryTime, String notes, BigDecimal outcome, BigDecimal initialRR,
+            String imageUrl1, String imageUrl2, String imageUrl3) {
+        this.currencyPair = currencyPair;
+        this.entryPrice = entryPrice;
+        this.stopLoss = stopLoss;
+        this.exitPrice = exitPrice;
+        this.direction = direction;
+        this.entryTime = entryTime;
+        this.notes = notes;
+        this.outcome = outcome;
+        this.initialRR = initialRR;
+        this.imageUrl1 = imageUrl1;
+        this.imageUrl2 = imageUrl2;
+        this.imageUrl3 = imageUrl3;
+        this.finalRR = BigDecimal.ZERO;
+    }
+
+    public Trade() {
+    }
+
+    public BigDecimal calculateFinalRR() { // noch überprüfen, ob die Berechnung korrekt ist
+        BigDecimal risk = entryPrice.subtract(stopLoss).abs();
+        BigDecimal reward;
+        if (direction == Direction.SHORT) {
+            reward = this.entryPrice.subtract(this.exitPrice).abs();
+        } else {
+            reward = this.exitPrice.subtract(this.entryPrice).abs();
+        }
+        if (risk.compareTo(BigDecimal.ZERO) == 0) {
+            return BigDecimal.ZERO; // Avoid division by zero
+        }
+        this.finalRR = reward.divide(risk, 2, RoundingMode.HALF_UP);
+        return this.finalRR;
+    }
+
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getCurrencyPair() {
+        return currencyPair;
+    }
+
+    public void setCurrencyPair(String currencyPair) {
+        this.currencyPair = currencyPair;
+    }
+
+    public BigDecimal getEntryPrice() {
+        return entryPrice;
+    }
+
+    public void setEntryPrice(BigDecimal entryPrice) {
+        this.entryPrice = entryPrice;
+    }
+
+    public BigDecimal getStopLoss() {
+        return stopLoss;
+    }
+
+    public void setStopLoss(BigDecimal stopLoss) {
+        this.stopLoss = stopLoss;
+    }
+
+    public BigDecimal getExitPrice() {
+        return exitPrice;
+    }
+
+    public void setExitPrice(BigDecimal exitPrice) {
+        this.exitPrice = exitPrice;
+    }
+
+    public Direction getDirection() {
+        return direction;
+    }
+
+    public void setDirection(Direction direction) {
+        this.direction = direction;
+    }
+
+    public LocalDateTime getEntryTime() {
+        return entryTime;
+    }
+
+    public void setEntryTime(LocalDateTime entryTime) {
+        this.entryTime = entryTime;
+    }
+
+    public String getNotes() {
+        return notes;
+    }
+
+    public void setNotes(String notes) {
+        this.notes = notes;
+    }
+
+    public BigDecimal getOutcome() {
+        return outcome;
+    }
+
+    public void setOutcome(BigDecimal outcome) {
+        this.outcome = outcome;
+    }
+
+    public BigDecimal getInitialRR() {
+        return initialRR;
+    }
+
+    public void setInitialRR(BigDecimal initialRR) {
+        this.initialRR = initialRR;
+    }
+
+    public String getImageUrl1() {
+        return imageUrl1;
+    }
+
+    public void setImageUrl1(String imageUrl1) {
+        this.imageUrl1 = imageUrl1;
+    }
+
+    public String getImageUrl2() {
+        return imageUrl2;
+    }
+
+    public void setImageUrl2(String imageUrl2) {
+        this.imageUrl2 = imageUrl2;
+    }
+
+    public String getImageUrl3() {
+        return imageUrl3;
+    }
+
+    public void setImageUrl3(String imageUrl3) {
+        this.imageUrl3 = imageUrl3;
+    }
+
+    public BigDecimal getFinalRR() {
+        return finalRR;
+    }
+
+    public void setFinalRR(BigDecimal finalRR) {
+        this.finalRR = finalRR;
+    }
+
+    public LocalDateTime getTradeDateTime() {
+        return tradeDateTime;
+    }
+
+    public void setTradeDateTime(LocalDateTime tradeDateTime) {
+        this.tradeDateTime = tradeDateTime;
+    }
+
+}
+</file>
+
+<file path="src/main/java/com/trading/journal/service/TradeService.java">
+package com.trading.journal.service;
+
+import com.trading.journal.dto.TradeStatsDto;
+import com.trading.journal.model.Direction;
+import com.trading.journal.model.Trade;
+import com.trading.journal.repository.TradeRepository;
+import org.springframework.stereotype.Service;
+
+import java.math.BigDecimal;
+import java.math.RoundingMode;
+import java.time.LocalDateTime;
+import java.util.List;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
+@Service
+public class TradeService {
+
+    private final TradeRepository tradeRepository;
+
+    public TradeService(TradeRepository tradeRepository) {
+        this.tradeRepository = tradeRepository;
+    }
+
+    public List<Trade> getAllTrades() {
+        return tradeRepository.findAll();
+    }
+
+    public Page<Trade> getAllTrades(Pageable pageable) {
+        return tradeRepository.findAll(pageable);
+    }
+
+    public Trade saveTrade(Trade trade) {
+        if (trade.getTradeDateTime() == null) {
+            trade.setTradeDateTime(LocalDateTime.now());
+        }
+
+        calculateAndSetFinalRR(trade);
+        return tradeRepository.save(trade);
+    }
+
+    // --- NEU: Trade über PATCH schließen ---
+    public Trade closeTrade(Long id, BigDecimal exitPrice) {
+        Trade trade = tradeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Trade nicht gefunden mit ID: " + id));
+
+        trade.setExitPrice(exitPrice);
+        calculateAndSetFinalRR(trade);
+
+        return tradeRepository.save(trade);
+    }
+
+    public Trade updateTrade(Long id, Trade updatedTrade) {
+        Trade existingTrade = tradeRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Trade nicht gefunden mit ID: " + id));
+
+        existingTrade.setCurrencyPair(updatedTrade.getCurrencyPair());
+        existingTrade.setDirection(updatedTrade.getDirection());
+        existingTrade.setEntryPrice(updatedTrade.getEntryPrice());
+        existingTrade.setStopLoss(updatedTrade.getStopLoss());
+        existingTrade.setExitPrice(updatedTrade.getExitPrice());
+
+        // Aktualisierte Bilder & Notizen
+        existingTrade.setImageUrl1(updatedTrade.getImageUrl1());
+        existingTrade.setImageUrl2(updatedTrade.getImageUrl2());
+        existingTrade.setImageUrl3(updatedTrade.getImageUrl3());
+        existingTrade.setNotes(updatedTrade.getNotes());
+
+        if (updatedTrade.getTradeDateTime() != null) {
+            existingTrade.setTradeDateTime(updatedTrade.getTradeDateTime());
+        }
+
+        calculateAndSetFinalRR(existingTrade);
+
+        return tradeRepository.save(existingTrade);
+    }
+
+    public void deleteTrade(Long id) {
+        tradeRepository.deleteById(id);
+    }
+
+    public TradeStatsDto calculateStats() {
+        List<Trade> allTrades = tradeRepository.findAll();
+
+        List<Trade> closedTrades = allTrades.stream()
+                .filter(t -> t.getFinalRR() != null)
+                .toList();
+
+        long totalClosed = closedTrades.size();
+
+        long winningTrades = closedTrades.stream()
+                .filter(t -> t.getFinalRR().compareTo(BigDecimal.ZERO) > 0)
+                .count();
+
+        double winRate = totalClosed > 0
+                ? ((double) winningTrades / totalClosed) * 100.0
+                : 0.0;
+
+        BigDecimal totalR = closedTrades.stream()
+                .map(Trade::getFinalRR)
+                .reduce(BigDecimal.ZERO, BigDecimal::add);
+
+        return new TradeStatsDto((long) allTrades.size(), winRate, totalR.doubleValue());
+    }
+
+    // Hilfsmethode zur zentralen Berechnung von FinalRR
+    private void calculateAndSetFinalRR(Trade trade) {
+        if (trade.getExitPrice() != null && trade.getEntryPrice() != null && trade.getStopLoss() != null) {
+            BigDecimal r;
+            if (trade.getDirection() == Direction.LONG) {
+                r = (trade.getExitPrice().subtract(trade.getEntryPrice()))
+                        .divide(trade.getEntryPrice().subtract(trade.getStopLoss()), 2, RoundingMode.HALF_UP);
+            } else {
+                r = (trade.getEntryPrice().subtract(trade.getExitPrice()))
+                        .divide(trade.getStopLoss().subtract(trade.getEntryPrice()), 2, RoundingMode.HALF_UP);
+            }
+            trade.setFinalRR(r);
+        }
+    }
+}
+</file>
+
+<file path="src/main/java/com/trading/journal/dto/TradeStatsDto.java">
+package com.trading.journal.dto;
+
+public class TradeStatsDto {
+    private long totalTrades;
+    private double winRate;
+    private double totalR;
+
+    public TradeStatsDto(long totalTrades, double winRate, double totalR) {
+        this.totalTrades = totalTrades;
+        this.winRate = winRate;
+        this.totalR = totalR;
+    }
+
+    // Getter und Setter
+    public long getTotalTrades() {
+        return totalTrades;
+    }
+
+    public void setTotalTrades(long totalTrades) {
+        this.totalTrades = totalTrades;
+    }
+
+    public double getWinRate() {
+        return winRate;
+    }
+
+    public void setWinRate(double winRate) {
+        this.winRate = winRate;
+    }
+
+    public double getTotalR() {
+        return totalR;
+    }
+
+    public void setTotalR(double totalR) {
+        this.totalR = totalR;
+    }
+}
+</file>
+
+</files>

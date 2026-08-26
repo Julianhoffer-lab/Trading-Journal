@@ -1,4 +1,13 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useMemo } from 'react'
+import {
+  ResponsiveContainer,
+  LineChart,
+  Line,
+  XAxis,
+  YAxis,
+  Tooltip as RechartsTooltip,
+  CartesianGrid
+} from 'recharts'
 
 function App() {
   const [trades, setTrades] = useState([])
@@ -6,16 +15,19 @@ function App() {
   const [loading, setLoading] = useState(true)
   const [errorMsg, setErrorMsg] = useState('')
 
+  // Dark Mode State (Standard: Dark Mode)
+  const [darkMode, setDarkMode] = useState(true)
+
   // Selected Trade & State für Detail-Edit
   const [selectedTrade, setSelectedTrade] = useState(null)
   const [editNotes, setEditNotes] = useState('')
   const [images, setImages] = useState({ imageUrl1: '', imageUrl2: '', imageUrl3: '' })
   const [isSaving, setIsSaving] = useState(false)
 
-  // Neu: State für vergrößertes Bild (Lightbox / Preview)
+  // State für vergrößertes Bild (Lightbox / Preview)
   const [previewImage, setPreviewImage] = useState(null)
 
-  // Filter States
+  // Filter States (wirken GLOBAL auf Journal UND Analytics)
   const [filterPair, setFilterPair] = useState('')
   const [filterDirection, setFilterDirection] = useState('ALL')
   const [filterOutcome, setFilterOutcome] = useState('ALL')
@@ -31,6 +43,38 @@ function App() {
     exitPrice: '',
     tradeDateTime: new Date().toISOString().slice(0, 16)
   })
+
+  // Navigation State: 'journal' oder 'analytics'
+  const [activeTab, setActiveTab] = useState('journal')
+
+  // Graph X-Achse Mode: 'tradeCount' oder 'time'
+  const [chartXAxisMode, setChartXAxisMode] = useState('tradeCount')
+
+  // Paginierung States
+  const [currentPage, setCurrentPage] = useState(1)
+  const itemsPerPage = 10
+
+  useEffect(() => {
+    setCurrentPage(1)
+  }, [filterPair, filterDirection, filterOutcome, filterDay, filterNotes])
+
+
+
+  // Theme-Farben je nach Modus
+  const theme = {
+    bg: darkMode ? '#121212' : '#f4f6f8',
+    text: darkMode ? '#e0e0e0' : '#212529',
+    heading: darkMode ? '#ffffff' : '#111111',
+    cardBg: darkMode ? '#1e1e1e' : '#ffffff',
+    border: darkMode ? '#333333' : '#dddddd',
+    subText: darkMode ? '#aaaaaa' : '#666666',
+    tableHeaderBg: darkMode ? '#2a2a2a' : '#f1f3f5',
+    tableHoverBg: darkMode ? '#2c2c2c' : '#f8f9fa',
+    inputBg: darkMode ? '#2d2d2d' : '#ffffff',
+    inputBorder: darkMode ? '#444444' : '#cccccc',
+    chartGrid: darkMode ? '#333333' : '#e0e0e0',
+    chartTooltipBg: darkMode ? '#2a2a2a' : '#ffffff'
+  }
 
   const fetchData = () => {
     Promise.all([
@@ -52,7 +96,6 @@ function App() {
     fetchData()
   }, [])
 
-  // Beim Öffnen des Modals Daten synchronisieren
   const openModal = (trade) => {
     setSelectedTrade(trade)
     setEditNotes(trade.notes || '')
@@ -120,7 +163,6 @@ function App() {
       .catch(err => setErrorMsg(err.message || 'Verbindung fehlgeschlagen'))
   }
 
-  // Screenshot per Strg + V einfügen
   const handlePasteImage = (e, slotKey) => {
     const items = e.clipboardData?.items
     if (!items) return
@@ -138,7 +180,6 @@ function App() {
     }
   }
 
-  // Notizen & Screenshots speichern
   const handleSaveDetails = () => {
     if (!selectedTrade) return
     setIsSaving(true)
@@ -185,12 +226,13 @@ function App() {
       .catch(err => console.error(err))
   }
 
-  // Filter-Logik
+  // Gefilterte Liste für BEIDE Tabs (Journal & Analytics)
   const filteredTrades = trades.filter(trade => {
-    const matchesPair = trade.currencyPair.toLowerCase().includes(filterPair.toLowerCase())
+    if (!trade) return false
+    const matchesPair = (trade.currencyPair || '').toLowerCase().includes(filterPair.toLowerCase())
     const matchesDirection = filterDirection === 'ALL' || trade.direction === filterDirection
 
-    const isWin = trade.finalRR !== null && trade.finalRR > 0
+    const isWin = trade.finalRR !== null && trade.finalRR !== undefined && trade.finalRR > 0
     const matchesOutcome =
       filterOutcome === 'ALL' ||
       (filterOutcome === 'WIN' && isWin) ||
@@ -207,317 +249,560 @@ function App() {
     return matchesPair && matchesDirection && matchesOutcome && matchesDay && matchesNotes
   })
 
+  // Check, ob aktuell ein Filter aktiv ist
+  const isFiltered = filterPair !== '' || filterDirection !== 'ALL' || filterOutcome !== 'ALL' || filterDay !== 'ALL' || filterNotes !== ''
+
+  const resetFilters = () => {
+    setFilterPair('')
+    setFilterDirection('ALL')
+    setFilterOutcome('ALL')
+    setFilterDay('ALL')
+    setFilterNotes('')
+  }
+
+  // Kumulierter Datenverlauf für den Graphen
+  const chartData = useMemo(() => {
+    if (!filteredTrades || filteredTrades.length === 0) return []
+
+    // Nur Trades mit gültiger finalRR berücksichtigen
+    const validTrades = filteredTrades
+      .filter(t => t && t.finalRR !== null && t.finalRR !== undefined && !isNaN(Number(t.finalRR)))
+      .sort((a, b) => new Date(a.tradeDateTime || 0) - new Date(b.tradeDateTime || 0))
+
+    if (validTrades.length === 0) return []
+
+    let cumulativeR = 0
+    const dataPoints = [
+      {
+        tradeNum: 0,
+        date: 'Start',
+        tradeRR: 0,
+        cumulativeR: 0
+      }
+    ]
+
+    validTrades.forEach((trade, index) => {
+      const rrVal = Number(trade.finalRR) || 0
+      cumulativeR += rrVal
+
+      const dateObj = trade.tradeDateTime ? new Date(trade.tradeDateTime) : null
+      const formattedDate = dateObj && !isNaN(dateObj.getTime())
+        ? dateObj.toLocaleDateString('de-DE', { day: '2-digit', month: '2-digit', year: '2-digit' })
+        : `Trade #${index + 1}`
+
+      dataPoints.push({
+        tradeNum: index + 1,
+        date: formattedDate,
+        tradeRR: Number(rrVal.toFixed(2)),
+        cumulativeR: Number(cumulativeR.toFixed(2))
+      })
+    })
+
+    return dataPoints
+  }, [filteredTrades])
+
+  // Paginierung für Journal
+  const indexOfLastTrade = currentPage * itemsPerPage
+  const indexOfFirstTrade = indexOfLastTrade - itemsPerPage
+  const currentTrades = filteredTrades.slice(indexOfFirstTrade, indexOfLastTrade)
+  const totalPages = Math.ceil(filteredTrades.length / itemsPerPage) || 1
+
   const getDayName = (dateString) => {
     if (!dateString) return '-'
     const date = new Date(dateString)
     return date.toLocaleDateString('de-DE', { weekday: 'short', day: '2-digit', month: '2-digit', hour: '2-digit', minute: '2-digit' })
   }
 
-  if (loading) return <div style={{ padding: '2rem' }}>Lade Daten vom Backend...</div>
+  // CSV-Export
+  const exportToCSV = () => {
+    if (filteredTrades.length === 0) {
+      alert('Keine Trades zum Exportieren vorhanden!')
+      return
+    }
+
+    const headers = ['ID', 'Datum/Zeit', 'Waehrungspaar', 'Richtung', 'Entry', 'StopLoss', 'Exit', 'Ergebnis_R', 'Notizen']
+
+    const rows = filteredTrades.map(trade => [
+      trade.id,
+      trade.tradeDateTime || '',
+      `"${trade.currencyPair || ''}"`,
+      trade.direction || '',
+      trade.entryPrice || 0,
+      trade.stopLoss || 0,
+      trade.exitPrice || 0,
+      trade.finalRR ?? '',
+      `"${(trade.notes || '').replace(/"/g, '""')}"`
+    ])
+
+    const csvContent = 'data:text/csv;charset=utf-8,\uFEFF'
+      + [headers.join(';'), ...rows.map(e => e.join(';'))].join('\n')
+
+    const encodedUri = encodeURI(csvContent)
+    const link = document.createElement('a')
+    link.setAttribute('href', encodedUri)
+    link.setAttribute('download', `trading_journal_export_${new Date().toISOString().slice(0, 10)}.csv`)
+    document.body.appendChild(link)
+    link.click()
+    document.body.removeChild(link)
+  }
+
+  // Hilfskomponente für Info-Tooltips direkt mit Inline-Styles
+  const Tooltip = ({ text }) => (
+    <span
+      title={text}
+      style={{
+        cursor: 'help',
+        marginLeft: '6px',
+        fontSize: '0.8rem',
+        backgroundColor: theme.border,
+        color: theme.subText,
+        borderRadius: '50%',
+        width: '16px',
+        height: '16px',
+        display: 'inline-flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        fontWeight: 'bold'
+      }}
+    >
+      ?
+    </span>
+  )
+
+  if (loading) return <div style={{ padding: '2rem', backgroundColor: theme.bg, color: theme.text, minHeight: '100vh' }}>Lade Daten vom Backend...</div>
 
   return (
-    <div style={{ padding: '2rem', fontFamily: 'system-ui, sans-serif', maxWidth: '1100px', margin: '0 auto' }}>
-      <h1>Trading Journal Dashboard</h1>
+    <div style={{ backgroundColor: theme.bg, color: theme.text, minHeight: '100vh', padding: '2rem', fontFamily: 'system-ui, sans-serif', transition: 'all 0.2s ease' }}>
+      <div style={{ maxWidth: '1100px', margin: '0 auto' }}>
 
-      {/* 1. Statistik-Karten */}
-      {stats && (
-        <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '1rem', marginBottom: '2rem' }}>
-          <div style={{ padding: '1rem', border: '1px solid #ccc', borderRadius: '8px', backgroundColor: '#fcfcfc' }}>
-            <h3 style={{ margin: '0 0 0.5rem 0', color: '#555' }}>Total Trades</h3>
-            <p style={{ fontSize: '1.8rem', fontWeight: 'bold', margin: 0 }}>{stats.totalTrades ?? 0}</p>
-          </div>
-          <div style={{ padding: '1rem', border: '1px solid #ccc', borderRadius: '8px', backgroundColor: '#fcfcfc' }}>
-            <h3 style={{ margin: '0 0 0.5rem 0', color: '#555' }}>Win Rate</h3>
-            <p style={{ fontSize: '1.8rem', fontWeight: 'bold', margin: 0, color: stats.winRate >= 50 ? '#28a745' : '#dc3545' }}>
-              {stats.winRate ? stats.winRate.toFixed(1) : '0.0'}%
-            </p>
-          </div>
-          <div style={{ padding: '1rem', border: '1px solid #ccc', borderRadius: '8px', backgroundColor: '#fcfcfc' }}>
-            <h3 style={{ margin: '0 0 0.5rem 0', color: '#555' }}>Total R</h3>
-            <p style={{ fontSize: '1.8rem', fontWeight: 'bold', margin: 0, color: stats.totalR >= 0 ? '#28a745' : '#dc3545' }}>
-              {stats.totalR ? stats.totalR.toFixed(2) : '0.00'} R
-            </p>
-          </div>
-        </div>
-      )}
+        {/* Header mit Tab-Navigation & Buttons */}
+        <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.5rem', flexWrap: 'wrap', gap: '1rem' }}>
+          <h1 style={{ margin: 0, color: theme.heading }}>Trading Journal Dashboard</h1>
 
-      {/* 2. Formular zum Anlegen (Schnelleingabe) */}
-      <div style={{ padding: '1.5rem', border: '1px solid #ddd', borderRadius: '8px', marginBottom: '2rem', backgroundColor: '#f9f9f9' }}>
-        <h2>Neuen Trade erfassen (Schnelleingabe)</h2>
-
-        {errorMsg && (
-          <div style={{ padding: '0.75rem', backgroundColor: '#ffebee', color: '#c62828', borderRadius: '4px', marginBottom: '1rem' }}>
-            <strong>Fehler:</strong> {errorMsg}
-          </div>
-        )}
-
-        <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
-          <div>
-            <label>Währungspaar:</label>
-            <input type="text" name="currencyPair" value={formData.currencyPair} onChange={handleChange} required style={{ width: '100%', padding: '8px', marginTop: '4px' }} />
-          </div>
-
-          <div>
-            <label>Richtung:</label>
-            <select name="direction" value={formData.direction} onChange={handleChange} style={{ width: '100%', padding: '8px', marginTop: '4px' }}>
-              <option value="LONG">LONG</option>
-              <option value="SHORT">SHORT</option>
-            </select>
-          </div>
-
-          <div>
-            <label>Entry Preis:</label>
-            <input type="number" step="any" name="entryPrice" value={formData.entryPrice} onChange={handleChange} required style={{ width: '100%', padding: '8px', marginTop: '4px' }} />
-          </div>
-
-          <div>
-            <label>Stop Loss:</label>
-            <input type="number" step="any" name="stopLoss" value={formData.stopLoss} onChange={handleChange} required style={{ width: '100%', padding: '8px', marginTop: '4px' }} />
-          </div>
-
-          <div>
-            <label>Exit Preis:</label>
-            <input type="number" step="any" name="exitPrice" value={formData.exitPrice} onChange={handleChange} required style={{ width: '100%', padding: '8px', marginTop: '4px' }} />
-          </div>
-
-          <div>
-            <label>Datum & Uhrzeit des Trades:</label>
-            <input type="datetime-local" name="tradeDateTime" value={formData.tradeDateTime} onChange={handleChange} style={{ width: '100%', padding: '8px', marginTop: '4px' }} />
-          </div>
-
-          <button type="submit" style={{ gridColumn: 'span 2', padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
-            Trade Speichern
-          </button>
-        </form>
-      </div>
-
-      {/* 3. Filter-Leiste */}
-      <div style={{ padding: '1rem', backgroundColor: '#eef2f5', borderRadius: '8px', marginBottom: '1.5rem', display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(180px, 1fr))', gap: '0.75rem', alignItems: 'center' }}>
-        <div>
-          <label style={{ fontSize: '0.85rem', fontWeight: 'bold', display: 'block' }}>Währungspaar:</label>
-          <input type="text" placeholder="z.B. EUR/USD..." value={filterPair} onChange={(e) => setFilterPair(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', border: '1px solid #ccc' }} />
-        </div>
-
-        <div>
-          <label style={{ fontSize: '0.85rem', fontWeight: 'bold', display: 'block' }}>Richtung:</label>
-          <select value={filterDirection} onChange={(e) => setFilterDirection(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', border: '1px solid #ccc' }}>
-            <option value="ALL">Alle Richtungen</option>
-            <option value="LONG">LONG</option>
-            <option value="SHORT">SHORT</option>
-          </select>
-        </div>
-
-        <div>
-          <label style={{ fontSize: '0.85rem', fontWeight: 'bold', display: 'block' }}>Ergebnis:</label>
-          <select value={filterOutcome} onChange={(e) => setFilterOutcome(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', border: '1px solid #ccc' }}>
-            <option value="ALL">Alle Trades</option>
-            <option value="WIN">Gewinner (Win)</option>
-            <option value="LOSS">Verlierer (Loss)</option>
-          </select>
-        </div>
-
-        <div>
-          <label style={{ fontSize: '0.85rem', fontWeight: 'bold', display: 'block' }}>Wochentag:</label>
-          <select value={filterDay} onChange={(e) => setFilterDay(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', border: '1px solid #ccc' }}>
-            <option value="ALL">Alle Tage</option>
-            <option value="1">Montag</option>
-            <option value="2">Dienstag</option>
-            <option value="3">Mittwoch</option>
-            <option value="4">Donnerstag</option>
-            <option value="5">Freitag</option>
-          </select>
-        </div>
-
-        <div>
-          <label style={{ fontSize: '0.85rem', fontWeight: 'bold', display: 'block' }}>Notiz-Suche:</label>
-          <input type="text" placeholder="Stichwort..." value={filterNotes} onChange={(e) => setFilterNotes(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', border: '1px solid #ccc' }} />
-        </div>
-      </div>
-
-      {/* 4. Tabellen-Übersicht */}
-      <h2>Alle Trades ({filteredTrades.length})</h2>
-      <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', backgroundColor: '#fff', boxShadow: '0 1px 3px rgba(0,0,0,0.1)', borderRadius: '8px', overflow: 'hidden' }}>
-        <thead>
-          <tr style={{ backgroundColor: '#f1f3f5', borderBottom: '2px solid #ddd' }}>
-            <th style={{ padding: '12px' }}>ID</th>
-            <th style={{ padding: '12px' }}>Datum / Zeit</th>
-            <th style={{ padding: '12px' }}>Währungspaar</th>
-            <th style={{ padding: '12px' }}>Richtung</th>
-            <th style={{ padding: '12px' }}>Entry</th>
-            <th style={{ padding: '12px' }}>Exit</th>
-            <th style={{ padding: '12px' }}>Ergebnis (R)</th>
-            <th style={{ padding: '12px' }}>Aktionen</th>
-          </tr>
-        </thead>
-        <tbody>
-          {filteredTrades.map(trade => {
-            const isWin = trade.finalRR !== null && trade.finalRR > 0
-            return (
-              <tr
-                key={trade.id}
-                onClick={() => openModal(trade)}
-                style={{ borderBottom: '1px solid #eee', cursor: 'pointer', transition: 'background-color 0.2s' }}
-                onMouseEnter={(e) => e.currentTarget.style.backgroundColor = '#f8f9fa'}
-                onMouseLeave={(e) => e.currentTarget.style.backgroundColor = '#fff'}
-              >
-                <td style={{ padding: '12px', fontWeight: 'bold' }}>#{trade.id}</td>
-                <td style={{ padding: '12px', color: '#666', fontSize: '0.9rem' }}>{getDayName(trade.tradeDateTime)}</td>
-                <td style={{ padding: '12px' }}>{trade.currencyPair}</td>
-                <td style={{ padding: '12px' }}>
-                  <span style={{ padding: '4px 8px', borderRadius: '4px', backgroundColor: trade.direction === 'LONG' ? '#e3f2fd' : '#fbe9e7', color: trade.direction === 'LONG' ? '#1976d2' : '#d32f2f', fontWeight: 'bold', fontSize: '0.85rem' }}>
-                    {trade.direction}
-                  </span>
-                </td>
-                <td style={{ padding: '12px' }}>{trade.entryPrice}</td>
-                <td style={{ padding: '12px' }}>{trade.exitPrice}</td>
-                <td style={{ padding: '12px', fontWeight: 'bold', color: isWin ? '#28a745' : '#dc3545' }}>
-                  {trade.finalRR !== null && trade.finalRR !== undefined ? `${trade.finalRR} R` : '-'}
-                </td>
-                <td style={{ padding: '12px' }}>
-                  <button onClick={(e) => handleDelete(trade.id, e)} style={{ backgroundColor: '#dc3545', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer' }}>
-                    Löschen
-                  </button>
-                </td>
-              </tr>
-            )
-          })}
-        </tbody>
-      </table>
-
-      {/* 5. Detail-Modal */}
-      {selectedTrade && (
-        <div style={{ position: 'fixed', top: 0, left: 0, right: 0, bottom: 0, backgroundColor: 'rgba(0,0,0,0.5)', display: 'flex', justifyContent: 'center', alignItems: 'center', zIndex: 1000 }}>
-          <div style={{ backgroundColor: '#fff', padding: '2rem', borderRadius: '8px', maxWidth: '750px', width: '100%', maxHeight: '90vh', overflowY: 'auto', boxShadow: '0 4px 20px rgba(0,0,0,0.2)' }}>
-            <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1rem', borderBottom: '1px solid #eee', paddingBottom: '0.5rem' }}>
-              <h2>Trade Details #{selectedTrade.id} - {selectedTrade.currencyPair}</h2>
-              <button onClick={() => setSelectedTrade(null)} style={{ border: 'none', background: 'none', fontSize: '1.5rem', cursor: 'pointer' }}>&times;</button>
-            </div>
-
-            <div style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem', marginBottom: '1.5rem', backgroundColor: '#f8f9fa', padding: '1rem', borderRadius: '6px' }}>
-              <div><strong>Zeitpunkt:</strong> {getDayName(selectedTrade.tradeDateTime)}</div>
-              <div><strong>Richtung:</strong> {selectedTrade.direction}</div>
-              <div><strong>Entry Price:</strong> {selectedTrade.entryPrice}</div>
-              <div><strong>Stop Loss:</strong> {selectedTrade.stopLoss}</div>
-              <div><strong>Exit Price:</strong> {selectedTrade.exitPrice}</div>
-              <div><strong>Ergebnis (R):</strong> <span style={{ color: selectedTrade.finalRR > 0 ? '#28a745' : '#dc3545', fontWeight: 'bold' }}>{selectedTrade.finalRR} R</span></div>
-            </div>
-
-            {/* Bearbeitbare Notizen */}
-            <div style={{ marginBottom: '1.5rem' }}>
-              <h3>Notizen / Journal-Eintrag</h3>
-              <textarea
-                rows="6"
-                placeholder="Schreibe hier ausführliche Notizen, Emotionen oder Setups zum Trade..."
-                value={editNotes}
-                onChange={(e) => setEditNotes(e.target.value)}
-                style={{ width: '100%', padding: '10px', borderRadius: '6px', border: '1px solid #ccc', fontFamily: 'inherit' }}
-              />
-            </div>
-
-            {/* Screenshots per Paste (Strg + V) & Klick zum Vergrößern */}
-            <div style={{ marginBottom: '1.5rem' }}>
-              <h3>Screenshots (In Feld klicken & Strg + V drücken)</h3>
-              <p style={{ fontSize: '0.85rem', color: '#666', marginTop: '-0.5rem', marginBottom: '0.75rem' }}>
-                Tipp: Klicke auf ein eingefügtes Bild, um es groß anzuzeigen.
-              </p>
-              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(3, 1fr)', gap: '0.75rem' }}>
-                {['imageUrl1', 'imageUrl2', 'imageUrl3'].map((slot, index) => (
-                  <div key={slot} style={{ textAlign: 'center' }}>
-                    <div
-                      onPaste={(e) => handlePasteImage(e, slot)}
-                      tabIndex="0"
-                      style={{
-                        border: '2px dashed #bbb',
-                        borderRadius: '6px',
-                        padding: '6px',
-                        minHeight: '130px',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        backgroundColor: '#fafafa',
-                        cursor: 'pointer'
-                      }}
-                    >
-                      {images[slot] ? (
-                        <img
-                          src={images[slot]}
-                          alt={`Screenshot ${index + 1}`}
-                          onClick={() => setPreviewImage(images[slot])}
-                          title="Klicken zum Vergrößern"
-                          style={{ maxWidth: '100%', maxHeight: '120px', borderRadius: '4px', objectFit: 'cover' }}
-                        />
-                      ) : (
-                        <span style={{ fontSize: '0.8rem', color: '#777' }}>Bild {index + 1}<br />Klicken & Strg+V</span>
-                      )}
-                    </div>
-                    {images[slot] && (
-                      <button
-                        onClick={() => setImages(prev => ({ ...prev, [slot]: '' }))}
-                        style={{ marginTop: '4px', fontSize: '0.75rem', color: '#dc3545', border: 'none', background: 'none', cursor: 'pointer' }}
-                      >
-                        Entfernen
-                      </button>
-                    )}
-                  </div>
-                ))}
-              </div>
-            </div>
-
-            <div style={{ display: 'flex', justifyContent: 'flex-end', gap: '0.5rem' }}>
-              <button onClick={() => setSelectedTrade(null)} style={{ padding: '8px 16px', backgroundColor: '#6c757d', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer' }}>
-                Abbrechen
-              </button>
-              <button onClick={handleSaveDetails} disabled={isSaving} style={{ padding: '8px 16px', backgroundColor: '#28a745', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
-                {isSaving ? 'Speichere...' : 'Änderungen Speichern'}
-              </button>
-            </div>
-          </div>
-        </div>
-      )}
-
-      {/* 6. Lightbox Overlay (Vergrößerte Bildansicht) */}
-      {previewImage && (
-        <div
-          onClick={() => setPreviewImage(null)}
-          style={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            backgroundColor: 'rgba(0, 0, 0, 0.85)',
-            display: 'flex',
-            justifyContent: 'center',
-            alignItems: 'center',
-            zIndex: 2000,
-            cursor: 'zoom-out',
-            padding: '2rem'
-          }}
-        >
-          <div style={{ position: 'relative', maxWidth: '90vw', maxHeight: '90vh' }}>
-            <img
-              src={previewImage}
-              alt="Vergrößerter Screenshot"
-              style={{ maxWidth: '100%', maxHeight: '85vh', borderRadius: '8px', boxShadow: '0 4px 25px rgba(0,0,0,0.5)' }}
-            />
+          {/* Tab Navigation */}
+          <div style={{ display: 'flex', gap: '0.5rem', backgroundColor: theme.cardBg, padding: '4px', borderRadius: '12px', border: `1px solid ${theme.border}` }}>
             <button
-              onClick={() => setPreviewImage(null)}
+              onClick={() => setActiveTab('journal')}
               style={{
-                position: 'absolute',
-                top: '-40px',
-                right: '0',
-                background: 'none',
+                padding: '8px 16px',
+                borderRadius: '8px',
                 border: 'none',
-                color: 'white',
-                fontSize: '2rem',
-                cursor: 'pointer'
+                backgroundColor: activeTab === 'journal' ? '#007bff' : 'transparent',
+                color: activeTab === 'journal' ? 'white' : theme.text,
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
               }}
             >
-              &times;
+              📝 Journal
+            </button>
+            <button
+              onClick={() => setActiveTab('analytics')}
+              style={{
+                padding: '8px 16px',
+                borderRadius: '8px',
+                border: 'none',
+                backgroundColor: activeTab === 'analytics' ? '#007bff' : 'transparent',
+                color: activeTab === 'analytics' ? 'white' : theme.text,
+                fontWeight: 'bold',
+                cursor: 'pointer',
+                transition: 'all 0.2s'
+              }}
+            >
+              📊 Analytics
+            </button>
+          </div>
+
+          {/* Action Buttons */}
+          <div style={{ display: 'flex', gap: '0.75rem' }}>
+            <button
+              onClick={exportToCSV}
+              style={{
+                padding: '8px 16px',
+                borderRadius: '20px',
+                border: `1px solid ${theme.border}`,
+                backgroundColor: '#28a745',
+                color: 'white',
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
+              }}
+            >
+              📥 CSV Export
+            </button>
+            <button
+              onClick={() => setDarkMode(!darkMode)}
+              style={{
+                padding: '8px 16px',
+                borderRadius: '20px',
+                border: `1px solid ${theme.border}`,
+                backgroundColor: theme.cardBg,
+                color: theme.text,
+                cursor: 'pointer',
+                fontWeight: 'bold',
+                display: 'flex',
+                alignItems: 'center',
+                gap: '8px',
+                boxShadow: '0 2px 5px rgba(0,0,0,0.2)'
+              }}
+            >
+              {darkMode ? '☀️ Light Mode' : '🌙 Dark Mode'}
             </button>
           </div>
         </div>
-      )}
+
+        {/* GLOBALE FILTER-LEISTE (Gilt für Journal AND Analytics) */}
+        <div style={{ padding: '1rem', backgroundColor: theme.cardBg, border: `1px solid ${theme.border}`, borderRadius: '8px', marginBottom: '1.5rem' }}>
+          <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '0.75rem' }}>
+            <span style={{ fontSize: '0.9rem', fontWeight: 'bold', color: theme.heading }}>
+              🔍 Globaler Filter (dieser Filter wirkt auf Journal & Analytics) {isFiltered && <span style={{ color: '#007bff', fontSize: '0.8rem' }}>(Aktiv: {filteredTrades.length} von {trades.length} Trades)</span>}
+            </span>
+            {isFiltered && (
+              <button
+                onClick={resetFilters}
+                style={{ fontSize: '0.8rem', padding: '4px 8px', backgroundColor: 'transparent', color: '#dc3545', border: '1px solid #dc3545', borderRadius: '4px', cursor: 'pointer' }}
+              >
+                Filter zurücksetzen
+              </button>
+            )}
+          </div>
+
+          <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))', gap: '0.75rem', alignItems: 'center' }}>
+            <div>
+              <label style={{ fontSize: '0.8rem', fontWeight: 'bold', display: 'block', color: theme.subText }}>Asset:</label>
+              <input type="text" placeholder="z.B. EUR/USD..." value={filterPair} onChange={(e) => setFilterPair(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}` }} />
+            </div>
+
+            <div>
+              <label style={{ fontSize: '0.8rem', fontWeight: 'bold', display: 'block', color: theme.subText }}>Richtung:</label>
+              <select value={filterDirection} onChange={(e) => setFilterDirection(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}` }}>
+                <option value="ALL">Alle Richtungen</option>
+                <option value="LONG">LONG</option>
+                <option value="SHORT">SHORT</option>
+              </select>
+            </div>
+
+            <div>
+              <label style={{ fontSize: '0.8rem', fontWeight: 'bold', display: 'block', color: theme.subText }}>Ergebnis:</label>
+              <select value={filterOutcome} onChange={(e) => setFilterOutcome(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}` }}>
+                <option value="ALL">Alle Trades</option>
+                <option value="WIN">Gewinner (Win)</option>
+                <option value="LOSS">Verlierer (Loss)</option>
+              </select>
+            </div>
+
+            <div>
+              <label style={{ fontSize: '0.8rem', fontWeight: 'bold', display: 'block', color: theme.subText }}>Wochentag:</label>
+              <select value={filterDay} onChange={(e) => setFilterDay(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}` }}>
+                <option value="ALL">Alle Tage</option>
+                <option value="1">Montag</option>
+                <option value="2">Dienstag</option>
+                <option value="3">Mittwoch</option>
+                <option value="4">Donnerstag</option>
+                <option value="5">Freitag</option>
+              </select>
+            </div>
+
+            <div>
+              <label style={{ fontSize: '0.8rem', fontWeight: 'bold', display: 'block', color: theme.subText }}>Notiz-Suche:</label>
+              <input type="text" placeholder="Stichwort..." value={filterNotes} onChange={(e) => setFilterNotes(e.target.value)} style={{ width: '100%', padding: '6px', borderRadius: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}` }} />
+            </div>
+          </div>
+        </div>
+
+        {/* TAB 1: JOURNAL */}
+        {activeTab === 'journal' && (
+          <>
+            {/* Formular zum Anlegen */}
+            <div style={{ padding: '1.5rem', border: `1px solid ${theme.border}`, borderRadius: '8px', marginBottom: '2rem', backgroundColor: theme.cardBg }}>
+              <h2 style={{ marginTop: 0, color: theme.heading }}>Neuen Trade erfassen (Schnelleingabe)</h2>
+
+              {errorMsg && (
+                <div style={{ padding: '0.75rem', backgroundColor: '#ffebee', color: '#c62828', borderRadius: '4px', marginBottom: '1rem' }}>
+                  <strong>Fehler:</strong> {errorMsg}
+                </div>
+              )}
+
+              <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: '1fr 1fr', gap: '1rem' }}>
+                <div>
+                  <label style={{ color: theme.text }}>Asset:</label>
+                  <input type="text" name="currencyPair" value={formData.currencyPair} onChange={handleChange} required style={{ width: '100%', padding: '8px', marginTop: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, borderRadius: '4px' }} />
+                </div>
+
+                <div>
+                  <label style={{ color: theme.text }}>Richtung:</label>
+                  <select name="direction" value={formData.direction} onChange={handleChange} style={{ width: '100%', padding: '8px', marginTop: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, borderRadius: '4px' }}>
+                    <option value="LONG">LONG</option>
+                    <option value="SHORT">SHORT</option>
+                  </select>
+                </div>
+
+                <div>
+                  <label style={{ color: theme.text }}>Entry Preis:</label>
+                  <input type="number" step="any" name="entryPrice" value={formData.entryPrice} onChange={handleChange} required style={{ width: '100%', padding: '8px', marginTop: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, borderRadius: '4px' }} />
+                </div>
+
+                <div>
+                  <label style={{ color: theme.text }}>Stop Loss:</label>
+                  <input type="number" step="any" name="stopLoss" value={formData.stopLoss} onChange={handleChange} required style={{ width: '100%', padding: '8px', marginTop: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, borderRadius: '4px' }} />
+                </div>
+
+                <div>
+                  <label style={{ color: theme.text }}>Exit Preis:</label>
+                  <input type="number" step="any" name="exitPrice" value={formData.exitPrice} onChange={handleChange} required style={{ width: '100%', padding: '8px', marginTop: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, borderRadius: '4px' }} />
+                </div>
+
+                <div>
+                  <label style={{ color: theme.text }}>Datum & Uhrzeit des Trades:</label>
+                  <input type="datetime-local" name="tradeDateTime" value={formData.tradeDateTime} onChange={handleChange} style={{ width: '100%', padding: '8px', marginTop: '4px', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, borderRadius: '4px' }} />
+                </div>
+
+                <button type="submit" style={{ gridColumn: 'span 2', padding: '10px', backgroundColor: '#007bff', color: 'white', border: 'none', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+                  Trade Speichern
+                </button>
+              </form>
+            </div>
+
+            {/* Tabellen-Übersicht */}
+            <h2 style={{ color: theme.heading }}>Alle Trades ({filteredTrades.length})</h2>
+            <p>(Klicke auf einen Trade, um die Details anzuzeigen und/oder zu bearbeiten)</p>
+            <table style={{ width: '100%', borderCollapse: 'collapse', textAlign: 'left', backgroundColor: theme.cardBg, border: `1px solid ${theme.border}`, borderRadius: '8px', overflow: 'hidden' }}>
+              <thead>
+                <tr style={{ backgroundColor: theme.tableHeaderBg, borderBottom: `2px solid ${theme.border}`, color: theme.heading }}>
+                  <th style={{ padding: '12px' }}>Datum / Zeit</th>
+                  <th style={{ padding: '12px' }}>Asset</th>
+                  <th style={{ padding: '12px' }}>Richtung</th>
+                  <th style={{ padding: '12px' }}>Entry</th>
+                  <th style={{ padding: '12px' }}>Exit</th>
+                  <th style={{ padding: '12px' }}>Ergebnis (R)</th>
+                  <th style={{ padding: '12px' }}>Aktionen</th>
+                </tr>
+              </thead>
+              <tbody>
+                {currentTrades.map(trade => {
+                  const isWin = trade.finalRR !== null && trade.finalRR !== undefined && trade.finalRR > 0
+                  return (
+                    <tr
+                      key={trade.id}
+                      onClick={() => openModal(trade)}
+                      style={{
+                        backgroundColor: theme.cardBg,
+                        color: theme.text,
+                        borderBottom: `1px solid ${theme.border}`,
+                        cursor: 'pointer',
+                        transition: 'background-color 0.2s'
+                      }}
+                      onMouseEnter={(e) => e.currentTarget.style.backgroundColor = theme.tableHoverBg}
+                      onMouseLeave={(e) => e.currentTarget.style.backgroundColor = theme.cardBg}
+                    >
+                      <td style={{ padding: '12px', color: theme.subText, fontSize: '0.9rem' }}>{getDayName(trade.tradeDateTime)}</td>
+                      <td style={{ padding: '12px' }}>{trade.currencyPair}</td>
+                      <td style={{ padding: '12px' }}>
+                        <span style={{ padding: '4px 8px', borderRadius: '4px', backgroundColor: trade.direction === 'LONG' ? (darkMode ? '#132f4c' : '#e3f2fd') : (darkMode ? '#3c1818' : '#fbe9e7'), color: trade.direction === 'LONG' ? '#64b5f6' : '#e57373', fontWeight: 'bold', fontSize: '0.85rem' }}>
+                          {trade.direction}
+                        </span>
+                      </td>
+                      <td style={{ padding: '12px' }}>{trade.entryPrice}</td>
+                      <td style={{ padding: '12px' }}>{trade.exitPrice}</td>
+                      <td style={{ padding: '12px', fontWeight: 'bold', color: isWin ? '#28a745' : '#dc3545' }}>
+                        {trade.finalRR !== null && trade.finalRR !== undefined ? `${trade.finalRR} R` : '-'}
+                      </td>
+                      <td style={{ padding: '12px' }}>
+                        <button onClick={(e) => handleDelete(trade.id, e)} style={{ backgroundColor: '#dc3545', color: 'white', border: 'none', padding: '6px 12px', borderRadius: '4px', cursor: 'pointer' }}>
+                          Löschen
+                        </button>
+                      </td>
+                    </tr>
+                  )
+                })}
+              </tbody>
+            </table>
+
+            {/* Pagination Controls */}
+            {totalPages > 1 && (
+              <div style={{ display: 'flex', justifyContent: 'center', alignItems: 'center', gap: '1rem', marginTop: '1rem' }}>
+                <button
+                  onClick={() => setCurrentPage(prev => Math.max(prev - 1, 1))}
+                  disabled={currentPage === 1}
+                  style={{
+                    padding: '6px 12px',
+                    backgroundColor: currentPage === 1 ? theme.border : theme.cardBg,
+                    color: currentPage === 1 ? theme.subText : theme.text,
+                    border: `1px solid ${theme.border}`,
+                    borderRadius: '4px',
+                    cursor: currentPage === 1 ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  &laquo; Zurück
+                </button>
+
+                <span style={{ fontSize: '0.9rem', color: theme.text }}>
+                  Seite <strong>{currentPage}</strong> von <strong>{totalPages}</strong>
+                </span>
+
+                <button
+                  onClick={() => setCurrentPage(prev => Math.min(prev + 1, totalPages))}
+                  disabled={currentPage === totalPages}
+                  style={{
+                    padding: '6px 12px',
+                    backgroundColor: currentPage === totalPages ? theme.border : theme.cardBg,
+                    color: currentPage === totalPages ? theme.subText : theme.text,
+                    border: `1px solid ${theme.border}`,
+                    borderRadius: '4px',
+                    cursor: currentPage === totalPages ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  Weiter &raquo;
+                </button>
+              </div>
+            )}
+          </>
+        )}
+
+        {/* TAB 2: ANALYTICS */}
+        {activeTab === 'analytics' && (() => {
+          // Sicherstellen, dass filteredTrades ein Array ist
+          const safeTrades = Array.isArray(filteredTrades) ? filteredTrades : []
+
+          const tradesWithRR = safeTrades.filter(
+            t => t && t.finalRR !== null && t.finalRR !== undefined && !isNaN(Number(t.finalRR))
+          )
+          const totalCount = safeTrades.length
+
+          const winRList = tradesWithRR.map(t => Number(t.finalRR)).filter(r => r > 0)
+          const lossRList = tradesWithRR.map(t => Number(t.finalRR)).filter(r => r < 0)
+
+          const winCount = winRList.length
+          const calculatedWinRate = totalCount > 0 ? (winCount / totalCount) * 100 : 0
+
+          const totalR = tradesWithRR.reduce((acc, t) => acc + (Number(t.finalRR) || 0), 0)
+
+          const sumWins = winRList.reduce((acc, r) => acc + r, 0)
+          const sumLosses = Math.abs(lossRList.reduce((acc, r) => acc + r, 0))
+
+          let calculatedProfitFactor = 'N/A'
+          if (sumLosses > 0) {
+            calculatedProfitFactor = (sumWins / sumLosses).toFixed(2)
+          } else if (sumWins > 0) {
+            calculatedProfitFactor = '∞'
+          }
+
+          const bestR = tradesWithRR.length > 0 ? Math.max(...tradesWithRR.map(t => Number(t.finalRR))) : null
+          const worstR = tradesWithRR.length > 0 ? Math.min(...tradesWithRR.map(t => Number(t.finalRR))) : null
+          const avgWin = winRList.length > 0 ? (sumWins / winRList.length) : null
+          const avgLoss = lossRList.length > 0 ? (lossRList.reduce((acc, r) => acc + r, 0) / lossRList.length) : null
+
+          // Sichere Werte-Zuweisung mit Null-Checks
+          const displayWinRate = (!isFiltered && stats && stats.winRate !== undefined) ? stats.winRate : calculatedWinRate
+          const displayTotalR = (!isFiltered && stats && stats.totalR !== undefined) ? stats.totalR : totalR
+          const displayProfitFactor = (!isFiltered && stats && stats.profitFactor !== undefined) ? stats.profitFactor : calculatedProfitFactor
+          const displayBestR = (!isFiltered && stats && stats.bestTradeR !== undefined) ? stats.bestTradeR : bestR
+          const displayWorstR = (!isFiltered && stats && stats.worstTradeR !== undefined) ? stats.worstTradeR : worstR
+          const displayAvgWin = (!isFiltered && stats && stats.avgWinR !== undefined) ? stats.avgWinR : avgWin
+          const displayAvgLoss = (!isFiltered && stats && stats.avgLossR !== undefined) ? stats.avgLossR : avgLoss
+
+          return (
+            <div style={{ display: 'flex', flexDirection: 'column', gap: '2rem' }}>
+              {/* 1. Haupt-KPI Übersicht */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+                <div style={{ padding: '1.25rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                  <div style={{ fontSize: '0.85rem', color: theme.subText }}>Gefilterte Trades</div>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: theme.heading, marginTop: '4px' }}>{totalCount}</div>
+                </div>
+
+                <div style={{ padding: '1.25rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                  <div style={{ fontSize: '0.85rem', color: theme.subText }}>Winrate</div>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: Number(displayWinRate) >= 50 ? '#28a745' : '#dc3545', marginTop: '4px' }}>
+                    {typeof displayWinRate === 'number' ? `${displayWinRate.toFixed(1)}%` : displayWinRate}
+                  </div>
+                </div>
+
+                <div style={{ padding: '1.25rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                  <div style={{ fontSize: '0.85rem', color: theme.subText }}>Akkumuliertes R</div>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: Number(displayTotalR) >= 0 ? '#28a745' : '#dc3545', marginTop: '4px' }}>
+                    {typeof displayTotalR === 'number' ? `${displayTotalR.toFixed(2)} R` : displayTotalR}
+                  </div>
+                </div>
+
+                <div style={{ padding: '1.25rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                  <div style={{ fontSize: '0.85rem', color: theme.subText }}>Profit Factor</div>
+                  <div style={{ fontSize: '1.8rem', fontWeight: 'bold', color: theme.heading, marginTop: '4px' }}>{displayProfitFactor}</div>
+                </div>
+              </div>
+
+              {/* 2. Detaillierte Stats */}
+              <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(200px, 1fr))', gap: '1rem' }}>
+                <div style={{ padding: '1rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                  <div style={{ fontSize: '0.8rem', color: theme.subText }}>Bester Trade</div>
+                  <div style={{ fontSize: '1.3rem', fontWeight: 'bold', color: '#28a745' }}>
+                    {displayBestR !== null && displayBestR !== undefined ? `${Number(displayBestR).toFixed(2)} R` : '-'}
+                  </div>
+                </div>
+
+                <div style={{ padding: '1rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                  <div style={{ fontSize: '0.8rem', color: theme.subText }}>Schlechtester Trade</div>
+                  <div style={{ fontSize: '1.3rem', fontWeight: 'bold', color: '#dc3545' }}>
+                    {displayWorstR !== null && displayWorstR !== undefined ? `${Number(displayWorstR).toFixed(2)} R` : '-'}
+                  </div>
+                </div>
+
+                <div style={{ padding: '1rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                  <div style={{ fontSize: '0.8rem', color: theme.subText }}>Durchschnittlicher Gewinner</div>
+                  <div style={{ fontSize: '1.3rem', fontWeight: 'bold', color: '#28a745' }}>
+                    {displayAvgWin !== null && displayAvgWin !== undefined ? `${Number(displayAvgWin).toFixed(2)} R` : '-'}
+                  </div>
+                </div>
+
+                <div style={{ padding: '1rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                  <div style={{ fontSize: '0.8rem', color: theme.subText }}>Durchschnittlicher Verlierer</div>
+                  <div style={{ fontSize: '1.3rem', fontWeight: 'bold', color: '#dc3545' }}>
+                    {displayAvgLoss !== null && displayAvgLoss !== undefined ? `${Number(displayAvgLoss).toFixed(2)} R` : '-'}
+                  </div>
+                </div>
+              </div>
+
+              {/* 3. CHART CONTAINER */}
+              <div style={{ padding: '1.5rem', backgroundColor: theme.cardBg, borderRadius: '8px', border: `1px solid ${theme.border}` }}>
+                <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'center', marginBottom: '1.25rem' }}>
+                  <h3 style={{ margin: 0, color: theme.heading }}>📈 Konto-Wachstum (Equity Curve in R)</h3>
+                  <div style={{ display: 'flex', gap: '0.5rem' }}>
+                    <button onClick={() => setChartXAxisMode('tradeCount')} style={{ padding: '4px 8px', fontSize: '0.8rem', cursor: 'pointer' }}># Trade-Anzahl</button>
+                    <button onClick={() => setChartXAxisMode('time')} style={{ padding: '4px 8px', fontSize: '0.8rem', cursor: 'pointer' }}>📅 Zeit</button>
+                  </div>
+                </div>
+
+                {(!chartData || chartData.length < 2) ? (
+                  <div style={{ padding: '2rem', textAlign: 'center', color: theme.subText }}>
+                    Keine ausreichenden Daten mit geschlossenen Trades (finalRR) für die Equity Curve vorhanden.
+                  </div>
+                ) : (
+                  <div style={{ width: '100%', height: '350px', minHeight: '350px' }}>
+                    <ResponsiveContainer width="100%" height="100%">
+                      <LineChart data={chartData} margin={{ top: 10, right: 30, left: 0, bottom: 0 }}>
+                        <CartesianGrid strokeDasharray="3 3" stroke={theme.chartGrid} />
+                        <XAxis dataKey={chartXAxisMode === 'tradeCount' ? 'tradeNum' : 'date'} stroke={theme.subText} />
+                        <YAxis stroke={theme.subText} unit=" R" />
+                        <RechartsTooltip contentStyle={{ backgroundColor: theme.chartTooltipBg, color: theme.text, borderRadius: '8px' }} formatter={(value) => [`${value} R`, 'Kumuliert']} />
+                        <Line
+                          type="monotone"
+                          dataKey="cumulativeR"
+                          stroke={(chartData[chartData.length - 1]?.cumulativeR || 0) >= 0 ? '#28a745' : '#dc3545'}
+                          strokeWidth={2}
+                          dot={{ r: 3 }}
+                        />
+                      </LineChart>
+                    </ResponsiveContainer>
+                  </div>
+                )}
+              </div>
+            </div>
+          )
+        })()}
+
+      </div>
     </div>
   )
 }
