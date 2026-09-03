@@ -1,0 +1,1 @@
+ALTER TABLE trades ADD COLUMN risk_amount NUMERIC(10, 2);

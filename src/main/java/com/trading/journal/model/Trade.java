@@ -3,14 +3,19 @@ package com.trading.journal.model;
 import java.math.BigDecimal;
 import java.math.RoundingMode;
 import java.time.LocalDateTime;
+import java.util.List;
+import java.util.ArrayList;
 
 import jakarta.persistence.EnumType;
 import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.JoinColumn;
 import jakarta.persistence.Table;
+import jakarta.persistence.CollectionTable;
 import jakarta.persistence.Column;
+import jakarta.persistence.ElementCollection;
 import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -43,17 +48,19 @@ public class Trade {
     private BigDecimal initialRR;
     @Column(name = "final_rr")
     private BigDecimal finalRR;
-    @Column(columnDefinition = "TEXT")
-    private String imageUrl1;
-    @Column(columnDefinition = "TEXT")
-    private String imageUrl2;
-    @Column(columnDefinition = "TEXT")
-    private String imageUrl3;
+    @ElementCollection
+    @CollectionTable(name = "trade_screenshots", joinColumns = @JoinColumn(name = "trade_id"))
+    @Column(name = "image_url")
+    private List<String> screenshots = new ArrayList<>();
     private LocalDateTime tradeDateTime;
+    @NotNull(message = "Risiko ist erforderlich.")
+    @Positive(message = "Risiko muss positiv sein.")
+    @Column(name = "risk_amount")
+    private BigDecimal riskAmount; // z. B. 100.00 CHF / USD
 
     public Trade(String currencyPair, BigDecimal entryPrice, BigDecimal stopLoss, BigDecimal exitPrice,
             Direction direction, LocalDateTime entryTime, String notes, BigDecimal outcome, BigDecimal initialRR,
-            String imageUrl1, String imageUrl2, String imageUrl3) {
+            List<String> screenshots) {
         this.currencyPair = currencyPair;
         this.entryPrice = entryPrice;
         this.stopLoss = stopLoss;
@@ -63,27 +70,36 @@ public class Trade {
         this.notes = notes;
         this.outcome = outcome;
         this.initialRR = initialRR;
-        this.imageUrl1 = imageUrl1;
-        this.imageUrl2 = imageUrl2;
-        this.imageUrl3 = imageUrl3;
+        this.screenshots = screenshots;
         this.finalRR = BigDecimal.ZERO;
     }
 
     public Trade() {
     }
 
-    public BigDecimal calculateFinalRR() { // noch überprüfen, ob die Berechnung korrekt ist
+    public BigDecimal calculateFinalRR() {
         BigDecimal risk = entryPrice.subtract(stopLoss).abs();
-        BigDecimal reward;
-        if (direction == Direction.SHORT) {
-            reward = this.entryPrice.subtract(this.exitPrice).abs();
-        } else {
-            reward = this.exitPrice.subtract(this.entryPrice).abs();
-        }
+
         if (risk.compareTo(BigDecimal.ZERO) == 0) {
-            return BigDecimal.ZERO; // Avoid division by zero
+            this.finalRR = BigDecimal.ZERO;
+            return BigDecimal.ZERO;
         }
-        this.finalRR = reward.divide(risk, 2, RoundingMode.HALF_UP);
+
+        BigDecimal priceChange;
+        if (direction == Direction.SHORT) {
+            priceChange = this.entryPrice.subtract(this.exitPrice);
+        } else {
+            priceChange = this.exitPrice.subtract(this.entryPrice);
+        }
+
+        // Vorzeichen bleibt erhalten! (+2.5 R bei Gewinn, -1.0 R bei Loss)
+        this.finalRR = priceChange.divide(risk, 2, RoundingMode.HALF_UP);
+
+        // Berechne direkt den absoluten Geldbetrag ($ / CHF)
+        if (this.riskAmount != null) {
+            this.outcome = this.finalRR.multiply(this.riskAmount).setScale(2, RoundingMode.HALF_UP);
+        }
+
         return this.finalRR;
     }
 
@@ -167,28 +183,12 @@ public class Trade {
         this.initialRR = initialRR;
     }
 
-    public String getImageUrl1() {
-        return imageUrl1;
+    public List<String> getScreenshots() {
+        return screenshots;
     }
 
-    public void setImageUrl1(String imageUrl1) {
-        this.imageUrl1 = imageUrl1;
-    }
-
-    public String getImageUrl2() {
-        return imageUrl2;
-    }
-
-    public void setImageUrl2(String imageUrl2) {
-        this.imageUrl2 = imageUrl2;
-    }
-
-    public String getImageUrl3() {
-        return imageUrl3;
-    }
-
-    public void setImageUrl3(String imageUrl3) {
-        this.imageUrl3 = imageUrl3;
+    public void setScreenshots(List<String> screenshots) {
+        this.screenshots = screenshots;
     }
 
     public BigDecimal getFinalRR() {
@@ -205,6 +205,14 @@ public class Trade {
 
     public void setTradeDateTime(LocalDateTime tradeDateTime) {
         this.tradeDateTime = tradeDateTime;
+    }
+
+    public BigDecimal getRiskAmount() {
+        return riskAmount;
+    }
+
+    public void setRiskAmount(BigDecimal riskAmount) {
+        this.riskAmount = riskAmount;
     }
 
 }

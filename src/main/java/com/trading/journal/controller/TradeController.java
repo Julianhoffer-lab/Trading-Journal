@@ -3,6 +3,7 @@ package com.trading.journal.controller;
 import com.trading.journal.dto.TradeStatsDto;
 import com.trading.journal.model.Trade;
 import com.trading.journal.service.TradeService;
+import com.trading.journal.repository.TradeRepository;
 
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
@@ -24,9 +25,11 @@ import jakarta.validation.Valid;
 public class TradeController {
 
     private final TradeService tradeService;
+    private final TradeRepository tradeRepository;
 
-    public TradeController(TradeService tradeService) {
+    public TradeController(TradeService tradeService, TradeRepository tradeRepository) {
         this.tradeService = tradeService;
+        this.tradeRepository = tradeRepository;
     }
 
     @PostMapping
@@ -57,9 +60,36 @@ public class TradeController {
         return ResponseEntity.noContent().build();
     }
 
-    // Trade aktualisieren (z.B. Exit-Preis nachtragen)
     @PutMapping("/{id}")
-    public ResponseEntity<Trade> updateTrade(@PathVariable Long id, @Valid @RequestBody Trade dto) {
-        return ResponseEntity.ok(tradeService.updateTrade(id, dto));
+    public ResponseEntity<Trade> updateTrade(@PathVariable Long id, @RequestBody Trade tradeDetails) {
+        return tradeRepository.findById(id)
+                .map(trade -> {
+                    if (tradeDetails.getCurrencyPair() != null)
+                        trade.setCurrencyPair(tradeDetails.getCurrencyPair());
+                    if (tradeDetails.getDirection() != null)
+                        trade.setDirection(tradeDetails.getDirection());
+                    if (tradeDetails.getRiskAmount() != null)
+                        trade.setRiskAmount(tradeDetails.getRiskAmount());
+                    if (tradeDetails.getFinalRR() != null)
+                        trade.setFinalRR(tradeDetails.getFinalRR());
+                    if (tradeDetails.getEntryPrice() != null)
+                        trade.setEntryPrice(tradeDetails.getEntryPrice());
+                    if (tradeDetails.getStopLoss() != null)
+                        trade.setStopLoss(tradeDetails.getStopLoss());
+                    if (tradeDetails.getExitPrice() != null)
+                        trade.setExitPrice(tradeDetails.getExitPrice());
+                    if (tradeDetails.getNotes() != null)
+                        trade.setNotes(tradeDetails.getNotes());
+
+                    // Screenshots-Liste aktualisieren:
+                    if (tradeDetails.getScreenshots() != null) {
+                        trade.getScreenshots().clear();
+                        trade.getScreenshots().addAll(tradeDetails.getScreenshots());
+                    }
+
+                    Trade updatedTrade = tradeRepository.save(trade);
+                    return ResponseEntity.ok(updatedTrade);
+                })
+                .orElse(ResponseEntity.notFound().build());
     }
 }

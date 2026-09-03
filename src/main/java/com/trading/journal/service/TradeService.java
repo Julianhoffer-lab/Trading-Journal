@@ -62,9 +62,7 @@ public class TradeService {
         existingTrade.setExitPrice(updatedTrade.getExitPrice());
 
         // Aktualisierte Bilder & Notizen
-        existingTrade.setImageUrl1(updatedTrade.getImageUrl1());
-        existingTrade.setImageUrl2(updatedTrade.getImageUrl2());
-        existingTrade.setImageUrl3(updatedTrade.getImageUrl3());
+        existingTrade.setScreenshots(updatedTrade.getScreenshots());
         existingTrade.setNotes(updatedTrade.getNotes());
 
         if (updatedTrade.getTradeDateTime() != null) {
