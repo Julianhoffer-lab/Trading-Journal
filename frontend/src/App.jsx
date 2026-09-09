@@ -1,4 +1,4 @@
-import TradeDetails from './TradeDetails';
+import TradeDetailsModal from './TradeDetails';
 import AccountBalanceChart from './AccountBalanceChart';
 import { useState, useEffect, useMemo } from 'react'
 import {
@@ -727,9 +727,8 @@ function App() {
         })()}
 
         {/* TRADE DETAILS MODAL */}
-        // In src/App.jsx:
         {selectedTrade && (
-          <TradeDetails
+          <TradeDetailsModal
             isOpen={!!selectedTrade}
             trade={selectedTrade}
             theme={theme}
@@ -744,7 +743,7 @@ function App() {
           />
         )}
 
-        {/* LIGHTBOX MODAL (GROSSANSICHT) */}
+        {/* LIGHTBOX MODAL (GROSSANSICHT - Optional, da bereits im TradeDetailsModal enthalten) */}
         {previewImage && (
           <div
             onClick={() => setPreviewImage(null)}
@@ -754,7 +753,7 @@ function App() {
               backgroundColor: 'rgba(0, 0, 0, 0.9)',
               display: 'flex',
               alignItems: 'center',
-              justify: 'center',
+              justifyContent: 'center',
               zIndex: 2000,
               padding: '2rem',
               cursor: 'zoom-out'
