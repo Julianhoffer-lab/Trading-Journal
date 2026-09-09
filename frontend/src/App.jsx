@@ -131,6 +131,14 @@ function App() {
     e.preventDefault()
     setErrorMsg('')
 
+    // 1. Risiko parsen und prüfen
+    const parsedRisk = parseFloat(formData.riskAmount)
+    if (isNaN(parsedRisk) || parsedRisk <= 0) {
+      setErrorMsg('Ungültiges Risiko (das Risiko muss größer als 0 sein).')
+      return
+    }
+
+    // 2. Datum formatieren
     let formattedDateTime = null
     if (formData.tradeDateTime && formData.tradeDateTime.trim() !== '') {
       formattedDateTime = formData.tradeDateTime.length === 16
@@ -138,16 +146,19 @@ function App() {
         : formData.tradeDateTime
     }
 
+    // 3. Payload mit riskAmount zusammenstellen
     const payload = {
       currencyPair: formData.currencyPair,
       direction: formData.direction,
       entryPrice: parseFloat(formData.entryPrice) || 0,
       stopLoss: parseFloat(formData.stopLoss) || 0,
-      exitPrice: parseFloat(formData.exitPrice) || 0,
+      exitPrice: formData.exitPrice ? parseFloat(formData.exitPrice) : null,
+      riskAmount: parsedRisk, // <--- WICHTIG: Hier wird das Risiko als Zahl übergeben!
       tradeDateTime: formattedDateTime,
-      notes: ''
+      notes: formData.notes || ''
     }
 
+    // 4. API-Call an Backend
     fetch('http://localhost:8081/api/trades', {
       method: 'POST',
       headers: {
@@ -164,13 +175,16 @@ function App() {
         return res.json()
       })
       .then(() => {
+        // Formular nach Erfolg zurücksetzen
         setFormData({
           currencyPair: 'EUR/USD',
           direction: 'LONG',
           entryPrice: '',
           stopLoss: '',
           exitPrice: '',
-          tradeDateTime: new Date().toISOString().slice(0, 16)
+          riskAmount: '', // <--- Wieder leeren
+          tradeDateTime: new Date().toISOString().slice(0, 16),
+          notes: ''
         })
         fetchData()
       })
@@ -472,7 +486,21 @@ function App() {
                 </div>
                 <div>
                   <label style={{ display: 'block', fontSize: '0.8rem', color: theme.subText }}>Datum & Zeit</label>
-                  <input type="datetime-local" name="tradeDateTime" value={formData.tradeDateTime} onChange={handleChange} style={{ width: '100%', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, padding: '6px', borderRadius: '4px' }} />
+                  <input
+                    type="datetime-local"
+                    name="tradeDateTime"
+                    value={formData.tradeDateTime}
+                    onChange={handleChange}
+                    style={{
+                      width: '100%',
+                      backgroundColor: theme.inputBg || '#1f2937', // Gleiches Schwarz wie die anderen Inputs
+                      color: theme.text || '#ffffff',               // Weiße Schrift
+                      border: `1px solid ${theme.inputBorder || '#374151'}`,
+                      padding: '6px',
+                      borderRadius: '4px',
+                      colorScheme: 'dark'                           // <--- Das macht das Kalender-Icon & Text komplett weiß!
+                    }}
+                  />
                 </div>
                 <div style={{ display: 'flex', alignItems: 'flex-end' }}>
                   <button type="submit" style={{ width: '100%', backgroundColor: '#007bff', color: 'white', border: 'none', padding: '8px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>Trade Speichern</button>
@@ -481,12 +509,10 @@ function App() {
                   <label htmlFor="riskAmount">Risiko (in CHF / $)</label>
                   <input
                     type="number"
-                    id="riskAmount"
+                    step="any"
                     name="riskAmount"
-                    step="0.01"
-                    placeholder="z. B. 100"
-                    value={formData.riskAmount}
-                    onChange={(e) => setFormData({ ...formData, riskAmount: e.target.value })}
+                    value={formData.riskAmount || ''}
+                    onChange={handleChange} // oder (e) => setFormData({ ...formData, riskAmount: e.target.value })
                     required
                   />
                 </div>
@@ -512,7 +538,7 @@ function App() {
                 </thead>
                 <tbody>
                   {currentTrades.length === 0 ? (
-                    <tr><td colSpan="9" style={{ padding: '2rem', textAlign: 'center', color: theme.subText }}>Keine Trades für diese Filterkriterien gefunden.</td></tr>
+                    <tr><td colSpan="9" style={{ padding: '2rem', textAlign: 'left', color: theme.subText }}>Keine Trades für diese Filterkriterien gefunden.</td></tr>
                   ) : (
                     currentTrades.map(trade => (
                       <tr key={trade.id} onClick={() => openModal(trade)} style={{ borderBottom: `1px solid ${theme.border}`, cursor: 'pointer', transition: 'background-color 0.15s' }}>
@@ -668,7 +694,7 @@ function App() {
                 </div>
 
                 {(!formattedChartData || formattedChartData.length < 2) ? (
-                  <div style={{ padding: '2rem', textAlign: 'center', color: theme.subText }}>
+                  <div style={{ padding: '2rem', textAlign: 'left', color: theme.subText }}>
                     Keine ausreichenden Daten mit geschlossenen Trades (finalRR) für die Equity Curve vorhanden.
                   </div>
                 ) : (
@@ -701,16 +727,19 @@ function App() {
         })()}
 
         {/* TRADE DETAILS MODAL */}
+        // In src/App.jsx:
         {selectedTrade && (
           <TradeDetails
+            isOpen={!!selectedTrade}
             trade={selectedTrade}
             theme={theme}
             onClose={() => setSelectedTrade(null)}
-            onUpdateTrade={(updatedTrade) => {
-              setSelectedTrade(updatedTrade);
-              setTrades(prevTrades =>
-                prevTrades.map(t => t.id === updatedTrade.id ? updatedTrade : t)
+            onSave={(updatedTrade) => {
+              // Trades im State aktualisieren
+              setTrades((prevTrades) =>
+                prevTrades.map((t) => (t.id === updatedTrade.id ? updatedTrade : t))
               );
+              setSelectedTrade(null);
             }}
           />
         )}

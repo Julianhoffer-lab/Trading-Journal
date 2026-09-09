@@ -20,6 +20,7 @@ import jakarta.persistence.Entity;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Positive;
+import jakarta.validation.constraints.AssertTrue;
 
 @Entity
 @Table(name = "trades")
@@ -75,6 +76,21 @@ public class Trade {
     }
 
     public Trade() {
+    }
+
+    @AssertTrue(message = "Ungültiger Stop Loss: Bei LONG muss der Stop Loss unter dem Entry Price liegen, bei SHORT darüber.")
+    public boolean isValidStopLoss() {
+        if (entryPrice == null || stopLoss == null || direction == null) {
+            return true; // Null-Prüfung erledigen bereits @NotNull Annotations
+        }
+
+        if (direction == Direction.LONG) {
+            return stopLoss.compareTo(entryPrice) < 0;
+        } else if (direction == Direction.SHORT) {
+            return stopLoss.compareTo(entryPrice) > 0;
+        }
+
+        return true;
     }
 
     public BigDecimal calculateFinalRR() {

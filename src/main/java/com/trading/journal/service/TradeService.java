@@ -32,6 +32,10 @@ public class TradeService {
     }
 
     public Trade saveTrade(Trade trade) {
+        if (!trade.isValidStopLoss()) {
+            throw new IllegalArgumentException("Ungültiger Stop Loss für die gewählte Richtung.");
+        }
+
         if (trade.getTradeDateTime() == null) {
             trade.setTradeDateTime(LocalDateTime.now());
         }
