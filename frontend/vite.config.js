@@ -26,5 +26,13 @@ export default defineConfig({
         ]
       }
     })
-  ]
+  ],
+  // --- NEU: Dieser Teil bindet Vite an den Docker-Container ---
+  server: {
+    host: true, // Lauscht auf 0.0.0.0 (wichtig für Docker!)
+    port: 5173,
+    watch: {
+      usePolling: true // Stellt sicher, dass Änderungen unter Windows/Docker erkannt werden
+    }
+  }
 })

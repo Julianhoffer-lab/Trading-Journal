@@ -2,6 +2,7 @@ services:
   db:
     image: postgres:16-alpine
     container_name: trading-db
+    restart: unless-stopped
     environment:
       POSTGRES_DB: trading_journal
       POSTGRES_USER: user
@@ -14,6 +15,7 @@ services:
   app:
     build: .
     container_name: trading-app
+    restart: unless-stopped
     ports:
       - "8081:8081"
     environment:
@@ -26,6 +28,17 @@ services:
       SPRING_FLYWAY_BASELINE_ON_MIGRATE: "true"
     depends_on:
       - db
+
+  frontend:
+    build:
+      context: .
+      dockerfile: Dockerfile.frontend
+    container_name: trading-frontend
+    restart: unless-stopped
+    ports:
+      - "5173:5173"
+    depends_on:
+      - app
 
 volumes:
   postgres_data:
