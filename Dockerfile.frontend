@@ -6,7 +6,7 @@ WORKDIR /app
 
 # Package-Dateien kopieren und Abhängigkeiten installieren
 COPY frontend/package*.json ./
-RUN npm install --legacy-peer-deps
+RUN npm install --legacy-peer-depsdocker compose build --no-cache frontend
 
 # Gesamten Frontend-Code kopieren
 COPY frontend/. .

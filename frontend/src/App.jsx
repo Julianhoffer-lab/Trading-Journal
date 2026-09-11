@@ -127,6 +127,21 @@ function App() {
     setFormData({ ...formData, [e.target.name]: e.target.value })
   }
 
+  const handleScreenshotChange = (index, value) => {
+    const updatedScreenshots = [...(formData.screenshots || [''])];
+    updatedScreenshots[index] = value;
+    setFormData({ ...formData, screenshots: updatedScreenshots });
+  };
+
+  const addScreenshotField = () => {
+    setFormData({ ...formData, screenshots: [...(formData.screenshots || []), ''] });
+  };
+
+  const removeScreenshotField = (index) => {
+    const updatedScreenshots = (formData.screenshots || []).filter((_, idx) => idx !== index);
+    setFormData({ ...formData, screenshots: updatedScreenshots });
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault()
     setErrorMsg('')
@@ -461,10 +476,12 @@ function App() {
             <div style={{ backgroundColor: theme.cardBg, padding: '1.5rem', borderRadius: '8px', marginBottom: '1.5rem', border: `1px solid ${theme.border}` }}>
               <h3 style={{ marginTop: 0, color: theme.heading }}>Neuen Trade erfassen</h3>
               <form onSubmit={handleSubmit} style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fit, minmax(140px, 1fr))', gap: '1rem' }}>
+
                 <div>
                   <label style={{ display: 'block', fontSize: '0.8rem', color: theme.subText }}>Währungspaar</label>
                   <input type="text" name="currencyPair" value={formData.currencyPair} onChange={handleChange} style={{ width: '100%', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, padding: '6px', borderRadius: '4px' }} required />
                 </div>
+
                 <div>
                   <label style={{ display: 'block', fontSize: '0.8rem', color: theme.subText }}>Richtung</label>
                   <select name="direction" value={formData.direction} onChange={handleChange} style={{ width: '100%', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, padding: '6px', borderRadius: '4px' }}>
@@ -472,18 +489,22 @@ function App() {
                     <option value="SHORT">SHORT</option>
                   </select>
                 </div>
+
                 <div>
                   <label style={{ display: 'block', fontSize: '0.8rem', color: theme.subText }}>Entry Preis</label>
                   <input type="number" step="any" name="entryPrice" value={formData.entryPrice} onChange={handleChange} style={{ width: '100%', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, padding: '6px', borderRadius: '4px' }} required />
                 </div>
+
                 <div>
                   <label style={{ display: 'block', fontSize: '0.8rem', color: theme.subText }}>Stop Loss</label>
                   <input type="number" step="any" name="stopLoss" value={formData.stopLoss} onChange={handleChange} style={{ width: '100%', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, padding: '6px', borderRadius: '4px' }} required />
                 </div>
+
                 <div>
                   <label style={{ display: 'block', fontSize: '0.8rem', color: theme.subText }}>Exit Preis</label>
                   <input type="number" step="any" name="exitPrice" value={formData.exitPrice} onChange={handleChange} style={{ width: '100%', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, padding: '6px', borderRadius: '4px' }} />
                 </div>
+
                 <div>
                   <label style={{ display: 'block', fontSize: '0.8rem', color: theme.subText }}>Datum & Zeit</label>
                   <input
@@ -493,29 +514,102 @@ function App() {
                     onChange={handleChange}
                     style={{
                       width: '100%',
-                      backgroundColor: theme.inputBg || '#1f2937', // Gleiches Schwarz wie die anderen Inputs
-                      color: theme.text || '#ffffff',               // Weiße Schrift
+                      backgroundColor: theme.inputBg || '#1f2937',
+                      color: theme.text || '#ffffff',
                       border: `1px solid ${theme.inputBorder || '#374151'}`,
                       padding: '6px',
                       borderRadius: '4px',
-                      colorScheme: 'dark'                           // <--- Das macht das Kalender-Icon & Text komplett weiß!
+                      colorScheme: 'dark'
                     }}
                   />
                 </div>
-                <div style={{ display: 'flex', alignItems: 'flex-end' }}>
-                  <button type="submit" style={{ width: '100%', backgroundColor: '#007bff', color: 'white', border: 'none', padding: '8px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>Trade Speichern</button>
-                </div>
+
                 <div className="form-group">
-                  <label htmlFor="riskAmount">Risiko (in CHF / $)</label>
+                  <label htmlFor="riskAmount" style={{ display: 'block', fontSize: '0.8rem', color: theme.subText }}>Risiko (in CHF / $)</label>
                   <input
                     type="number"
                     step="any"
                     name="riskAmount"
                     value={formData.riskAmount || ''}
-                    onChange={handleChange} // oder (e) => setFormData({ ...formData, riskAmount: e.target.value })
+                    onChange={handleChange}
+                    style={{ width: '100%', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, padding: '6px', borderRadius: '4px' }}
                     required
                   />
                 </div>
+
+                {/* Notizen Feld */}
+                <div style={{ gridColumn: '1 / -1' }}>
+                  <label style={{ display: 'block', fontSize: '0.8rem', color: theme.subText }}>Notizen</label>
+                  <textarea name="notes" value={formData.notes} onChange={handleChange} style={{ width: '100%', backgroundColor: theme.inputBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, padding: '6px', borderRadius: '4px', minHeight: '60px' }} placeholder={"Begründung für den Trade, Emotionen, Marktkontext..."} />
+                </div>
+
+                {/* NEU: Screenshots & Chart-Analyse Bereich */}
+                <div style={{ gridColumn: '1 / -1', backgroundColor: theme.inputBg, padding: '1rem', borderRadius: '6px', border: `1px solid ${theme.inputBorder}` }}>
+                  <label style={{ display: 'block', fontSize: '0.85rem', fontWeight: 'bold', color: theme.heading, marginBottom: '0.5rem' }}>
+                    🖼️ Screenshots & Chart-Analyse URLs
+                  </label>
+
+                  {(formData.screenshots || ['']).map((url, idx) => (
+                    <div key={idx} style={{ display: 'flex', gap: '8px', marginBottom: '8px' }}>
+                      <input
+                        type="url"
+                        value={url}
+                        onChange={(e) => handleScreenshotChange(idx, e.target.value)}
+                        placeholder="https://www.tradingview.com/x/..."
+                        style={{ width: '100%', backgroundColor: theme.cardBg, color: theme.text, border: `1px solid ${theme.inputBorder}`, padding: '6px', borderRadius: '4px' }}
+                      />
+                      {(formData.screenshots || []).length > 1 && (
+                        <button
+                          type="button"
+                          onClick={() => removeScreenshotField(idx)}
+                          style={{ backgroundColor: '#ff4d4f', color: '#fff', border: 'none', padding: '0 12px', borderRadius: '4px', cursor: 'pointer' }}
+                        >
+                          ✕
+                        </button>
+                      )}
+                    </div>
+                  ))}
+
+                  <button
+                    type="button"
+                    onClick={addScreenshotField}
+                    style={{ backgroundColor: 'transparent', border: `1px solid ${theme.inputBorder}`, color: theme.text, padding: '4px 8px', borderRadius: '4px', cursor: 'pointer', fontSize: '0.8rem', marginTop: '4px' }}
+                  >
+                    + Weitere URL hinzufügen
+                  </button>
+
+                  {/* Live Vorschau der eingegebenen URLs */}
+                  {(formData.screenshots || []).filter(s => s && s.trim() !== '').length > 0 && (
+                    <div style={{ display: 'grid', gridTemplateColumns: 'repeat(auto-fill, minmax(140px, 1fr))', gap: '8px', marginTop: '12px' }}>
+                      {formData.screenshots.filter(s => s && s.trim() !== '').map((url, idx) => (
+                        <div key={idx} style={{ borderRadius: '4px', overflow: 'hidden', border: `1px solid ${theme.inputBorder}`, height: '90px', backgroundColor: '#000' }}>
+                          <img
+                            src={url}
+                            alt={`Preview ${idx + 1}`}
+                            style={{ width: '100%', height: '100%', objectFit: 'cover' }}
+                            onError={(e) => {
+                              e.currentTarget.style.display = 'none';
+                              e.currentTarget.parentNode.innerText = '🖼️ Link ungültig';
+                              e.currentTarget.parentNode.style.display = 'flex';
+                              e.currentTarget.parentNode.style.alignItems = 'center';
+                              e.currentTarget.parentNode.style.justifyContent = 'center';
+                              e.currentTarget.parentNode.style.fontSize = '0.75rem';
+                              e.currentTarget.parentNode.style.color = '#ff4d4f';
+                            }}
+                          />
+                        </div>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Submit Button */}
+                <div style={{ gridColumn: '1 / -1', marginTop: '0.5rem' }}>
+                  <button type="submit" style={{ width: '100%', backgroundColor: '#007bff', color: 'white', border: 'none', padding: '10px', borderRadius: '4px', cursor: 'pointer', fontWeight: 'bold' }}>
+                    Trade Speichern
+                  </button>
+                </div>
+
               </form>
               {errorMsg && <div style={{ color: '#dc3545', marginTop: '0.5rem', fontSize: '0.9rem' }}>{errorMsg}</div>}
             </div>

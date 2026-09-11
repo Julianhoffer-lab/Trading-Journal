@@ -41,7 +41,6 @@ public class Trade {
     @Enumerated(EnumType.STRING)
     @NotNull(message = "Direction (LONG/SHORT) ist erforderlich.")
     private Direction direction;
-    private LocalDateTime entryTime;
     @Column(columnDefinition = "TEXT")
     private String notes;
     private BigDecimal outcome;
